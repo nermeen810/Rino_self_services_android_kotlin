@@ -1,4 +1,4 @@
-package com.rino.self_services.dataSource.remoteDataSource
+package com.rino.self_services.model.dataSource.remoteDataSource
 
 import javax.inject.Inject
 

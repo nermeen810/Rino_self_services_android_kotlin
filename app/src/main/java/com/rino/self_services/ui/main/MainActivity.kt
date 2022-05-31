@@ -1,4 +1,4 @@
-package com.rino.self_services.ui
+package com.rino.self_services.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

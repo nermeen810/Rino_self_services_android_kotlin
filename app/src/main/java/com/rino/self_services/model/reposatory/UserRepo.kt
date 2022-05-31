@@ -1,7 +1,7 @@
 package com.rino.self_services.model.reposatory
 
 import android.util.Log
-import com.rino.self_services.dataSource.remoteDataSource.ApiDataSource
+import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
 import com.rino.self_services.model.pojo.LoginRequest
 import com.rino.self_services.model.pojo.LoginResponse
 import com.rino.self_services.utils.Constants

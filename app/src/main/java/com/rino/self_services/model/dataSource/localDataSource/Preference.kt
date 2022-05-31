@@ -1,4 +1,4 @@
-package com.rino.self_services.dataSource.localDataSource
+package com.rino.self_services.model.dataSource.localDataSource
 
 interface Preference {
     fun getFirstTimeLaunch():Boolean

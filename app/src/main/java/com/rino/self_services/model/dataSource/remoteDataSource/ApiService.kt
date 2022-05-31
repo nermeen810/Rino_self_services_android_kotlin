@@ -1,4 +1,4 @@
-package com.rino.self_services.dataSource.remoteDataSource
+package com.rino.self_services.model.dataSource.remoteDataSource
 
 
 import com.rino.self_services.model.pojo.LoginResponse

@@ -1,8 +1,8 @@
 package com.rino.self_services.di.module
 
 import android.content.Context
-import com.rino.self_services.dataSource.remoteDataSource.ApiService
-import com.rino.self_services.dataSource.NetworkConnectionInterceptor
+import com.rino.self_services.model.dataSource.remoteDataSource.ApiService
+import com.rino.self_services.model.dataSource.NetworkConnectionInterceptor
 import com.rino.self_services.utils.Constants
 import dagger.Module
 import dagger.Provides

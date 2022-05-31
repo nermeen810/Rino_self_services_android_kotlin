@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentLoginBinding
 import com.rino.self_services.model.pojo.LoginRequest
-import com.rino.self_services.ui.MainActivity
+import com.rino.self_services.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

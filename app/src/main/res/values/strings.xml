@@ -14,9 +14,12 @@
     <string name="dismiss">تجاهل</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">الصفحة الرئيسية</string>
+    <string name="home">الخدمات الرئيسية</string>
     <string name="requests">الطلبات</string>
     <string name="statistics">الاحصائيات</string>
     <string name="history">تاريخ الطلبات</string>
     <string name="search_hint">ابحث</string>
+    <string name="hr_clearance">اخلاء الطرف</string>
+    <string name="payment_process">المدفوعات المالية</string>
+    <string name="notification">تنبيهات الاداره العليا</string>
 </resources>

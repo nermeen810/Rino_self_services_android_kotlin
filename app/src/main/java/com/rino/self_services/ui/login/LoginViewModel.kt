@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rino.self_services.dataSource.localDataSource.MySharedPreference
-import com.rino.self_services.dataSource.localDataSource.Preference
-import com.rino.self_services.dataSource.localDataSource.PreferenceDataSource
+import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
+import com.rino.self_services.model.dataSource.localDataSource.Preference
+import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.pojo.LoginRequest
 import com.rino.self_services.model.reposatory.UserRepo
 import com.rino.self_services.utils.PREF_FILE_NAME

@@ -1,4 +1,4 @@
-package com.rino.self_services.dataSource
+package com.rino.self_services.model.dataSource
 
 import android.content.Context
 import android.net.ConnectivityManager

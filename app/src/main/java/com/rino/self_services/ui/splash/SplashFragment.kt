@@ -1,4 +1,4 @@
-package com.rino.self_services.ui
+package com.rino.self_services.ui.splash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
