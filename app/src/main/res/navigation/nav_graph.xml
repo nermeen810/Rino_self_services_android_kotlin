@@ -51,5 +51,9 @@
         android:id="@+id/paymentProcessesFragment"
         android:name="com.rino.self_services.ui.paymentProcessHome.PaymentProcessesFragment"
         android:label="fragment_payment_processes"
-        tools:layout="@layout/fragment_payment_processes" />
+        tools:layout="@layout/fragment_payment_processes" >
+        <action
+            android:id="@+id/paymentProcess_to_seeAll"
+            app:destination="@id/seeAllPaymentProcessFragment"/>
+    </fragment>>
 </navigation>

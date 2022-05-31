@@ -12,6 +12,9 @@
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_see_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/fragment_payment_processes.xml" value="0.48261260986328125" />
+        <entry key="app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.13405797101449277" />
+        <entry key="app/src/main/res/layout/see_all.xml" value="0.48485565185546875" />
       </map>
     </option>
   </component>

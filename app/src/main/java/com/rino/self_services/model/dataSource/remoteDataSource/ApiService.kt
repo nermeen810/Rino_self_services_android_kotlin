@@ -2,10 +2,9 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 
 
 import com.rino.self_services.model.pojo.LoginResponse
+import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
@@ -15,4 +14,8 @@ interface ApiService {
                       @Field("password") password:String,
                       @Field("client_id") client_id:String,
     ): Response<LoginResponse>
+
+    @Headers( "Content-Type: application/json;charset=UTF-8")
+    @GET("{future}/{me}/from/{from}/to/{to}/page/{page}")
+    suspend fun getAllRecords(@Header("Authorization") token:String,@Path("future") future:String,@Path("me") me:String ,@Path("from") from:String,@Path("to") to:String,@Path("page") page:Int): Response<SeeAllPaymentProcessResponse>
 }

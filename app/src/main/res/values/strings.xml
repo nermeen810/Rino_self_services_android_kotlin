@@ -22,4 +22,12 @@
     <string name="hr_clearance">اخلاء الطرف</string>
     <string name="payment_process">المدفوعات المالية</string>
     <string name="notification">تنبيهات الاداره العليا</string>
+    <string name="order_number">رقم الطلب</string>
+    <string name="order_date"> تاريخ الطلب</string>
+    <string name="side">الجهة</string>
+    <string name="amount">المبلغ</string>
+    <string name="balance">الرصيد</string>
+    <string name="payment_method">طريقه الدفع</string>
+    <string name="order_status">حاله الطلب</string>
+    <string name="forword_to_me">محال الى</string>
 </resources>
