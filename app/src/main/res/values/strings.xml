@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Self_Services</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="login_userName_hint">البريد الألكترونى</string>
+    <string name="login_password_hint">كلمة المرور</string>
+    <string name="forgot_password">استعادة كلمة المرور</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+
+    <string name="success_login">تم تسجيل الدخول بنجاح</string>
+    <string name="invalid_email_or_pass">خطأ فى البريد الكترونى او كلمة المرور </string>
+    <string name="required_field">مطلوب  </string>
+    <string name="email_must_less_than50">البريد الاكتروني يجيب الا يزيد عن 50 حرف </string>
+    <string name="invalid_email">بريد الكترونى خاطئ </string>
+    <string name="dismiss">تجاهل</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="requests">الطلبات</string>
+    <string name="statistics">الاحصائيات</string>
+    <string name="history">تاريخ الطلبات</string>
+    <string name="search_hint">ابحث</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.rino.self_services.di.module
 
 import android.content.Context
+import com.rino.self_services.dataSource.remoteDataSource.ApiService
+import com.rino.self_services.dataSource.NetworkConnectionInterceptor
+import com.rino.self_services.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,30 +19,30 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
 
-//    @Singleton
-//    @Provides
-//    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-//
-//        return Retrofit.Builder()
-//            .baseUrl(Constants.base_url)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .client(okHttpClient)
-//            .build()
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideRestApi(retrofit: Retrofit) : ApiService {
-//        return  retrofit.create(ApiService::class.java)
-//    }
-//
-//    @Provides
-//    fun provideClient(@ApplicationContext context: Context) : OkHttpClient {
-//
-//        return OkHttpClient.Builder()
-//            .addInterceptor(NetworkConnectionInterceptor(context))
-//            .build()
-//    }
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+
+        return Retrofit.Builder()
+            .baseUrl(Constants.base_url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRestApi(retrofit: Retrofit) : ApiService {
+        return  retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    fun provideClient(@ApplicationContext context: Context) : OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .addInterceptor(NetworkConnectionInterceptor(context))
+            .build()
+    }
 
 
 }

@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     // ViewModel and LiveData
     def viewModelLifeCycleVersion = '2.3.0'
     def androidLifecycleExtensionsVersion = '2.2.0'
