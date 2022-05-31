@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.rino.self_services.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/login_to_home"
+            app:destination="@id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.rino.self_services.ui.seeAllHr.SeeAllHrClearanceFragment"
+        android:label="fragment_see_all"
+        tools:layout="@layout/fragment_see_all_hr_clearance" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.rino.self_services.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.rino.self_services.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/home_to_payment"
+            app:destination="@id/paymentProcessesFragment"/>
+        <action
+            android:id="@+id/home_to_hr"
+            app:destination="@id/hrClearanceHomeFragment"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/hrClearanceHomeFragment"
+        android:name="com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragment"
+        android:label="fragment_hr_clearance_home"
+        tools:layout="@layout/fragment_hr_clearance_home" />
+    <fragment
+        android:id="@+id/seeAllPaymentProcessFragment"
+        android:name="com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragment"
+        android:label="fragment_see_all_payment_process"
+        tools:layout="@layout/fragment_see_all_payment_process" />
+    <fragment
+        android:id="@+id/paymentProcessesFragment"
+        android:name="com.rino.self_services.ui.paymentProcessHome.PaymentProcessesFragment"
+        android:label="fragment_payment_processes"
+        tools:layout="@layout/fragment_payment_processes" />
+</navigation>
