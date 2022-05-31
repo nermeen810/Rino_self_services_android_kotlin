@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.paymentProcessHome.PaymentProcessesFragment">
     <LinearLayout
@@ -131,7 +132,6 @@
 <!--                android:visibility="gone" />-->
 <!--            -->
 
-<!--                </LinearLayout>-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyRecycle"
                 android:layout_width="match_parent"
@@ -141,9 +141,6 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 />
-
-        </LinearLayout>
-
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="50dp"
@@ -151,5 +148,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             />
+        </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>
