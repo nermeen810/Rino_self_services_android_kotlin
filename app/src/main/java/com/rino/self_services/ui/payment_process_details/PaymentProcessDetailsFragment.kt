@@ -10,6 +10,8 @@ import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
 import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
+import com.rino.self_services.model.pojo.SeeAllRequest
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +20,13 @@ class PaymentProcessDetailsFragment : Fragment() {
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+//            navSeeAll = arguments?.get("nav_see_all") as NavSeeAll
+//            period = SeeAllRequest("token","requests",navSeeAll.me_or_others,navSeeAll.startPeriod,navSeeAll.endPeriod,1)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

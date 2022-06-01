@@ -145,8 +145,8 @@ class PaymentProcessesFragment : Fragment() {
 
 
     private fun navToSeeAll(navSeeAll: NavSeeAll) {
-//        val action = PaymentProcessesFragmentDirections.paymentProcessToSeeAll(navSeeAll)
-//        findNavController().navigate(action)
+        val action = PaymentProcessesFragmentDirections.paymentProcessToSeeAll(navSeeAll)
+        findNavController().navigate(action)
     }
 
     private fun observeShowError() {

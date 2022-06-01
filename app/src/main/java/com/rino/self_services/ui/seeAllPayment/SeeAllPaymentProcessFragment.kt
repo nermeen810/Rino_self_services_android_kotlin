@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
@@ -21,15 +22,15 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private lateinit var adapter:SeeAllPaymentProcessRVAdapter
     val viewModel: SeeAllPaymentProcessViewModel by viewModels()
     private lateinit var binding: FragmentSeeAllPaymentProcessBinding
-    private var period = SeeAllRequest("token","requests",navSeeAll.me_or_others,navSeeAll.startPeriod,navSeeAll.endPeriod,1)
+    private lateinit var period:SeeAllRequest
     private var totalPages = 1
     private lateinit var navSeeAll: NavSeeAll
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-//            navSeeAll = arguments?.get("nav_see_all") as NavSeeAll
-
+            navSeeAll = arguments?.get("nav_see_all") as NavSeeAll
+            period = SeeAllRequest("token","requests",navSeeAll.me_or_others,navSeeAll.startPeriod,navSeeAll.endPeriod,1)
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -87,7 +88,17 @@ class SeeAllPaymentProcessFragment : Fragment() {
         }
     }
     private fun getPressesdItemIndex(index:Int){
+        var id = viewModel.seeAllPaymentProcessData.value?.data?.get(index)?.id
+        var action = id?.let {
+            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment()
+        }
+        if (action != null) {
+            findNavController().navigate(action)
+        }
+//        private fun navToSeeAll(navSeeAll: NavSeeAll) {
+//            val action = PaymentProcessesFragmentDirections.paym!entProcessToSeeAll(navSeeAll)
 
+//        }
     }
 
 
