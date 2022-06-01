@@ -88,17 +88,16 @@ class SeeAllPaymentProcessFragment : Fragment() {
         }
     }
     private fun getPressesdItemIndex(index:Int){
-        var id = viewModel.seeAllPaymentProcessData.value?.data?.get(index)?.id
+        val id = viewModel.seeAllPaymentProcessData.value?.data?.get(index)?.id
         var action = id?.let {
-            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment()
+            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
+                it
+                )
         }
+
         if (action != null) {
             findNavController().navigate(action)
         }
-//        private fun navToSeeAll(navSeeAll: NavSeeAll) {
-//            val action = PaymentProcessesFragmentDirections.paym!entProcessToSeeAll(navSeeAll)
-
-//        }
     }
 
 

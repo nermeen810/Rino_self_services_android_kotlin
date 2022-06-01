@@ -19,12 +19,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
-
+     var requestId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-//            navSeeAll = arguments?.get("nav_see_all") as NavSeeAll
-//            period = SeeAllRequest("token","requests",navSeeAll.me_or_others,navSeeAll.startPeriod,navSeeAll.endPeriod,1)
+            requestId = arguments?.get("id") as Int
         }
     }
 
@@ -36,7 +35,7 @@ class PaymentProcessDetailsFragment : Fragment() {
         observeLoading()
         oberveData()
         obseveError()
-        viewModel.getData(19714)
+        viewModel.getData(requestId)
 
         return binding.root
     }

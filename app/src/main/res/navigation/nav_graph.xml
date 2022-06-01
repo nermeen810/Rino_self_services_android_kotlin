@@ -48,7 +48,12 @@
             app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
         <action
             android:id="@+id/action_seeAllPaymentProcessFragment_to_paymentProcessDetailsFragment"
-            app:destination="@id/paymentProcessDetailsFragment" />
+            app:destination="@id/paymentProcessDetailsFragment" >
+            <argument
+                android:name="id"
+                app:argType="integer"
+                android:defaultValue="1" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/paymentProcessesFragment"
