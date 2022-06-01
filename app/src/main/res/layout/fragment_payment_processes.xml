@@ -1,19 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.paymentProcessHome.PaymentProcessesFragment">
 
-    <Button
-        android:id="@+id/navigate_to_seeall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/mSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:iconifiedByDefault="false"
+                android:layoutDirection="ltr"
+                android:queryHint="@string/search_hint"
+                android:textDirection="rtl"
+                app:defaultQueryHint="@string/search_hint"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/serviceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:padding="@dimen/paddingText"
+                android:text="@string/payment_process"
+                android:textColor="@color/brown"
+                android:textSize="@dimen/headerTextSize"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mSearch" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/period_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/paddingLayout"
+                android:orientation="horizontal"
+                android:textDirection="rtl"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/serviceTitle"
+                tools:listitem="@layout/period_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/no_internet_layout"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:orientation="vertical"-->
+        <!--            >-->
+        <!--            <com.airbnb.lottie.LottieAnimationView-->
+        <!--                android:id="@+id/no_network_result"-->
+        <!--                android:layout_width="250dp"-->
+        <!--                android:layout_height="250dp"-->
+        <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--                app:layout_constraintRight_toRightOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                android:layout_marginTop="8dp"-->
+        <!--                app:lottie_rawRes="@raw/no_internet"-->
+        <!--                app:lottie_autoPlay="true"-->
+        <!--                app:lottie_loop="true"-->
+        <!--                android:scaleType="fitXY" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/text_no_internet"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/no_network_result"-->
+        <!--                app:layout_constraintRight_toRightOf="@+id/no_network_result"-->
+        <!--                app:layout_constraintLeft_toLeftOf="@+id/no_network_result"-->
+        <!--                android:textSize="16sp"-->
+        <!--                android:text="@string/no_internet"-->
+        <!--                android:gravity="center"-->
+        <!--                android:layout_marginTop="16dp"/>-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--    <TextView-->
+        <!--        android:id="@+id/textView2"-->
+        <!--        android:layout_width="150dp"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:gravity="center"-->
+        <!--        android:layout_gravity="center_horizontal"-->
+        <!--        android:text="@string/history"-->
+        <!--        android:textSize="22sp"-->
+        <!--        android:textStyle="bold"-->
+        <!--        android:textColor="@color/teal"-->
+        <!--        android:layout_marginBottom="25dp"-->
+        <!--        android:layout_marginTop="25dp" />-->
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:paddingTop="30dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/no_data_anim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/no_data" />
+
+            <TextView
+                android:id="@+id/text_no_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/no_data"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/payment_home_item" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/searchHistoryRecycle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/payment_history_item" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:text="Button"
+        android:layoutDirection="rtl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        app:menu="@menu/bottom_navigation_menu" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layoutDirection="rtl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -186,7 +186,7 @@ class LoginFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).bottomNavigation.isGone = true
+      //  (activity as MainActivity).bottomNavigation.isGone = true
     }
 
     private fun showMessage(msg: String) {

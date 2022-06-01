@@ -7,23 +7,21 @@
     android:padding="@dimen/paddingLayout"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/home"
-    android:layout_marginTop="@dimen/paddingLayout"
-        android:textColor="@color/brown"
-        android:textSize="@dimen/header_text"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/final_logo"
+        app:layout_constraintBottom_toTopOf="@+id/payment_process_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="14dp" />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/hr_clearance_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/color_orange"
+        android:background="@drawable/orange_rect"
         android:text="@string/hr_clearance"
         android:textColor="@color/white"
         android:textSize="@dimen/sub_header_text"
@@ -38,7 +36,7 @@
         android:id="@+id/payment_process_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_orange"
+        android:background="@drawable/orange_rect"
         android:layout_margin="@dimen/paddingLayout"
         android:text="@string/payment_process"
         android:textColor="@color/white"
@@ -52,7 +50,7 @@
         android:id="@+id/notification_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_orange"
+        android:background="@drawable/orange_rect"
         android:layout_margin="@dimen/paddingLayout"
         android:text="@string/notification"
         android:textColor="@color/white"
