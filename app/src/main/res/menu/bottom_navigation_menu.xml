@@ -4,11 +4,11 @@
         android:id="@+id/me_item"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_featured_play_list_24"
-        android:title="@string/others"/>
+        android:title="@string/me"/>
     <item
         android:id="@+id/others_item"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_auto_graph_24"
-        android:title="@string/me"/>
+        android:title="@string/others"/>
 
 </menu>

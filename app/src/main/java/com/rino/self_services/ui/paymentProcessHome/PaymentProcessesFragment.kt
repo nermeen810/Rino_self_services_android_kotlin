@@ -218,6 +218,7 @@ class PaymentProcessesFragment : Fragment() {
     }
 
     private fun bottomNavigationSetup() {
+  //      binding.bottomNavigation.
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.me_item -> {

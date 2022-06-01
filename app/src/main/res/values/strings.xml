@@ -3,8 +3,8 @@
     <string name="login">تسجيل الدخول</string>
     <string name="login_userName_hint">البريد الألكترونى</string>
     <string name="login_password_hint">كلمة المرور</string>
-    <string name="forgot_password">استعادة كلمة المرور</string>
-    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="forgot_password">استعادة كلمة المرور؟</string>
+    <string name="privacy_policy">سياسة الخصوصية والدعم الفنى</string>
     <string name="success_login">تم تسجيل الدخول بنجاح</string>
     <string name="invalid_email_or_pass">خطأ فى البريد الكترونى او كلمة المرور </string>
     <string name="required_field">مطلوب  </string>
@@ -17,7 +17,7 @@
     <string name="requests">الطلبات</string>
     <string name="statistics">الاحصائيات</string>
     <string name="history">تاريخ الطلبات</string>
-    <string name="search_hint">ابحث</string>
+    <string name="search_hint"> ابحث برقم الطلب أو بنص </string>
     <string name="hr_clearance">اخلاء الطرف</string>
     <string name="payment_process">المدفوعات المالية</string>
     <string name="notification">تنبيهات الاداره العليا</string>
