@@ -5,14 +5,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rino.self_services.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
+import com.rino.self_services.model.pojo.SeeAllRequest
+import com.rino.self_services.model.reposatory.HRClearanceRequest
+import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragmentDirections
+import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessRVAdapter
 
+@AndroidEntryPoint
 class SeeAllHrClearanceFragment : Fragment() {
 
+    val viewModel: SeeAllHRClearanceViewModel by viewModels()
+    private lateinit var adapter:HRSeeAllRVAdapter
+    private lateinit var period: HRClearanceRequest
+    private lateinit var binding: FragmentSeeAllHrClearanceBinding
+    private var totalPages = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            period = HRClearanceRequest("2021-01-01","2021-12-31","me",1)
         }
     }
 
@@ -20,8 +35,74 @@ class SeeAllHrClearanceFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_see_all_hr_clearance, container, false)
+
+        binding = FragmentSeeAllHrClearanceBinding.inflate(inflater, container, false)
+        observeLoading()
+        oserveData()
+        overseError()
+        adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
+            getPressesdItemIndex(it)
+        }
+
+        binding.hrClearanceSeeAllRv.adapter = adapter
+        binding.hrClearanceSeeAllRv.layoutManager = LinearLayoutManager(this.context)
+        viewModel.getData(period)
+        binding.hrClearanceSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
+                        viewModel.pageNumber += 1
+                        viewModel.getData(period)
+                    }
+                }
+            }
+        })
+        return binding.root
+    }
+    private fun observeLoading() {
+        viewModel.loading.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.clearanceSeeAllProgress.visibility = it
+            }
+        }
+    }
+    fun oserveData(){
+        viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
+            it?.let {
+                totalPages = it.totalPages
+                it.let { it1 -> adapter.updateItems(it.date)
+                }
+            }
+        }
+    }
+    private fun overseError(){
+        viewModel.setError.observe(viewLifecycleOwner){
+            if (it != null || it != ""){
+                if (viewModel.seeAllPaymentProcessData.value?.date?.isNotEmpty() == true){
+
+                }else{
+                    binding.seeAllClearanceError.text = it
+                    binding.seeAllClearanceError.visibility = View.VISIBLE
+                }
+
+            }else{
+                binding.seeAllClearanceError.visibility = View.GONE
+            }
+
+        }
+    }
+    private fun getPressesdItemIndex(index:Int){
+        val id = viewModel.seeAllPaymentProcessData.value?.date?.get(index)?.id
+
+//        var action = id?.let {
+//            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
+//                it
+//            )
+//        }
+//
+//        if (action != null) {
+//            findNavController().navigate(action)
+//        }
     }
 
 

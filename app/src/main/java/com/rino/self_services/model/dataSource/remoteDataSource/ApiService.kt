@@ -1,6 +1,7 @@
 package com.rino.self_services.model.dataSource.remoteDataSource
 
 
+import com.rino.self_services.model.pojo.HRSeeAllData
 import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
@@ -27,9 +28,8 @@ interface ApiService {
 
     @GET("api/requests/{ID}/details")
     suspend fun getPaymentDetails(@Header("Authorization")token:String,@Path("ID") id:Int): Response<PaymentProcessDetails>
-
-    @GET("api/clearancerequests/{isMe}/{ID}/details")
-    suspend fun getHRDetails(@Header("Authorization")token:String,@Path("ID") id:Int,@Path("isMe") isMe:Int )
+    @GET("api/clearancerequests/{meOrOthers}/from/{from}/to/{to}/page/{pageNumber}")
+    suspend fun getAllHRRecords(@Header("Authorization") token:String, @Path("meOrOthers") meOrOthers:String, @Path("from") from:String, @Path("to") to:String, @Path("pageNumber") pageNumber: Int):Response<HRSeeAllData>
 
 
 

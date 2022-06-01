@@ -52,4 +52,9 @@
     <string name="me">المحال الي</string>
     <string name="others">الاخري</string>
     <string name="no_data">"لا توجد بيانات فى هذة الفترة  "</string>
+    <string name="employee_number">رقم الموظف</string>
+    <string name="employee_name">اسم الموظف</string>
+    <string name="office">الادارة</string>
+    <string name="action">الاجراء المعتمد</string>
+    <string name="type">نوع المخالصة</string>
 </resources>
