@@ -14,8 +14,9 @@ import com.rino.self_services.databinding.FragmentLoginBinding
 import com.rino.self_services.ui.login.LoginFragmentDirections
 import com.rino.self_services.ui.login.LoginViewModel
 import com.rino.self_services.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding

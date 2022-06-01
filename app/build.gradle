@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin'
+//    id 'androidx.navigation.safeargs'
+    id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id "kotlin-parcelize"
 }
 
 android {
@@ -39,7 +41,9 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
+    //lottie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
     // ViewModel and LiveData
     def viewModelLifeCycleVersion = '2.3.0'
     def androidLifecycleExtensionsVersion = '2.2.0'

@@ -3,23 +3,53 @@
     <string name="login">تسجيل الدخول</string>
     <string name="login_userName_hint">البريد الألكترونى</string>
     <string name="login_password_hint">كلمة المرور</string>
-    <string name="forgot_password">استعادة كلمة المرور</string>
-    <string name="privacy_policy">سياسة الخصوصية</string>
-
+    <string name="forgot_password">استعادة كلمة المرور؟</string>
+    <string name="privacy_policy">سياسة الخصوصية والدعم الفنى</string>
     <string name="success_login">تم تسجيل الدخول بنجاح</string>
     <string name="invalid_email_or_pass">خطأ فى البريد الكترونى او كلمة المرور </string>
     <string name="required_field">مطلوب  </string>
     <string name="email_must_less_than50">البريد الاكتروني يجيب الا يزيد عن 50 حرف </string>
     <string name="invalid_email">بريد الكترونى خاطئ </string>
     <string name="dismiss">تجاهل</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">الخدمات الرئيسية</string>
     <string name="requests">الطلبات</string>
     <string name="statistics">الاحصائيات</string>
     <string name="history">تاريخ الطلبات</string>
-    <string name="search_hint">ابحث</string>
+    <string name="search_hint"> ابحث برقم الطلب أو بنص </string>
     <string name="hr_clearance">اخلاء الطرف</string>
     <string name="payment_process">المدفوعات المالية</string>
     <string name="notification">تنبيهات الاداره العليا</string>
+
+    <string name="order_number">رقم الطلب</string>
+    <string name="order_date"> تاريخ الطلب</string>
+    <string name="side">الجهة</string>
+    <string name="amount">المبلغ</string>
+    <string name="balance">الرصيد</string>
+    <string name="payment_method">طريقه الدفع</string>
+    <string name="order_status">حاله الطلب</string>
+    <string name="forword_to_me">محال الى</string>
+    <string name="description">الوصف</string>
+    <string name="order_side">جهة الطلب</string>
+
+    <string name="payment_limit">الحد الائتماني</string>
+    <string name="approve_head_department">اعتماد رئيس القسم</string>
+    <string name="denay">رفض الطلب</string>
+    <string name="beneficiary_clause">بند المستفيد</string>
+    <string name="provision">المخصص</string>
+
+    <string name="request_num">رقم الطلب</string>
+    <string name="rqust_date">تاريخ الطلب</string>
+    <string name="request_amount">المبلغ</string>
+    <string name="request_agency">الجهة</string>
+
+    <string name="requst_status">حالة الطلب</string>
+    <string name="show_all">عرض الكل</string>
+    <string name="request_to">محال الى</string>
+    <string name="cash">كاش</string>
+    <string name="task">طلب</string>
+    <string name="me">المحال الي</string>
+    <string name="others">الاخري</string>
+    <string name="no_data">"لا توجد بيانات فى هذة الفترة  "</string>
 </resources>

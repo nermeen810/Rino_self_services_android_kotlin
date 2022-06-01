@@ -10,8 +10,10 @@
     <FrameLayout
         android:id="@+id/logo_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/black_transperant"
+        android:padding="@dimen/paddingLayout"
+        android:layout_margin="@dimen/paddingLayout"
+        android:layout_height="100dp"
+        android:background="@drawable/final_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/scrollView2"
@@ -60,7 +62,6 @@
                     android:layoutDirection="rtl"
                     app:endIconDrawable="@drawable/ic_baseline_email_24"
                     app:endIconMode="custom"
-                    android:fontFamily="@font/helva"
                     android:hint="@string/login_userName_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -92,11 +93,26 @@
                     android:textSize="@dimen/sub_header_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orange_rect"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sub_header_text"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/resetPass_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
                 android:textStyle="bold"
                 android:padding="@dimen/paddingText"
                 android:clickable="true"
@@ -104,26 +120,12 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/normal_text" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/loginButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:background="@color/color_orange"
-                android:text="@string/login"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sub_header_text"
-                android:textStyle="bold" />
-
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -135,6 +137,7 @@
                     android:padding="@dimen/paddingText"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/normal_text" />
+
 
                 <TextView
                     android:id="@+id/privacyPolicy_txt"

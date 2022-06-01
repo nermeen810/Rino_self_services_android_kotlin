@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 
 class MainActivity : AppCompatActivity() {
-    lateinit var bottomNavigation : BottomNavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,43 +26,19 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        bottomNavigation = findViewById(R.id.bottom_navigation)
-        bottomNavigationSetup(navController,bottomNavigation)
-        splashSetup(navController,bottomNavigation)
+        splashSetup(navController)
 
     }
 
-    private fun bottomNavigationSetup(navController: NavController, bottomNavigation: BottomNavigationView) {
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home_item -> {
-                    navController.popBackStack()
-                    navController.navigate(R.id.splashFragment)
-                    true
-                }
-                R.id.search_item -> {
-                    navController.popBackStack()
-                    navController.navigate(R.id.loginFragment)
-                    true
-                }
-                R.id.account_item -> {
-                    navController.popBackStack()
-                    navController.navigate(R.id.seeAllFragment)
-                    true
-                }
-                else-> false
 
-            }
-        }
-    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
 
-    private fun splashSetup(navController: NavController, bottomNavigation: BottomNavigationView){
-        bottomNavigation.isGone = true
+    private fun splashSetup(navController: NavController){
+
         CoroutineScope(Dispatchers.Default).launch{
             delay(3000)
             CoroutineScope(Dispatchers.Main).launch{
