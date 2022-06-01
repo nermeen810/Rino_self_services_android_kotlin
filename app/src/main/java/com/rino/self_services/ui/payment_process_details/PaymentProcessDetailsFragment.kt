@@ -67,7 +67,7 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.provisionPaymentDetails.text = details?.provision
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
             binding.paymentProcessDetailsAmount.text = details?.amount.toString()
-
+            binding.orderSidePayment.text = details?.department
             if(details?.limit == null){
                 binding.paymentLimit.text = "لا يوجد"
             }else{
