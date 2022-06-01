@@ -130,6 +130,7 @@
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:gravity="center"
                                 android:id="@+id/order_state"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -301,26 +302,29 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
+
                 android:id="@+id/approve"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Button"
+                android:text="@string/approve_head_department"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
                 android:id="@+id/deny"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Button"
+                android:text="@string/denay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/approve" />

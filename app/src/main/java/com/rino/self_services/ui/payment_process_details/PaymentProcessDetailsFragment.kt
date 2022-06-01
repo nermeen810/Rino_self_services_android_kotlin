@@ -60,13 +60,14 @@ class PaymentProcessDetailsFragment : Fragment() {
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
             binding.orderNumberDetails.text = details?.id.toString()
-            binding.orderDateDetails.text = details?.date
+            binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
             binding.orderDescriptionPayment.text = details?.desc
             binding.beneficiaryPayment.text = details?.beneficiary
             binding.provisionPaymentDetails.text = details?.provision
-            binding.paymentMethodPaymentprocessDetails.text = details?.paymentMethod
+            binding.paymentMethodPaymentprocessDetails.text = details?.payType
             binding.paymentProcessDetailsAmount.text = details?.amount.toString()
+
             if(details?.limit == null){
                 binding.paymentLimit.text = "لا يوجد"
             }else{
@@ -80,6 +81,11 @@ class PaymentProcessDetailsFragment : Fragment() {
                 4 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
                 5 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
                 6 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
+            }
+            if(details?.status =="جديد"){
+                binding.deny.alpha = 1f
+            }else{
+                binding.deny.alpha = 0f
             }
 
         }
