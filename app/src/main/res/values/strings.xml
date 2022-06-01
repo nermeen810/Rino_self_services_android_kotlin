@@ -52,4 +52,12 @@
     <string name="me">المحال الي</string>
     <string name="others">الاخري</string>
     <string name="no_data">"لا توجد بيانات فى هذة الفترة  "</string>
+    <string name="clearance_num">رقم المخالصة</string>
+    <string name="emp_num">رقم الموظف</string>
+    <string name="emp_name">أسم الموظف</string>
+    <string name="department">الادارة</string>
+    <string name="clearance_status">الاجراء المعتمد</string>
+    <string name="request_type">نوع المخالصة</string>
+    <string name="vacation_start">بداية الاجازة</string>
+    <string name="vacation_end">نهاية الاجازة</string>
 </resources>
