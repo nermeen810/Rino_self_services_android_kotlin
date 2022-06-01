@@ -1,4 +1,4 @@
-package com.rino.self_services.ui.paymentProcessHome
+ackage com.rino.self_services.ui.paymentProcessHome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

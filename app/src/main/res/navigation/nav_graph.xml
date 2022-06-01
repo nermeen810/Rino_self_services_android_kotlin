@@ -18,7 +18,12 @@
         android:id="@+id/seeAllFragment"
         android:name="com.rino.self_services.ui.seeAllHr.SeeAllHrClearanceFragment"
         android:label="fragment_see_all"
-        tools:layout="@layout/fragment_see_all_hr_clearance" />
+        tools:layout="@layout/fragment_see_all_hr_clearance" >
+
+        <action
+            android:id="@+id/action_fromPaymentProcessSeeAll_to_Details"
+            app:destination="@id/paymentProcessDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.rino.self_services.ui.splash.SplashFragment"
@@ -46,10 +51,23 @@
         android:id="@+id/seeAllPaymentProcessFragment"
         android:name="com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragment"
         android:label="fragment_see_all_payment_process"
-        tools:layout="@layout/fragment_see_all_payment_process" />
+        tools:layout="@layout/fragment_see_all_payment_process"
+        >
+    </fragment>
     <fragment
         android:id="@+id/paymentProcessesFragment"
         android:name="com.rino.self_services.ui.paymentProcessHome.PaymentProcessesFragment"
         android:label="fragment_payment_processes"
-        tools:layout="@layout/fragment_payment_processes" />
+        tools:layout="@layout/fragment_payment_processes" >
+        <action
+            android:id="@+id/paymentProcess_to_seeAll"
+            app:destination="@id/seeAllPaymentProcessFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/paymentProcessDetailsFragment"
+        android:name="com.rino.self_services.ui.payment_process_details.PaymentProcessDetailsFragment"
+        android:label="fragment_payment_process_details"
+        tools:layout="@layout/fragment_payment_process_details" >
+    </fragment>
+
 </navigation>
