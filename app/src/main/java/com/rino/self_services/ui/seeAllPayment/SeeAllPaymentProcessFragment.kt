@@ -79,8 +79,13 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private fun overseError(){
         viewModel.setError.observe(viewLifecycleOwner){
             if (it != null || it != ""){
-                binding.paymentProcessSeeAllError.text = it
-                binding.paymentProcessSeeAllError.visibility = View.VISIBLE
+                if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){
+
+                }else{
+                    binding.paymentProcessSeeAllError.text = it
+                    binding.paymentProcessSeeAllError.visibility = View.VISIBLE
+                }
+
             }else{
                 binding.paymentProcessSeeAllError.visibility = View.GONE
             }
