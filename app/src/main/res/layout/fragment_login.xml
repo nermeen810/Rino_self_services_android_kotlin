@@ -60,7 +60,6 @@
                     android:layoutDirection="rtl"
                     app:endIconDrawable="@drawable/ic_baseline_email_24"
                     app:endIconMode="custom"
-                    android:fontFamily="@font/helva"
                     android:hint="@string/login_userName_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
