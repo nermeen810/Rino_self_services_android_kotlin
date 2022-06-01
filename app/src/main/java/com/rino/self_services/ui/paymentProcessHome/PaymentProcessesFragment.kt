@@ -1,4 +1,4 @@
-ackage com.rino.self_services.ui.paymentProcessHome
+package com.rino.self_services.ui.paymentProcessHome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
@@ -70,7 +71,7 @@ class PaymentProcessesFragment : Fragment() {
         observeHistoryData()
         observeNoData()
         observeSearchHistoryData()
-        observeNavToService()
+        observeNavToSeeAll()
      //   observeNavToServiceDetails()
         observeLoading()
         observeShowError()
@@ -121,10 +122,10 @@ class PaymentProcessesFragment : Fragment() {
         }
     }
 
-    private fun observeNavToService() {
+    private fun observeNavToSeeAll() {
         viewModel.navToSeeAll.observe(viewLifecycleOwner) {
             it?.let {
-     //           navToSeeAll(it)
+               navToSeeAll(it)
             }
         }
     }
@@ -143,10 +144,10 @@ class PaymentProcessesFragment : Fragment() {
 //    }
 
 
-//    private fun navToSeeAll(period: NavSeeAll) {
-//        val action = FilteredHistotyFragmentDirections.actionFilteredHistoryToHistoryByService(serviceId.toString(),period)
+    private fun navToSeeAll(navSeeAll: NavSeeAll) {
+//        val action = PaymentProcessesFragmentDirections.paymentProcessToSeeAll(navSeeAll)
 //        findNavController().navigate(action)
-//    }
+    }
 
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
@@ -236,47 +237,4 @@ class PaymentProcessesFragment : Fragment() {
             }
         }
     }
-//    private fun setPeriodTimeMenuItems() {
-//        binding.periodTimeTextView.setText(R.string.period_time)
-//
-//        val adapter = ArrayAdapter(
-//            requireContext(), R.layout.dropdown_item,
-//            periodTimeList_ar
-//        )
-//        binding.periodTimeTextView.setAdapter(adapter)
-//        binding.periodTimeTextView.onItemClickListener =
-//            AdapterView.OnItemClickListener { parent, _, position, id ->
-//                val selectedItem = parent.getItemAtPosition(position).toString()
-//                historyAdapter.clearList()
-//                val index = periodTimeList_ar.indexOf(selectedItem)
-//                selectedPeriod = periodTimeList_en[index]
-//                if (NetworkConnection.checkInternetConnection(requireContext())) {
-//                    viewModel.getHistoryData(serviceId, periodTimeList_en[index])
-//                }
-//                else{
-//                    showMessage()
-//                }
-//            }
-//    }
-
-//    private fun showMessage() {
-//        lifecycleScope.launchWhenResumed {
-//            Snackbar.make(
-//                requireView(),
-//                getString(R.string.no_internet),
-//                Snackbar.LENGTH_INDEFINITE
-//            )
-//                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-//                    resources.getColor(
-//                        R.color.teal
-//                    )
-//                )
-//                .setActionTextColor(resources.getColor(R.color.white))
-//                .setAction(getString(R.string.dismiss))
-//                {
-//                }.show()
-//        }
-//    }
-
-
 }

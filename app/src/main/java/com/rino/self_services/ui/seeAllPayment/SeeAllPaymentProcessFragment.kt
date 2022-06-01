@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 
 import com.rino.self_services.model.pojo.SeeAllRequest
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -20,10 +21,17 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private lateinit var adapter:SeeAllPaymentProcessRVAdapter
     val viewModel: SeeAllPaymentProcessViewModel by viewModels()
     private lateinit var binding: FragmentSeeAllPaymentProcessBinding
-    private var period = SeeAllRequest("token","requests","me","2020-01-01","2020-12-30",1)
+    private var period = SeeAllRequest("token","requests",navSeeAll.me_or_others,navSeeAll.startPeriod,navSeeAll.endPeriod,1)
     private var totalPages = 1
+    private lateinit var navSeeAll: NavSeeAll
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+//            navSeeAll = arguments?.get("nav_see_all") as NavSeeAll
 
+        }
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSeeAllPaymentProcessBinding.inflate(inflater, container, false)
 

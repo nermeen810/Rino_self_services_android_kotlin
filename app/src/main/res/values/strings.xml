@@ -43,7 +43,7 @@
     <string name="rqust_date">تاريخ الطلب</string>
     <string name="request_amount">المبلغ</string>
     <string name="request_agency">الجهة</string>
-    <string name="payment_method">طريقة الدفع</string>
+
     <string name="requst_status">حالة الطلب</string>
     <string name="show_all">عرض الكل</string>
     <string name="request_to">محال الى</string>

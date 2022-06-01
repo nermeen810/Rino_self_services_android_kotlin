@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -53,6 +53,9 @@
         android:label="fragment_see_all_payment_process"
         tools:layout="@layout/fragment_see_all_payment_process"
         >
+<!--        <argument-->
+<!--            android:name="nav_see_all"-->
+<!--            app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />-->
     </fragment>
     <fragment
         android:id="@+id/paymentProcessesFragment"
@@ -62,6 +65,7 @@
         <action
             android:id="@+id/paymentProcess_to_seeAll"
             app:destination="@id/seeAllPaymentProcessFragment"/>
+
     </fragment>
     <fragment
         android:id="@+id/paymentProcessDetailsFragment"
