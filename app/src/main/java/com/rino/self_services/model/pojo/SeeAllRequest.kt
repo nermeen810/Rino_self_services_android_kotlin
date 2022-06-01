@@ -7,10 +7,10 @@ class SeeAllRequest{
     var currentFutuer = ""
     var from = ""
     var to = ""
-    var page = 1
+    var page:Long = 0
 
     constructor()
-    constructor(token:String,me:String,currentFutuer: String,from: String,to:String,page:Int){
+    constructor(token:String,me:String,currentFutuer: String,from: String,to:String,page:Long){
         this.token = token
         this.me = me
         this.currentFutuer = currentFutuer

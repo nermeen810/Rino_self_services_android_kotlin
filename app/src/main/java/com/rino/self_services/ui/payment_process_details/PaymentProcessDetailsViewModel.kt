@@ -1,4 +1,4 @@
-package com.rino.self_services.ui.seeAllPayment
+package com.rino.self_services.ui.payment_process_details
 
 import android.app.Application
 import android.content.Context
@@ -11,8 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
-import com.rino.self_services.model.pojo.SeeAllRequest
-import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.reposatory.PaymentRepo
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -21,9 +20,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 @HiltViewModel
-class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: PaymentRepo, private val context: Application):ViewModel() {
+class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: PaymentRepo, private val context: Application):
+    ViewModel() {
     private val preference = MySharedPreference(
         context.getSharedPreferences(
             PREF_FILE_NAME,
@@ -31,28 +30,25 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
 
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
-    private  var _seeAllData = MutableLiveData<SeeAllPaymentProcessResponse>()
+    private  var _detailsData = MutableLiveData<PaymentProcessDetails>()
+
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
-     var pageNumber:Long = 1
-
     val loading: LiveData<Int>
         get() = _loading
     val setError: LiveData<String>
         get() = _setError
-    val seeAllPaymentProcessData: LiveData<SeeAllPaymentProcessResponse>
-        get() = _seeAllData
-    fun getData(seeAllRequest:SeeAllRequest){
-
-        var mySeeAllRequest = SeeAllRequest("Bearer "+sharedPreference.getToken(),seeAllRequest.currentFutuer,seeAllRequest.me,seeAllRequest.from,seeAllRequest.to,pageNumber)
+    val detailsData: LiveData<PaymentProcessDetails>
+        get() = _detailsData
+    fun getData(id:Int){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = mySeeAllRequest?.let { repo.getAllRecords(it) }) {
+            when (val result = repo.getPaymentDetails("Bearer "+sharedPreference.getToken(),id) ) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data?.let {
-                            _seeAllData.postValue(it)
+                            _detailsData.postValue(it)
                         }
                         Log.i("see All network:", "done")
                     }
