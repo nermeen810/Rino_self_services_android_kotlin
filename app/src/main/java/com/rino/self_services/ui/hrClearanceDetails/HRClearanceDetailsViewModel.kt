@@ -8,7 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.model.reposatory.HRClearanceRepo
+//import com.rino.self_services.model.reposatory.HRClearanceRepo
+import com.rino.self_services.model.reposatory.HrClearanceRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HRClearanceRepo):ViewModel(){
+class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HrClearanceRepo):ViewModel(){
     private  var _detailsData = MutableLiveData<HRClearanceDetails>()
 
     private var _setError = MutableLiveData<String>()
