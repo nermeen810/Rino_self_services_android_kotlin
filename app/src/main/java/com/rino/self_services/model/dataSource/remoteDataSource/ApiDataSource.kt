@@ -36,4 +36,11 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         searchTxt:String
     ) = apiService.searchRequest(auth,searchTxt)
 
+
+    suspend fun getHrClearanceHomeList(
+        auth: String,
+        me_or_other: String,
+        period_value: String
+    ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
+
 }

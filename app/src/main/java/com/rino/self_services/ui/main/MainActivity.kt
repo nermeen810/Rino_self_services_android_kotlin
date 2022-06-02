@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        splashSetup(navController)
+       splashSetup(navController)
 
     }
 
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
 
     private fun splashSetup(navController: NavController){
 
@@ -50,4 +51,16 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+   private fun splashSetup(navController: NavController){
+
+       CoroutineScope(Dispatchers.Default).launch{
+           delay(3000)
+           CoroutineScope(Dispatchers.Main).launch{
+               navController.popBackStack()
+               navController.navigate(R.id.loginFragment)
+           }
+       }
+   }
+
 }

@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/paddingText"
                     android:padding="4dp"
-                    android:text="@string/request_num"
+                    android:text="@string/clearance_num"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/paddingLayout"
                     android:layout_marginBottom="2dp"
-                    android:padding="4dp"
+                    android:padding="@dimen/paddingText"
                     android:text="25"
                     android:textColor="@color/dark_gray"
                     android:textSize="@dimen/normalTextSize"
@@ -68,20 +68,20 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/amountTxt"
+                    android:id="@+id/empNumTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingLayout"
                     android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
-                    android:text="@string/request_amount"
+                    android:text="@string/emp_num"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line1" />
 
                 <TextView
-                    android:id="@+id/amountValue"
+                    android:id="@+id/empNumValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingText"
@@ -95,25 +95,25 @@
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/amountTxt"
+                    app:layout_constraintBottom_toBottomOf="@+id/empNumTxt"
                     app:layout_constraintEnd_toStartOf="@+id/serviceNumTxt"
-                    app:layout_constraintRight_toLeftOf="@+id/amountTxt"
-                    app:layout_constraintTop_toTopOf="@+id/amountTxt" />
+                    app:layout_constraintRight_toLeftOf="@+id/empNumTxt"
+                    app:layout_constraintTop_toTopOf="@+id/empNumTxt" />
 
                 <TextView
-                    android:id="@+id/agencyTxt"
+                    android:id="@+id/empNameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
-                    android:text="@string/request_agency"
+                    android:text="@string/emp_name"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amountTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/empNumTxt" />
 
                 <TextView
-                    android:id="@+id/agencyValue"
+                    android:id="@+id/empNameValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingText"
@@ -125,25 +125,25 @@
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/agencyTxt"
-                    app:layout_constraintEnd_toEndOf="@+id/amountValue"
-                    app:layout_constraintRight_toLeftOf="@+id/agencyTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/amountValue" />
+                    app:layout_constraintBottom_toBottomOf="@+id/empNameTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/empNumValue"
+                    app:layout_constraintRight_toLeftOf="@+id/empNameTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/empNumValue" />
 
                 <TextView
-                    android:id="@+id/paymentMethodTxt"
+                    android:id="@+id/departmentTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
-                    android:text="@string/payment_method"
+                    android:text="@string/department"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/agencyTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/empNameTxt" />
 
                 <TextView
-                    android:id="@+id/paymentMethodValue"
+                    android:id="@+id/departmentValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingText"
@@ -155,20 +155,20 @@
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/paymentMethodTxt"
-                    app:layout_constraintEnd_toEndOf="@+id/agencyValue"
-                    app:layout_constraintRight_toLeftOf="@+id/paymentMethodTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/agencyValue" />
+                    app:layout_constraintBottom_toBottomOf="@+id/departmentTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/empNameValue"
+                    app:layout_constraintRight_toLeftOf="@+id/departmentTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/empNameValue" />
 
                 <View
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/paddingLayout"
                     android:background="@color/gray"
-                    app:layout_constraintTop_toBottomOf="@id/paymentMethodTxt"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    app:layout_constraintTop_toBottomOf="@id/departmentTxt"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent" />
                 <TextView
                     android:id="@+id/request_statusTxt"
                     android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                     android:layout_marginRight="@dimen/paddingText"
                     android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
-                    android:text="@string/requst_status"
+                    android:text="@string/clearance_status"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
@@ -198,7 +198,7 @@
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/request_statusTxt"
-                    app:layout_constraintEnd_toEndOf="@+id/paymentMethodValue"
+                    app:layout_constraintEnd_toEndOf="@+id/departmentValue"
                     app:layout_constraintRight_toLeftOf="@+id/request_statusTxt"
                     app:layout_constraintTop_toTopOf="@+id/request_statusTxt" />
 
@@ -235,7 +235,109 @@
                     app:layout_constraintRight_toLeftOf="@+id/request_toTxt"
                     app:layout_constraintTop_toTopOf="@+id/request_toTxt" />
 
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    app:layout_constraintTop_toBottomOf="@id/request_toTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/request_typeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/request_type"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line3" />
+
+                <TextView
+                    android:id="@+id/request_typeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:layout_marginRight="@dimen/paddingLayout"
+
+                    android:maxWidth="200dp"
+                    android:maxLines="2"
+                    android:padding="8dp"
+                    android:text="25"
+                    android:background="@drawable/brown_border_rect"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_typeTxt"
+                    app:layout_constraintRight_toRightOf="@+id/request_toValue"
+                    app:layout_constraintRight_toLeftOf="@+id/request_typeTxt"
+                    app:layout_constraintTop_toTopOf="@+id/request_typeTxt" />
+
+                <TextView
+                    android:id="@+id/vacationStartTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/vacation_start"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/request_typeTxt" />
+
+                <TextView
+                    android:id="@+id/vacationStartValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="200dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/vacationStartTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/request_typeValue"
+                    app:layout_constraintRight_toLeftOf="@+id/vacationStartTxt"
+                    app:layout_constraintTop_toTopOf="@+id/vacationStartTxt" />
+
+                <TextView
+                    android:id="@+id/vacationEndTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/vacation_end"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vacationStartTxt" />
+
+                <TextView
+                    android:id="@+id/vacationEndValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/vacationEndTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/vacationStartValue"
+                    app:layout_constraintRight_toLeftOf="@+id/vacationEndTxt"
+                    app:layout_constraintTop_toTopOf="@+id/vacationEndTxt" />
                 <TextView
                     android:id="@+id/date_from_txt"
                     android:layout_width="wrap_content"
