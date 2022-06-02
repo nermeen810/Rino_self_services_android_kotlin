@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.R
 import com.rino.self_services.model.pojo.AttachmentPayment
 
-class PPAttachmentViewAdapter(private var itemList: List<AttachmentPayment>, private val onItemClicked: (position: Int) -> Unit): RecyclerView.Adapter<PPAttachmentViewAdapter.MyViewHolder>()  {
+class PPAttachmentViewAdapter(private var itemList: Array<AttachmentPayment>, private val onItemClicked: (position: Int) -> Unit): RecyclerView.Adapter<PPAttachmentViewAdapter.MyViewHolder>()  {
 
     class MyViewHolder(view: View, private val onItemClicked: (position: Int) -> Unit):
         RecyclerView.ViewHolder(view), View.OnClickListener{

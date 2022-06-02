@@ -24,7 +24,7 @@
                 app:layout_constraintHeight_percent="0.8"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintWidth_percent="0.2"
                 tools:src="@tools:sample/avatars" />
 
             <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/stepper_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/stepper_view"
-                app:layout_constraintWidth_percent="0.65">
+                app:layout_constraintWidth_percent="0.75">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -153,23 +153,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_margin="12dp"
                         android:text="@string/description"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/order_state_card" />
 
                     <TextView
+
                         android:id="@+id/order_description_payment"
-                        android:layout_width="0dp"
-                        app:layout_constraintWidth_percent="0.9"
+                        android:layout_width="wrap_content"
                         android:layout_height="24dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="4dp"
                         android:text="TextView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                         />
 
                     <TextView
                         android:textColor="@color/black"
@@ -341,7 +341,7 @@
                 app:layout_constraintWidth_percent="0.45" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/approve3"
+                android:id="@+id/view_pp_attachments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

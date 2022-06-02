@@ -85,6 +85,9 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_paymentProcessDetailsFragment_to_PPAttachmentFragment"
+            app:destination="@id/PPAttachmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllHrClearanceFragment"
@@ -106,6 +109,15 @@
         <argument
             android:name="hr_clearance_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
+    </fragment>
+    <fragment
+        android:id="@+id/PPAttachmentFragment"
+        android:name="com.rino.self_services.PPAttachmentFragment"
+        android:label="fragment_p_p_attachment"
+        tools:layout="@layout/fragment_p_p_attachment" >
+        <argument
+            android:name="attachments"
+            app:argType="com.rino.self_services.model.pojo.AttachmentPayment[]" />
     </fragment>
 
 </navigation>

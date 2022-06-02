@@ -13,11 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
 import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
+import com.rino.self_services.model.pojo.AttachmentPayment
+import com.rino.self_services.model.pojo.AttachmentResponse
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
@@ -35,6 +38,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
@@ -42,6 +46,7 @@ class PaymentProcessDetailsFragment : Fragment() {
     private var action = ""
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
+    private  var array:ArrayList<AttachmentPayment> = ArrayList()
      var requestId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +66,11 @@ class PaymentProcessDetailsFragment : Fragment() {
         viewModel.getData(requestId)
         (activity as MainActivity).detailsData.observe(viewLifecycleOwner){
             setDuringImage(it)
+        }
+        binding.viewPpAttachments.setOnClickListener {
+
+            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(array.toList().toTypedArray())
+            findNavController().navigate(action)
         }
         binding.addAttachmentPp.setOnClickListener {
             if(action.isEmpty()){
@@ -117,6 +127,8 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
+            details?.attachments?.let { it1 -> array.addAll(it1) }
+
             binding.orderNumberDetails.text = details?.id.toString()
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
