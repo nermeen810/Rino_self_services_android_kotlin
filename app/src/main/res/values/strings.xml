@@ -67,5 +67,7 @@
     <string name="request_type">نوع المخالصة</string>
     <string name="vacation_start">بداية الاجازة</string>
     <string name="vacation_end">نهاية الاجازة</string>
+    <string name="add_attachment">اضافه مرفقات</string>
+    <string name="see_attachments">عرض المرفقات</string>
 
 </resources>

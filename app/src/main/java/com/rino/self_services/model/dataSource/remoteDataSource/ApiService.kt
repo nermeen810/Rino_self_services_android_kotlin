@@ -13,6 +13,8 @@ import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 import retrofit2.Response
 import retrofit2.http.*
@@ -52,6 +54,12 @@ interface ApiService {
                                    @Path("me_or_others")me_or_other :String,
                                    @Path("period_value")period_value :String):Response<HrClearanceResponse>
 
+    @Multipart
+    @POST("api/clearancerequests/action/")
+    suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part("Entity") Entity:RequestBody, @Part Attachments: List<MultipartBody.Part>,@Part("Notes") notes:RequestBody):Response<AttachmentResponse>
 
+    @Multipart
+    @POST("api/requests/action/")
+    suspend fun createAttachmentsForPayment(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part Attachments: List<MultipartBody.Part>,@Part("Notes") notes:RequestBody):Response<AttachmentResponse>
 }
 

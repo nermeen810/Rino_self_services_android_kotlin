@@ -1,6 +1,12 @@
 package com.rino.self_services.ui.payment_process_details
 
+import android.content.Context
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +19,27 @@ import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
 import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 import com.rino.self_services.model.pojo.SeeAllRequest
+import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
+    private lateinit var part:MultipartBody.Part
+    private var action = ""
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
      var requestId = 0
@@ -38,6 +59,29 @@ class PaymentProcessDetailsFragment : Fragment() {
         oberveData()
         obseveError()
         viewModel.getData(requestId)
+        (activity as MainActivity).detailsData.observe(viewLifecycleOwner){
+            setDuringImage(it)
+        }
+        binding.addAttachmentPp.setOnClickListener {
+            if(action.isEmpty()){
+                showMessage("من فضلك ادخل حاله الطلب رفض او قبول")
+            }else{
+                (activity as MainActivity).openGalary()
+            }
+
+        }
+        viewModel.setToTrue.observe(viewLifecycleOwner){
+            if (it){
+                showMessage("تم اضافه المرفقات بنجاح")
+            }
+        }
+        binding.deny.setOnClickListener {
+            action = "deny"
+        }
+        binding.approve.setOnClickListener {
+            action = "approve"
+        }
+
         return binding.root
     }
     private fun observeLoading() {
@@ -51,8 +95,6 @@ class PaymentProcessDetailsFragment : Fragment() {
         viewModel.setError.observe(viewLifecycleOwner){
         if(it != null && it != ""){
             showMessage(it)
-//            binding.ppErrorMessage.text = it
-//            binding.ppErrorMessage.visibility = View.VISIBLE
         }else{
             binding.ppErrorMessage.visibility = View.GONE
         }
@@ -105,5 +147,53 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
 
         }
+    }
+    private fun setDuringImage(bitmap: Bitmap) {
+        var duringBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        CoroutineScope(Dispatchers.Default).launch {
+
+            duringBitmap = duringBitmap
+
+            try {
+                val file =
+                    File(getRealPathFromURI(getImageUri(requireContext(), duringBitmap,"Attachments")))
+                println("duringFilePath" + file.path)
+                val requestFile: RequestBody =
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                part = MultipartBody.Part.createFormData(
+                    "Attachments",
+                    file.name.trim(),
+                    requestFile
+                )
+
+                viewModel.createAttachment(part,requestId,action)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+
+    }
+    fun getRealPathFromURI(uri: Uri?): String? {
+        val cursor: Cursor? =
+            uri?.let { requireActivity().getContentResolver().query(it, null, null, null, null) }
+        cursor?.moveToFirst()
+        val idx: Int? = cursor?.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        return idx?.let { cursor.getString(it) }
+    }
+    fun getImageUri(inContext: Context, inImage: Bitmap, title:String): Uri? {
+        val bytes = ByteArrayOutputStream()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            inImage.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 20, bytes)
+        }
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+        val path = MediaStore.Images.Media.insertImage(
+            inContext.contentResolver,
+            inImage,
+            title+ currentDate.toString().replace(" ",""),
+            null
+        )
+
+        return Uri.parse(path)
     }
 }

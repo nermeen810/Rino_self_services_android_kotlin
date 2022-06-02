@@ -1,7 +1,9 @@
 package com.rino.self_services.model.pojo
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class PaymentProcessDetails(
     @SerializedName("data") var data:PaymentProcessDetailsData?)
@@ -11,7 +13,7 @@ data class PaymentProcessDetailsData(
     ,@SerializedName("department") var department:String
     ,@SerializedName("provision") var provision:String
     ,@SerializedName("desc") var desc:String
-    ,@SerializedName("amount") var amount:Int?
+    ,@SerializedName("amount") var amount:Double?
     ,@SerializedName("limit") var limit:Double?
     ,@SerializedName("paymentmethod") var paymentMethod:String
     ,@SerializedName("balance") var balance:Int?
@@ -24,4 +26,10 @@ data class PaymentProcessDetailsData(
     ,@SerializedName("step") var step:Int
     ,@SerializedName("current") var current: Current
     ,@SerializedName("action") var action:Action
+    ,@SerializedName("notes") var notes:String?
+    ,@SerializedName("attachments") var attachments:List<AttachmentPayment>?
 )
+@Parcelize
+data class AttachmentPayment(
+    @SerializedName("name") var name:String
+    ,@SerializedName("url") var url:String):Parcelable

@@ -24,7 +24,9 @@
         <entry key="..\:/Self_Services/app/src/main/res/layout/period_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/request_to_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/attachment_item_pp.xml" value="0.6584922016530798" />
         <entry key="app/src/main/res/layout/fragment_hr_clearance_details.xml" value="0.29053955078125004" />
+        <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.37654418945312507" />
         <entry key="app/src/main/res/layout/fragment_payment_processes.xml" value="0.48261260986328125" />
         <entry key="app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.17198581560283688" />
         <entry key="app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.13405797101449277" />
@@ -32,6 +34,7 @@
         <entry key="app/src/main/res/layout/payment_history_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/request_to_item.xml" value="0.17198581560283688" />
         <entry key="app/src/main/res/layout/see_all.xml" value="0.48485565185546875" />
+        <entry key="app/src/main/res/xml/provider_paths.xml" value="0.14918946301925026" />
       </map>
     </option>
   </component>

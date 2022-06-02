@@ -19,12 +19,12 @@
                 android:id="@+id/stepper_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.3"
-                app:layout_constraintHeight_percent="0.8"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="14dp"
+                app:layout_constraintHeight_percent="0.8"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.3"
                 tools:src="@tools:sample/avatars" />
 
             <androidx.cardview.widget.CardView
@@ -42,11 +42,11 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/pp_error_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/divider5"
                         app:layout_constraintEnd_toStartOf="@+id/beneficiary_payment"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -54,6 +54,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,6 +75,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,6 +106,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/order_date_details" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +132,6 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:gravity="center"
                                 android:id="@+id/order_state"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -137,6 +139,7 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
                                 android:layout_marginBottom="5dp"
+                                android:gravity="center"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +148,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -156,17 +160,19 @@
 
                     <TextView
                         android:id="@+id/order_description_payment"
-                        android:layout_width="245dp"
+                        android:layout_width="0dp"
+                        app:layout_constraintWidth_percent="0.9"
                         android:layout_height="24dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="8dp"
                         android:text="TextView"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -186,6 +192,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -205,6 +212,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -223,6 +231,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -251,6 +260,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/payment_method_paymentprocess_details" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -282,6 +292,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -302,33 +313,59 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:textColor="@color/white"
-                app:cornerRadius="10dp"
-                android:background="@drawable/orange_rect"
                 android:id="@+id/approve"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:background="@drawable/orange_rect"
                 android:text="@string/approve_head_department"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                app:cornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintWidth_percent="0.45" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:background="@drawable/brown_border_rect"
+                android:id="@+id/add_attachment_pp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/orange_rect"
+                android:text="@string/add_attachment"
+                android:textColor="@color/white"
                 app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/approve3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/orange_rect"
+                android:text="@string/see_attachments"
+                android:textColor="@color/white"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_attachment_pp"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/deny"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:background="@drawable/brown_border_rect"
                 android:text="@string/denay"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:cornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/approve" />
+                app:layout_constraintTop_toBottomOf="@+id/approve"
+                app:layout_constraintWidth_percent="0.45" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
