@@ -1,20 +1,20 @@
 package com.rino.self_services.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.isGone
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-    //    splashSetup(navController)
+       splashSetup(navController)
 
     }
 
@@ -37,14 +37,30 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-//    private fun splashSetup(navController: NavController){
-//
-//        CoroutineScope(Dispatchers.Default).launch{
-//            delay(3000)
-//            CoroutineScope(Dispatchers.Main).launch{
-//                navController.popBackStack()
-//                navController.navigate(R.id.loginFragment)
-//            }
-//        }
-//    }
+
+    private fun splashSetup(navController: NavController){
+
+        CoroutineScope(Dispatchers.Default).launch{
+            delay(3000)
+            CoroutineScope(Dispatchers.Main).launch{
+                navController.popBackStack()
+                navController.navigate(R.id.loginFragment)
+            }
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+   private fun splashSetup(navController: NavController){
+
+       CoroutineScope(Dispatchers.Default).launch{
+           delay(3000)
+           CoroutineScope(Dispatchers.Main).launch{
+               navController.popBackStack()
+               navController.navigate(R.id.loginFragment)
+           }
+       }
+   }
+
 }

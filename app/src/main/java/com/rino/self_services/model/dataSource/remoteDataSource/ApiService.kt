@@ -1,11 +1,15 @@
 package com.rino.self_services.model.dataSource.remoteDataSource
 
 
+
+import com.rino.self_services.model.pojo.*
+
 import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
@@ -28,10 +32,10 @@ interface ApiService {
 
     @GET("api/requests/{ID}/details")
     suspend fun getPaymentDetails(@Header("Authorization")token:String,@Path("ID") id:Int): Response<PaymentProcessDetails>
-
-    @GET("api/clearancerequests/{isMe}/{ID}/details")
-    suspend fun getHRDetails(@Header("Authorization")token:String,@Path("ID") id:Int,@Path("isMe") isMe:Int )
-
+    @GET("api/clearancerequests/{meOrOthers}/from/{from}/to/{to}/page/{pageNumber}")
+    suspend fun getAllHRRecords(@Header("Authorization") token:String, @Path("meOrOthers") meOrOthers:String, @Path("from") from:String, @Path("to") to:String, @Path("pageNumber") pageNumber: Int):Response<HRSeeAllData>
+    @GET("api/clearancerequests/{enity}/{requestID}/details")
+    suspend fun getHRDetails(@Header("Authorization")token:String,@Path("enity") enity:Int,@Path("requestID") requestID:Int):Response<HRClearanceDetails>
 
 
     @GET("api/requests/{me_or_others}/period/{period_value}")

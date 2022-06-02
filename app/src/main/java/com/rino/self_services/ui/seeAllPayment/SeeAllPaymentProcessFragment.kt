@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 
 import com.rino.self_services.model.pojo.SeeAllRequest
@@ -64,7 +67,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
                 totalPages = it.totalPages
-                it.data.let { it1 -> adapter.updateItems(it1)
+                it.data.let { it1 -> adapter.updateItems(viewModel.seeAllarray)
                     }
         }
     }
@@ -82,8 +85,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
                 if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){
 
                 }else{
-                    binding.paymentProcessSeeAllError.text = it
-                    binding.paymentProcessSeeAllError.visibility = View.VISIBLE
+                    showMessage(it)
                 }
 
             }else{
@@ -93,15 +95,30 @@ class SeeAllPaymentProcessFragment : Fragment() {
         }
     }
     private fun getPressesdItemIndex(index:Int){
-        val id = viewModel.seeAllPaymentProcessData.value?.data?.get(index)?.id
-        var action = id?.let {
-            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
-                it
-                )
-        }
 
-        if (action != null) {
-            findNavController().navigate(action)
+            val id = viewModel.seeAllarray.get(index).id
+            var action = id?.let {
+                SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
+                    it
+                )
+            }
+
+            if (action != null) {
+                findNavController().navigate(action)
+            }
+    }
+    private fun showMessage(msg: String) {
+        lifecycleScope.launchWhenResumed {
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                    resources.getColor(
+                        R.color.color_orange
+                    )
+                )
+                .setActionTextColor(resources.getColor(R.color.white))
+                .setAction(getString(R.string.dismiss))
+                {
+                }.show()
         }
     }
 
