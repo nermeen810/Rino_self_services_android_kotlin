@@ -52,15 +52,15 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-   private fun splashSetup(navController: NavController){
-
-       CoroutineScope(Dispatchers.Default).launch{
-           delay(3000)
-           CoroutineScope(Dispatchers.Main).launch{
-               navController.popBackStack()
-               navController.navigate(R.id.loginFragment)
-           }
-       }
-   }
+//   private fun splashSetup(navController: NavController){
+//
+//       CoroutineScope(Dispatchers.Default).launch{
+//           delay(3000)
+//           CoroutineScope(Dispatchers.Main).launch{
+//               navController.popBackStack()
+//               navController.navigate(R.id.loginFragment)
+//           }
+//       }
+//   }
 
 }

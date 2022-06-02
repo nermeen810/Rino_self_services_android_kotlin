@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.pojo.HRSeeAllData
 import com.rino.self_services.model.pojo.HRSeeAllItem
-import com.rino.self_services.model.reposatory.HRClearanceRepo
-import com.rino.self_services.model.reposatory.HRClearanceRequest
+
+import com.rino.self_services.model.reposatory.HrClearanceRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 @HiltViewModel
-class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HRClearanceRepo): ViewModel() {
+class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearanceRepo): ViewModel() {
     private  var _seeAllData = MutableLiveData<HRSeeAllData>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
@@ -61,3 +61,4 @@ class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HRClearan
     }
 
 }
+data class HRClearanceRequest(var from:String,var to:String,var meOrOthers:String,var pageNumber:Int)

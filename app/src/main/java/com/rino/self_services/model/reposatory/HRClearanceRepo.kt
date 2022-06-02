@@ -10,70 +10,147 @@ import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.HRSeeAllData
+import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.ui.seeAllHr.HRClearanceRequest
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException
 import javax.inject.Inject
 
-class HRClearanceRepo@Inject constructor(private val apiDataSource: ApiDataSource, private val context: Application){
+class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSource, private val context: Application){
     private val preference = MySharedPreference(
         context.getSharedPreferences(
             PREF_FILE_NAME,
             Context.MODE_PRIVATE))
 
     private val sharedPreference: Preference = PreferenceDataSource(preference)
-    suspend fun getHRClearanceAllRecords(hrClearanceRequest: HRClearanceRequest): Result<HRSeeAllData?> {
+
+    suspend fun getHrClearanceHomeList(me_or_other: String,
+                                   period_value: String): Result<HrClearanceResponse?> {
+        var result: Result<HrClearanceResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.getHrClearanceHomeList("Bearer "+sharedPreference.getToken(), me_or_other, period_value)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("getHrClearanceHomeList", "Result $result")
+            } else {
+                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Reques "))
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        result = Result.Error(Exception("Not Found"))
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("time out"))
+                    }
+                    else -> {
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+    suspend fun getHRDetails(hrClearanceDetailsRequest: HRClearanceDetailsRequest):Result<HRClearanceDetails?>{
+        var result: Result<HRClearanceDetails?> = Result.Loading
+        try {
+            val response = apiDataSource.getHRDetails("Bearer "+sharedPreference.getToken(),hrClearanceDetailsRequest.entity,hrClearanceDetailsRequest.requestID)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("getHrClearanceHomeList", "Result $result")
+            } else {
+                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Reques "))
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        result = Result.Error(Exception("Not Found"))
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("time out"))
+                    }
+                    else -> {
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+    suspend fun getHRClearanceAllRecords(hrClearanceRequest: HRClearanceRequest):Result<HRSeeAllData?>{
         var result: Result<HRSeeAllData?> = Result.Loading
         try {
             val response = apiDataSource.getAllHRRecords("Bearer "+sharedPreference.getToken(),hrClearanceRequest.meOrOthers,hrClearanceRequest.from,hrClearanceRequest.to,hrClearanceRequest.pageNumber)
-            Log.d("ayman status Code",response.code().toString())
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-
+                Log.i("getHrClearanceHomeList", "Result $result")
             } else {
+                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
                 when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Reques "))
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        result = Result.Error(Exception("Not Found"))
+                    }
                     500 -> {
+                        Log.e("Error 500", "Server Error")
                         result = Result.Error(Exception("server is down"))
                     }
                     502 -> {
+                        Log.e("Error 502", "Time out")
                         result =
                             Result.Error(Exception("time out"))
                     }
+                    else -> {
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
+                    }
                 }
             }
-        }catch(e: IOException) {
-            result = Result.Error(e)
-        }
-        return result
-    }
-    suspend fun getHRDetails(detailsRequest: HRClearanceDetailsRequest):Result<HRClearanceDetails>{
-        var result: Result<HRClearanceDetails> = Result.Loading
-        try {
-            val response = apiDataSource.getHRDetails("Bearer "+sharedPreference.getToken(),detailsRequest.entity,detailsRequest.requestID)
-            Log.d("ayman status Code",response.code().toString()+""+detailsRequest.requestID.toString())
-            if (response.isSuccessful) {
-                result = Result.Success(response.body()!!)
 
-            } else {
-                when (response.code()) {
-                    500 -> {
-                        result = Result.Error(Exception("server is down"))
-                    }
-                    502 -> {
-                        result =
-                            Result.Error(Exception("time out"))
-                    }
-                }
-            }
-        }catch(e: IOException) {
+        } catch (e: IOException) {
             result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
         }
         return result
     }
+
 }
-data class HRClearanceRequest(
-    var from:String
-    ,var to:String
-    , var meOrOthers:String
-    ,var pageNumber:Int)
-

@@ -16,8 +16,7 @@ import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.model.pojo.SeeAllRequest
-import com.rino.self_services.model.reposatory.HRClearanceRequest
+
 
 
 
