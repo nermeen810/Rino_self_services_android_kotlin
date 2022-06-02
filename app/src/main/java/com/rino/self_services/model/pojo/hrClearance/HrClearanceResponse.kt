@@ -21,7 +21,7 @@ data class Data (
 data class Items (
 
     @SerializedName("id"          ) var id         : Int?     = null,
-    @SerializedName("date"        ) var date       : String?  = null,
+    @SerializedName("date"        ) var date       : String,
     @SerializedName("department"  ) var department : String?  = null,
     @SerializedName("status_code" ) var statusCode : String?  = null,
     @SerializedName("status"      ) var status     : String?  = null,

@@ -265,10 +265,11 @@
                     android:layout_marginTop="@dimen/paddingText"
                     android:layout_marginRight="@dimen/paddingLayout"
 
-                    android:maxWidth="150dp"
+                    android:maxWidth="200dp"
                     android:maxLines="2"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:text="25"
+                    android:background="@drawable/brown_border_rect"
                     android:textColor="@color/dark_gray"
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
