@@ -342,13 +342,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/hr_approve" />
 
             <androidx.appcompat.widget.AppCompatButton
+
                 android:id="@+id/hr_denay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="8dp"
                 android:alpha="0"
-                android:background="@drawable/orange_rect"
+                android:background="@drawable/brown_border_rect"
                 android:text="رفض"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
