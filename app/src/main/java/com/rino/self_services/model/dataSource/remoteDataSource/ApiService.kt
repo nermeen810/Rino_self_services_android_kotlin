@@ -5,6 +5,7 @@ import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
@@ -41,5 +42,12 @@ interface ApiService {
     @GET("/api/requests/search/{search_txt}")
     suspend fun searchRequest(@Header("Authorization"   ) auth: String,
                                    @Path("search_txt")  search_txt :String):Response<SearchResponse>
+
+    @GET("api/clearancerequests/{me_or_others}/period/{period_value}")
+    suspend fun getHrClearanceHomeList(@Header("Authorization"   ) auth: String,
+                                   @Path("me_or_others")me_or_other :String,
+                                   @Path("period_value")period_value :String):Response<HrClearanceResponse>
+
+
 }
 

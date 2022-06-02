@@ -50,8 +50,8 @@ class PaymentProcessesFragment : Fragment() {
     }
 
     private fun init() {
-        periodTimeList_ar = arrayListOf(" السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
-        periodTimeList_en = arrayListOf("lastyear","year","lastmonth","month","lastweek","week","all")
+        periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
+        periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
         PaymentHomeViewModel.me_or_others = me_or_others
         paymentList = arrayListOf()

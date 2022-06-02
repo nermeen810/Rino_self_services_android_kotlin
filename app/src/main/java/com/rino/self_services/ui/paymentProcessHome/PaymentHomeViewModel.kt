@@ -30,7 +30,7 @@ class PaymentHomeViewModel @Inject constructor(private val modelRepository: Paym
         companion object {
             var me_or_others = "me"
           var periodTimeList_en =
-                arrayListOf("lastyear","year","lastmonth","month","lastweek","week","all")
+                arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
             var lastSelectedPos = periodTimeList_en.size-1
         }
 //        val navToTaskDetails: LiveData<ServiceData>

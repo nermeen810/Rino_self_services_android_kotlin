@@ -37,7 +37,7 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         holder.binding.serviceNumValue.text = Constants.convertNumsToArabic(paymentSubList[position].id.toString())
         val dateRes = paymentSubList[position].date.split("T")
         holder.binding.dateFromTxt.text     = Constants.convertNumsToArabic(dateRes[0])
-        holder.binding.amoouuntValu.text     = Constants.convertNumsToArabic(paymentSubList[position].amount.toString())
+        holder.binding.amountValue.text     = Constants.convertNumsToArabic(paymentSubList[position].amount.toString())
         holder.binding.agencyValue.text     = Constants.convertNumsToArabic(paymentSubList[position].department?:"")
         holder.binding.paymentMethodValue.text     = context.getText(R.string.cash)
         holder.binding.requestStatusValue.text     = paymentSubList[position].status?:""
