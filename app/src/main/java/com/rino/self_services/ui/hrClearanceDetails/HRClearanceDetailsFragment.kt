@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -83,6 +84,7 @@ class HRClearanceDetailsFragment : Fragment() {
         }
     }
     private fun oberveData(){
+        observeAction()
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
             binding.clearanceId.text = details?.id.toString()
@@ -122,11 +124,43 @@ class HRClearanceDetailsFragment : Fragment() {
             if(details.status?.contains("جديد") == true){
                 binding.hrApprove.alpha = 1f
                 binding.hrDenay.alpha = 1f
+                binding.hrApprove.setOnClickListener{
+
+                    binding.hrApprove.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"approve")
+                }
+                binding.hrDenay.setOnClickListener{
+                    binding.hrDenay.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"deny")
+
+                }
             }else{
-                binding.hrApprove.alpha = 0f
+                binding.hrApprove.alpha = 1f
                 binding.hrDenay.alpha = 0f
+                binding.hrApprove.setOnClickListener{
+                    binding.hrApprove.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"approve")
+
+                }
             }
 
+        }
+    }
+
+    private fun observeAction() {
+        viewModel.action.observe(viewLifecycleOwner){
+            var msg = ""
+             if(it=="approve"){
+                msg = getString(R.string.approve_msg)
+            }
+            else if(it=="deny"){
+                  msg = getString(R.string.deny_msg)
+             }
+            Toast.makeText(
+                requireActivity(),
+               msg,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

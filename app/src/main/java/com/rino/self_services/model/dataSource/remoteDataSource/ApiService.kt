@@ -8,6 +8,7 @@ import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.hrClearance.ActionApproveOrDeny
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 
 
@@ -51,6 +52,12 @@ interface ApiService {
     suspend fun getHrClearanceHomeList(@Header("Authorization"   ) auth: String,
                                    @Path("me_or_others")me_or_other :String,
                                    @Path("period_value")period_value :String):Response<HrClearanceResponse>
+
+    @POST("api/clearancerequests/action/{entity}/{id}/{action}")
+    suspend fun approveRequest(@Header("Authorization"   ) auth: String,
+                                       @Path("entity")entity :Int?,
+                                       @Path("id")id :Int?,
+                                      @Path("action")action :String):Response<ActionApproveOrDeny>
 
 
 }

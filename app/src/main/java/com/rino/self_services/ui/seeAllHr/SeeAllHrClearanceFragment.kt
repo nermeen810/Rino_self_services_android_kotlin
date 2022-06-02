@@ -114,7 +114,7 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun getPressesdItemIndex(index:Int){
 
 
-            val id = viewModel.arrayList.get(index).id
+            val id = viewModel.arrayList.get(index-1).id
             val entity = viewModel.arrayList.get(index).entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
                 HRClearanceDetailsRequest(entity!!,id)

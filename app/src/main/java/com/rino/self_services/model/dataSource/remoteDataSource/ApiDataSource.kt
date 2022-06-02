@@ -43,4 +43,6 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         period_value: String
     ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
 
+    suspend fun approveRequest( auth: String, entity :Int?,
+                              id :Int?, action :String) =apiService.approveRequest(auth,entity,id,action)
 }
