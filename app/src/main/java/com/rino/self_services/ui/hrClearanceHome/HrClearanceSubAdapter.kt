@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.HrClearanceHomeItemBinding
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.PaymentHomeViewModel
 import com.rino.self_services.utils.Constants
@@ -67,7 +68,9 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         }
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
-            //          paymentHomeViewModel.navToServiceDetails(historyList[position])
+            hrClearanceViewModel.navToServiceDetails(
+                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0)
+                )
         }
 
     }

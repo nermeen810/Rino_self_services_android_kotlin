@@ -72,7 +72,7 @@ class PaymentProcessesFragment : Fragment() {
         observeNoData()
         observeSearchHistoryData()
         observeNavToSeeAll()
-     //   observeNavToServiceDetails()
+        observeNavToServiceDetails()
         observeLoading()
         observeShowError()
     }
@@ -130,18 +130,18 @@ class PaymentProcessesFragment : Fragment() {
         }
     }
 
-//    private fun observeNavToServiceDetails() {
-//        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
-//            it?.let {
-//                navToServiceDetails(it)
-//            }
-//        }
-//    }
+    private fun observeNavToServiceDetails() {
+        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
+            it?.let {
+                navToServiceDetails(it)
+            }
+        }
+    }
 
-//    private fun navToServiceDetails(serviceData: ServiceData) {
-//        val action = HistoryByServiceTypeFragmentDirections.actionHistoryByIDToServiceDetails(serviceData)
-//        findNavController().navigate(action)
-//    }
+    private fun navToServiceDetails(id: Int) {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(id)
+        findNavController().navigate(action)
+    }
 
 
     private fun navToSeeAll(navSeeAll: NavSeeAll) {
