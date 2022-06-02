@@ -43,6 +43,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,6 +95,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/clearance_details_date" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,6 +117,7 @@
                         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView27"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -144,6 +148,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/clearance_description" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView31"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -164,6 +169,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView35"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -184,6 +190,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView37"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -214,6 +221,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/hr_d_department" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView39"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -244,6 +252,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/textView41"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -276,6 +285,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/hr_l_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -286,6 +296,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/hr_type" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/hr_l_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -351,7 +362,6 @@
                 android:alpha="0"
                 android:background="@drawable/brown_border_rect"
                 android:text="رفض"
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2"
                 app:layout_constraintWidth_percent="0.4" />

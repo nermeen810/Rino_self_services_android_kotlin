@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_hrClearanceHomeFragment_to_seeAllHrClearanceFragment"
             app:destination="@id/seeAllHrClearanceFragment" />
+        <action
+            android:id="@+id/action_hrClearanceHomeFragment_to_HRClearanceDetailsFragment"
+            app:destination="@id/HRClearanceDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllPaymentProcessFragment"
@@ -67,6 +70,9 @@
         <action
             android:id="@+id/paymentProcess_to_seeAll"
             app:destination="@id/seeAllPaymentProcessFragment"/>
+        <action
+            android:id="@+id/action_paymentProcessesFragment_to_paymentProcessDetailsFragment"
+            app:destination="@id/paymentProcessDetailsFragment" />
 
     </fragment>
     <fragment
@@ -88,6 +94,9 @@
         <action
             android:id="@+id/action_seeAllHrClearanceFragment_to_HRClearanceDetailsFragment"
             app:destination="@id/HRClearanceDetailsFragment" />
+        <argument
+            android:name="nav_to_see_all_clearance"
+            app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
     </fragment>
     <fragment
         android:id="@+id/HRClearanceDetailsFragment"

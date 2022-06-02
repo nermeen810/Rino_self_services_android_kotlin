@@ -22,7 +22,6 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         context.getSharedPreferences(
             PREF_FILE_NAME,
             Context.MODE_PRIVATE))
-
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
     suspend fun getHrClearanceHomeList(me_or_other: String,

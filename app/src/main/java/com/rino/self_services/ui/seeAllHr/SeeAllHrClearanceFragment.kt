@@ -16,8 +16,7 @@ import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-
-
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 
 
 @AndroidEntryPoint
@@ -31,7 +30,8 @@ class SeeAllHrClearanceFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            period = HRClearanceRequest("2021-01-01","2021-12-31","me",1)
+            var v = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
+            period = HRClearanceRequest(v.startPeriod,v.endPeriod,v.me_or_others,1)
         }
     }
 

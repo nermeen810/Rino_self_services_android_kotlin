@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
 import com.rino.self_services.model.reposatory.HrClearanceRepo
@@ -25,7 +26,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
     private var _getPaymentData = MutableLiveData<HrClearanceResponse?>()
     private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()
     private var _navToSeeAll: MutableLiveData<NavSeeAll> = MutableLiveData()
-    //       private var _navToTaskDetails: MutableLiveData<ServiceData> = MutableLiveData()
+    private var _navToTaskDetails: MutableLiveData<HRClearanceDetailsRequest> = MutableLiveData()
 
 
     companion object {
@@ -34,8 +35,8 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         var lastSelectedPos = periodTimeList_en.size-1
     }
-//        val navToTaskDetails: LiveData<ServiceData>
-//        get() = _navToTaskDetails
+        val navToTaskDetails: LiveData<HRClearanceDetailsRequest>
+        get() = _navToTaskDetails
 
     val getSearchHistoryData: LiveData<SearchResponse?>
         get() = _getSearchHistoryData
@@ -60,9 +61,9 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
         _navToSeeAll.value = navSeeAll
     }
 
-//        fun navToServiceDetails(item: ServiceData) {
-//            _navToTaskDetails.value = item
-//        }
+        fun navToServiceDetails(item: HRClearanceDetailsRequest) {
+            _navToTaskDetails.value = item
+        }
 
     fun getPaymentData() {
         _loading.postValue(View.VISIBLE)

@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.paymentProcessHome
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,8 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         }
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
-  //          paymentHomeViewModel.navToServiceDetails(historyList[position])
+            Log.i("id",paymentSubList[position].id.toString()?:"")
+            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
         }
 
     }

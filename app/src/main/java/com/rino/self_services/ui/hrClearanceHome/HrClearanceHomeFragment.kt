@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceHomeBinding
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Data
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 import com.rino.self_services.model.pojo.hrClearance.Items
@@ -72,7 +73,7 @@ class HrClearanceHomeFragment : Fragment() {
         observeNoData()
   //      observeSearchHistoryData()
         observeNavToSeeAll()
-        //   observeNavToServiceDetails()
+           observeNavToServiceDetails()
         observeLoading()
         observeShowError()
     }
@@ -130,22 +131,22 @@ class HrClearanceHomeFragment : Fragment() {
         }
     }
 
-//    private fun observeNavToServiceDetails() {
-//        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
-//            it?.let {
-//                navToServiceDetails(it)
-//            }
-//        }
-//    }
+    private fun observeNavToServiceDetails() {
+        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
+            it?.let {
+                navToServiceDetails(it)
+            }
+        }
+    }
 
-//    private fun navToServiceDetails(serviceData: ServiceData) {
-//        val action = HistoryByServiceTypeFragmentDirections.actionHistoryByIDToServiceDetails(serviceData)
-//        findNavController().navigate(action)
-//    }
+    private fun navToServiceDetails(request: HRClearanceDetailsRequest) {
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToHRClearanceDetailsFragment(request)
+        findNavController().navigate(action)
+    }
 
 
     private fun navToSeeAll(navSeeAll: NavSeeAll) {
-        val action = PaymentProcessesFragmentDirections.paymentProcessToSeeAll(navSeeAll)
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToSeeAllHrClearanceFragment(navSeeAll)
         findNavController().navigate(action)
     }
 
