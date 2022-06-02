@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
 import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
@@ -36,7 +38,6 @@ class PaymentProcessDetailsFragment : Fragment() {
         oberveData()
         obseveError()
         viewModel.getData(requestId)
-
         return binding.root
     }
     private fun observeLoading() {
@@ -49,11 +50,26 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun obseveError(){
         viewModel.setError.observe(viewLifecycleOwner){
         if(it != null && it != ""){
-            binding.ppErrorMessage.text = it
-            binding.ppErrorMessage.visibility = View.VISIBLE
+            showMessage(it)
+//            binding.ppErrorMessage.text = it
+//            binding.ppErrorMessage.visibility = View.VISIBLE
         }else{
             binding.ppErrorMessage.visibility = View.GONE
         }
+        }
+    }
+    private fun showMessage(msg: String) {
+        lifecycleScope.launchWhenResumed {
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                    resources.getColor(
+                        R.color.color_orange
+                    )
+                )
+                .setActionTextColor(resources.getColor(R.color.white))
+                .setAction(getString(R.string.dismiss))
+                {
+                }.show()
         }
     }
     private fun oberveData(){

@@ -1,6 +1,8 @@
 package com.rino.self_services.model.dataSource.remoteDataSource
 
 
+import retrofit2.http.Header
+import retrofit2.http.Path
 import javax.inject.Inject
 
 class ApiDataSource @Inject constructor(private val apiService: ApiService) {
@@ -22,7 +24,7 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
     ) = apiService.getAllHRRecords(token,meOrOthers,from,to,page)
 
     suspend fun getPaymentDetails(token:String,id:Int) = apiService.getPaymentDetails(token,id)
-
+    suspend fun getHRDetails(token:String, enity:Int, requestID:Int) = apiService.getHRDetails(token,enity,requestID)
     suspend fun getPaymentHomeList(
         auth: String,
         me_or_other: String,

@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.model.reposatory.HRClearanceRequest
-import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragmentDirections
-import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessRVAdapter
+
+
 
 @AndroidEntryPoint
 class SeeAllHrClearanceFragment : Fragment() {
@@ -50,7 +55,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         binding.hrClearanceSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
+                    if (viewModel.pageNumber < totalPages?:1 && viewModel.loading.value == View.GONE){
                         viewModel.pageNumber += 1
                         viewModel.getData(period)
                     }
@@ -69,8 +74,9 @@ class SeeAllHrClearanceFragment : Fragment() {
     fun oserveData(){
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
-                totalPages = it.totalPages
-                it.let { it1 -> adapter.updateItems(it.date)
+
+
+                it.let { it1 -> adapter.updateItems(viewModel.arrayList)
                 }
             }
         }
@@ -81,8 +87,9 @@ class SeeAllHrClearanceFragment : Fragment() {
                 if (viewModel.seeAllPaymentProcessData.value?.date?.isNotEmpty() == true){
 
                 }else{
-                    binding.seeAllClearanceError.text = it
-                    binding.seeAllClearanceError.visibility = View.VISIBLE
+                    showMessage(it)
+//                    binding.seeAllClearanceError.text = it
+//                    binding.seeAllClearanceError.visibility = View.VISIBLE
                 }
 
             }else{
@@ -91,19 +98,30 @@ class SeeAllHrClearanceFragment : Fragment() {
 
         }
     }
-    private fun getPressesdItemIndex(index:Int){
-        val id = viewModel.seeAllPaymentProcessData.value?.date?.get(index)?.id
-
-//        var action = id?.let {
-//            SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
-//                it
-//            )
-//        }
-//
-//        if (action != null) {
-//            findNavController().navigate(action)
-//        }
+    private fun showMessage(msg: String) {
+        lifecycleScope.launchWhenResumed {
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                    resources.getColor(
+                        R.color.color_orange
+                    )
+                )
+                .setActionTextColor(resources.getColor(R.color.white))
+                .setAction(getString(R.string.dismiss))
+                {
+                }.show()
+        }
     }
+    private fun getPressesdItemIndex(index:Int){
 
 
+            val id = viewModel.arrayList.get(index).id
+            val entity = viewModel.arrayList.get(index).entity
+            var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
+                HRClearanceDetailsRequest(entity!!,id)
+            )
+            findNavController().navigate(action)
+
+
+    }
 }

@@ -7,6 +7,8 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
+import com.rino.self_services.model.pojo.HRClearanceDetails
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.HRSeeAllData
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -27,6 +29,30 @@ class HRClearanceRepo@Inject constructor(private val apiDataSource: ApiDataSourc
             Log.d("ayman status Code",response.code().toString())
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
+
+            } else {
+                when (response.code()) {
+                    500 -> {
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        result =
+                            Result.Error(Exception("time out"))
+                    }
+                }
+            }
+        }catch(e: IOException) {
+            result = Result.Error(e)
+        }
+        return result
+    }
+    suspend fun getHRDetails(detailsRequest: HRClearanceDetailsRequest):Result<HRClearanceDetails>{
+        var result: Result<HRClearanceDetails> = Result.Loading
+        try {
+            val response = apiDataSource.getHRDetails("Bearer "+sharedPreference.getToken(),detailsRequest.entity,detailsRequest.requestID)
+            Log.d("ayman status Code",response.code().toString()+""+detailsRequest.requestID.toString())
+            if (response.isSuccessful) {
+                result = Result.Success(response.body()!!)
 
             } else {
                 when (response.code()) {
