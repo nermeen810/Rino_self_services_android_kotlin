@@ -17,18 +17,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceDetailsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.payment_process_details.PaymentProcessDetailsViewModel
+import com.rino.self_services.ui.seeAllHr.SeeAllHrClearanceFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,6 +73,8 @@ class HRClearanceDetailsFragment : Fragment() {
         observeLoading()
         obseveError()
         oberveData()
+        handleBackBotton()
+        navToViewAttachments()
         binding.addAttachment.setOnClickListener {
             (activity as MainActivity).openGalary()
 
@@ -86,6 +92,20 @@ class HRClearanceDetailsFragment : Fragment() {
 
         return binding.root
     }
+
+
+    private fun navToViewAttachments() {
+
+    }
+
+    private fun handleBackBotton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                HRClearanceDetailsFragmentDirections.hRClearanceDetailsFragmentToHrHome()
+            findNavController().navigate(action)
+        }
+    }
+
 
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
@@ -169,6 +189,7 @@ class HRClearanceDetailsFragment : Fragment() {
         }
     }
     private fun oberveData(){
+        observeAction()
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
             binding.clearanceId.text = details?.id.toString()
@@ -208,11 +229,57 @@ class HRClearanceDetailsFragment : Fragment() {
             if(details.status?.contains("جديد") == true){
                 binding.hrApprove.alpha = 1f
                 binding.hrDenay.alpha = 1f
+                binding.hrApprove.setOnClickListener{
+
+                    binding.hrApprove.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"approve")
+                }
+                binding.hrDenay.setOnClickListener{
+                    binding.hrDenay.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"deny")
+
+                }
             }else{
-                binding.hrApprove.alpha = 0f
+                binding.hrApprove.alpha = 1f
                 binding.hrDenay.alpha = 0f
+                binding.hrApprove.setOnClickListener{
+                    binding.hrApprove.alpha = 0f
+                    viewModel.actionApproveOrDeny(details?.entity,details?.id,"approve")
+
+                }
+            }
+            if(details.attachment.size==0)
+            {
+                binding.viewAttachment.visibility =View.GONE
+            }
+            else {
+                binding.viewAttachment.setOnClickListener {
+                    val action =
+                        HRClearanceDetailsFragmentDirections.hrClearanceDetailsToHrViewAttachments(
+                            details.attachment,
+                            hrClearanceDetailsRequest
+                        )
+                    findNavController().navigate(action)
+                }
             }
 
+        }
+    }
+
+    private fun observeAction() {
+        viewModel.action.observe(viewLifecycleOwner){
+            var msg = ""
+             if(it=="approve"){
+                msg = getString(R.string.approve_msg)
+            }
+            else if(it=="deny"){
+                  msg = getString(R.string.deny_msg)
+             }
+            Toast.makeText(
+                requireActivity(),
+               msg,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

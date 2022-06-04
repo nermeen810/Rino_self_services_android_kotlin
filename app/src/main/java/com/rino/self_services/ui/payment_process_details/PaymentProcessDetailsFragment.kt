@@ -27,6 +27,7 @@ import com.rino.self_services.model.pojo.AttachmentResponse
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragmentDirections
 import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -66,6 +67,7 @@ class PaymentProcessDetailsFragment : Fragment() {
         observeLoading()
         oberveData()
         obseveError()
+        handleBackBotton()
         viewModel.getData(requestId)
         (activity as MainActivity).detailsData.observe(viewLifecycleOwner){
             setDuringImage(it)
@@ -116,6 +118,13 @@ class PaymentProcessDetailsFragment : Fragment() {
         }
 
         return binding.root
+    }
+    private fun handleBackBotton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToPaymentHome()
+            findNavController().navigate(action)
+        }
     }
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {

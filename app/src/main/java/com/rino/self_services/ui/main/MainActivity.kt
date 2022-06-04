@@ -5,7 +5,11 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+
 import android.provider.MediaStore
+
+import android.widget.Toast
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
+import com.rino.self_services.ui.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,10 +32,15 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
 
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private  var _detailsData = MutableLiveData<Bitmap>()
     val detailsData: LiveData<Bitmap>
         get() = _detailsData
+
+
+   // private lateinit var appBarConfiguration: AppBarConfiguration
+    private var  count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +53,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+    override fun onBackPressed() {
+     //   super.onBackPressed()
+        if(count==0)
+        {
+            Toast.makeText(
+                this,
+                getString(R.string.exit_msg),
+                Toast.LENGTH_SHORT
+            ).show()
+            count += 1
+        }
+        else {
+            finish()
+        }
     }
 
 
@@ -76,16 +96,10 @@ fun openGalary(){
     var myIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     startActivityForResult(myIntent,111)
 }
-
-//   private fun splashSetup(navController: NavController){
-//
-//       CoroutineScope(Dispatchers.Default).launch{
-//           delay(3000)
-//           CoroutineScope(Dispatchers.Main).launch{
-//               navController.popBackStack()
-//               navController.navigate(R.id.loginFragment)
-//           }
-//       }
-//   }
+override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
+    }
 
 }

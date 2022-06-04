@@ -16,6 +16,15 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/backbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/paddingLayout"
+                android:src="@drawable/ic_baseline_arrow_forward_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
                 android:id="@+id/stepper_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -23,8 +32,7 @@
                 android:layout_marginTop="14dp"
                 app:layout_constraintHeight_percent="0.8"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintTop_toBottomOf="@id/backbtn"
                 tools:src="@tools:sample/avatars" />
 
             <androidx.cardview.widget.CardView

@@ -2,7 +2,9 @@ package com.rino.self_services.utils
 
 object Constants {
     val base_url = "https://rino-app-staging.azurewebsites.net/"
+
 //    val base_url = "https://a2b2-156-214-13-100.ngrok.io/"
+  
     val grant_type = "password"
     val client_id = "Rhino.Android"
 
