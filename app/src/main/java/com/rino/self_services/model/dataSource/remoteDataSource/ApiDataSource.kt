@@ -4,6 +4,8 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 import com.rino.self_services.model.pojo.AttachmentResponse
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
+import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
+import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,6 +23,10 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         password: String,
         client_id: String
     ) = apiService.login(grant_type, username, password, client_id)
+
+     suspend fun requestOTP(requestOTP: RequestOTP) =apiService.requestOTP(requestOTP)
+
+     suspend fun resetPassword(resetPasswrdRequest: ResetPasswordRequest)= apiService.resetPassword(resetPasswrdRequest)
 
     suspend fun getAllRecords(token:String,future:String,me:String,from:String,to:String,page:Long) = apiService.getAllRecords(token, future,me,from, to, page)
     suspend fun getAllHRRecords(
