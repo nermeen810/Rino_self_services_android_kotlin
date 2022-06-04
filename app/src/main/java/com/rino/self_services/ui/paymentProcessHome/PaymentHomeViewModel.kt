@@ -24,17 +24,17 @@ class PaymentHomeViewModel @Inject constructor(private val modelRepository: Paym
         private var _getPaymentData = MutableLiveData<PaymentHomeResponse?>()
        private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()
         private var _navToSeeAll: MutableLiveData<NavSeeAll> = MutableLiveData()
- //       private var _navToTaskDetails: MutableLiveData<ServiceData> = MutableLiveData()
+        private var _navToTaskDetails: MutableLiveData<Int> = MutableLiveData()
 
 
         companion object {
             var me_or_others = "me"
           var periodTimeList_en =
-                arrayListOf("lastyear","year","lastmonth","month","lastweek","week","all")
+                arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
             var lastSelectedPos = periodTimeList_en.size-1
         }
-//        val navToTaskDetails: LiveData<ServiceData>
-//        get() = _navToTaskDetails
+        val navToTaskDetails: LiveData<Int>
+        get() = _navToTaskDetails
 
        val getSearchHistoryData: LiveData<SearchResponse?>
        get() = _getSearchHistoryData
@@ -59,9 +59,9 @@ class PaymentHomeViewModel @Inject constructor(private val modelRepository: Paym
             _navToSeeAll.value = navSeeAll
         }
 
-//        fun navToServiceDetails(item: ServiceData) {
-//            _navToTaskDetails.value = item
-//        }
+        fun navToServiceDetails(id:Int) {
+            _navToTaskDetails.value = id
+        }
 
         fun getPaymentData() {
             _loading.postValue(View.VISIBLE)

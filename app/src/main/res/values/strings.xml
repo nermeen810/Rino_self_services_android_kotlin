@@ -52,4 +52,39 @@
     <string name="me">المحال الي</string>
     <string name="others">الاخري</string>
     <string name="no_data">"لا توجد بيانات فى هذة الفترة  "</string>
+
+    <string name="employee_number">رقم الموظف</string>
+    <string name="employee_name">اسم الموظف</string>
+    <string name="office">الادارة</string>
+    <string name="action">الاجراء المعتمد</string>
+    <string name="type">نوع المخالصة</string>
+
+    <string name="clearance_num">رقم المخالصة</string>
+    <string name="emp_num">رقم الموظف</string>
+    <string name="emp_name">أسم الموظف</string>
+    <string name="department">الادارة</string>
+    <string name="clearance_status">الاجراء المعتمد</string>
+    <string name="request_type">نوع المخالصة</string>
+    <string name="vacation_start">بداية الاجازة</string>
+    <string name="vacation_end">نهاية الاجازة</string>
+
+    <string name="add_attachment">اضافه مرفقات</string>
+    <string name="see_attachments">عرض المرفقات</string>
+    <string name="approve_request_number">هل تريد اعتماد الطلب رقم</string>
+    <string name="deny_request_number">هل تريد رفض الطلب رقم</string>
+    <string name="approve_with_attachments">الاعتماد بمرفقات </string>
+    <string name="approve_without_attachments">الاعتماد بدون مرفقات</string>
+    <string name="cancel">الغاء</string>
+    <string name="deny_with_attachments">الرفض بمرفقات</string>
+    <string name="deny_without_attachments">الرفض بدون مرفقات</string>
+
+    <string name="attatchment">المرفقات</string>
+    <string name="approve_msg">تم قبول الطلب</string>
+    <string name="deny_msg">تم رقض الطلب</string>
+    <string name="view_attachment">عرض المرفقات</string>
+    <string name="details">تفاصيل المخالصة</string>
+    <string name="exit_msg">اذا كنت تريد الخروج من التطبيق اضغط على زر الرجوع مره اخرى</string>
+    <string name="attachments">المرفقات</string>
+
+
 </resources>

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
+import com.rino.self_services.model.pojo.Item
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
 import com.rino.self_services.model.reposatory.PaymentRepo
@@ -32,6 +33,8 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
     private  var _seeAllData = MutableLiveData<SeeAllPaymentProcessResponse>()
+//    private  var seeAllarray = MutableLiveData<Item>()
+    var seeAllarray = ArrayList<Item>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
      var pageNumber:Long = 1
@@ -53,6 +56,7 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
                     withContext(Dispatchers.Main) {
                         result.data?.let {
                             _seeAllData.postValue(it)
+                            seeAllarray.addAll(it.data)
                         }
                         Log.i("see All network:", "done")
                     }

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="8dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle"
+            android:orientation="horizontal"
+            android:padding="@dimen/paddingLayout"
+            android:weightSum="10">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10">
+                <!--                android:layout_weight="9"-->
+                android:padding="@dimen/paddingText">
+
+                <TextView
+                    android:id="@+id/serviceNumTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/paddingText"
+                    android:padding="4dp"
+                    android:text="@string/clearance_num"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/serviceNumValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/paddingLayout"
+                    android:layout_marginBottom="2dp"
+                    android:padding="@dimen/paddingText"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/serviceNumTxt"
+                    app:layout_constraintRight_toLeftOf="@+id/serviceNumTxt"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    app:layout_constraintTop_toBottomOf="@id/serviceNumTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/empNumTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/emp_num"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+                <TextView
+                    android:id="@+id/empNumValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:layout_marginRight="@dimen/paddingLayout"
+
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/empNumTxt"
+                    app:layout_constraintEnd_toStartOf="@+id/serviceNumTxt"
+                    app:layout_constraintRight_toLeftOf="@+id/empNumTxt"
+                    app:layout_constraintTop_toTopOf="@+id/empNumTxt" />
+
+                <TextView
+                    android:id="@+id/empNameTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/emp_name"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/empNumTxt" />
+
+                <TextView
+                    android:id="@+id/empNameValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="200dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/empNameTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/empNumValue"
+                    app:layout_constraintRight_toLeftOf="@+id/empNameTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/empNumValue" />
+
+                <TextView
+                    android:id="@+id/departmentTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/department"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/empNameTxt" />
+
+                <TextView
+                    android:id="@+id/departmentValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/departmentTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/empNameValue"
+                    app:layout_constraintRight_toLeftOf="@+id/departmentTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/empNameValue" />
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    app:layout_constraintTop_toBottomOf="@id/departmentTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/request_statusTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:layout_marginRight="@dimen/paddingText"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/clearance_status"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+                <TextView
+                    android:id="@+id/request_statusValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/orange_rect"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="8dp"
+                    android:text="25"
+                    android:textColor="@color/white"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_statusTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/departmentValue"
+                    app:layout_constraintRight_toLeftOf="@+id/request_statusTxt"
+                    app:layout_constraintTop_toTopOf="@+id/request_statusTxt" />
+
+                <TextView
+                    android:id="@+id/request_toTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:layout_marginRight="@dimen/paddingText"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/request_to"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/request_statusTxt" />
+
+                <TextView
+                    android:id="@+id/request_toValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="150dp"
+                    android:background="@drawable/brown_border_rect"
+                    android:maxLines="2"
+                    android:padding="8dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_toTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/request_statusValue"
+                    app:layout_constraintRight_toLeftOf="@+id/request_toTxt"
+                    app:layout_constraintTop_toTopOf="@+id/request_toTxt" />
+
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    app:layout_constraintTop_toBottomOf="@id/request_toTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/request_typeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/request_type"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line3" />
+
+                <TextView
+                    android:id="@+id/request_typeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:layout_marginRight="@dimen/paddingLayout"
+
+                    android:maxWidth="200dp"
+                    android:maxLines="2"
+                    android:padding="8dp"
+                    android:text="25"
+                    android:background="@drawable/brown_border_rect"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_typeTxt"
+                    app:layout_constraintRight_toRightOf="@+id/request_toValue"
+                    app:layout_constraintRight_toLeftOf="@+id/request_typeTxt"
+                    app:layout_constraintTop_toTopOf="@+id/request_typeTxt" />
+
+                <TextView
+                    android:id="@+id/vacationStartTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/vacation_start"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/request_typeTxt" />
+
+                <TextView
+                    android:id="@+id/vacationStartValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="200dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/vacationStartTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/request_typeValue"
+                    app:layout_constraintRight_toLeftOf="@+id/vacationStartTxt"
+                    app:layout_constraintTop_toTopOf="@+id/vacationStartTxt" />
+
+                <TextView
+                    android:id="@+id/vacationEndTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/paddingLayout"
+                    android:padding="4dp"
+                    android:text="@string/vacation_end"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vacationStartTxt" />
+
+                <TextView
+                    android:id="@+id/vacationEndValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/vacationEndTxt"
+                    app:layout_constraintEnd_toEndOf="@+id/vacationStartValue"
+                    app:layout_constraintRight_toLeftOf="@+id/vacationEndTxt"
+                    app:layout_constraintTop_toTopOf="@+id/vacationEndTxt" />
+                <TextView
+                    android:id="@+id/date_from_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/paddingLayout"
+                    android:padding="@dimen/paddingText"
+                    android:text="15"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/time_txt"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:padding="@dimen/paddingText"-->
+                <!--                    android:text="15"-->
+                <!--                    android:textColor="@color/dark_gray"-->
+                <!--                    android:textSize="@dimen/subTextTextSize"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/trip_img"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_margin="5dp"-->
+            <!--                android:src="@drawable/service_icon" />-->
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

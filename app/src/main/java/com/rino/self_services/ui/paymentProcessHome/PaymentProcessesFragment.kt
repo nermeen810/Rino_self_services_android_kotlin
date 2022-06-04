@@ -1,10 +1,12 @@
 package com.rino.self_services.ui.paymentProcessHome
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +17,7 @@ import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.model.pojo.payment.Data
 import com.rino.self_services.model.pojo.payment.Items
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
+import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,8 +53,8 @@ class PaymentProcessesFragment : Fragment() {
     }
 
     private fun init() {
-        periodTimeList_ar = arrayListOf(" السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
-        periodTimeList_en = arrayListOf("lastyear","year","lastmonth","month","lastweek","week","all")
+        periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
+        periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
         PaymentHomeViewModel.me_or_others = me_or_others
         paymentList = arrayListOf()
@@ -64,7 +67,16 @@ class PaymentProcessesFragment : Fragment() {
         setUpUI()
 //        checkNetwork(serviceId)
         observeData()
+        handleBackButton()
         paymentMainItemAdapter.updateItems(emptyList())
+    }
+
+    private fun handleBackButton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                PaymentProcessesFragmentDirections.paymentToHome()
+            findNavController().navigate(action)
+        }
     }
 
     private fun observeData() {
@@ -72,7 +84,7 @@ class PaymentProcessesFragment : Fragment() {
         observeNoData()
         observeSearchHistoryData()
         observeNavToSeeAll()
-     //   observeNavToServiceDetails()
+        observeNavToServiceDetails()
         observeLoading()
         observeShowError()
     }
@@ -130,18 +142,18 @@ class PaymentProcessesFragment : Fragment() {
         }
     }
 
-//    private fun observeNavToServiceDetails() {
-//        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
-//            it?.let {
-//                navToServiceDetails(it)
-//            }
-//        }
-//    }
+    private fun observeNavToServiceDetails() {
+        viewModel.navToTaskDetails.observe(viewLifecycleOwner) {
+            it?.let {
+                navToServiceDetails(it)
+            }
+        }
+    }
 
-//    private fun navToServiceDetails(serviceData: ServiceData) {
-//        val action = HistoryByServiceTypeFragmentDirections.actionHistoryByIDToServiceDetails(serviceData)
-//        findNavController().navigate(action)
-//    }
+    private fun navToServiceDetails(id: Int) {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(id)
+        findNavController().navigate(action)
+    }
 
 
     private fun navToSeeAll(navSeeAll: NavSeeAll) {
