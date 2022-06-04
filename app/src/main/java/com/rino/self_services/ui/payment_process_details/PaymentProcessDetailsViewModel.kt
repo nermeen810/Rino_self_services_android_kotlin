@@ -82,7 +82,7 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                     withContext(Dispatchers.Main) {
                         result.data.let {
 //                            it?.data?.let { it1 -> Log.d("newAyman", it1.date) }
-//                            _detailsData.postValue(it)
+                            _detailsData.postValue(it)
                             _setToTrue.postValue(true)
 
                             Log.d("atchments","done")

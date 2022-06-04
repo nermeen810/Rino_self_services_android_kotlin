@@ -75,6 +75,7 @@ fun createAttachment(part:MultipartBody.Part,id:Int,entity:Int){
                     withContext(Dispatchers.Main) {
                         result.data.let {
                             Log.d("atchments","done")
+
                            _detailsData.postValue(it)
                         }
                         Log.i("see All network:", "done")

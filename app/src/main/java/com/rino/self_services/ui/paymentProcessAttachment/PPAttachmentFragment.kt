@@ -1,4 +1,4 @@
-package com.rino.self_services
+package com.rino.self_services.ui.paymentProcessAttachment
 
 import android.content.Intent
 import android.net.Uri

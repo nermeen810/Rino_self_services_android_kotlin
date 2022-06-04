@@ -2,6 +2,7 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 
 
 import com.rino.self_services.model.pojo.AttachmentResponse
+import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -30,7 +31,7 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         page: Int
     ) = apiService.getAllHRRecords(token,meOrOthers,from,to,page)
 
-    suspend fun createAttachment(token:String,id:Int,Action:String,Entity:Int,parts:List<MultipartBody.Part>): retrofit2.Response<AttachmentResponse> {
+    suspend fun createAttachment(token:String,id:Int,Action:String,Entity:Int,parts:List<MultipartBody.Part>): retrofit2.Response<HRClearanceDetails> {
         val idBody: RequestBody = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val actionBody: RequestBody = Action.toRequestBody("text/plain".toMediaTypeOrNull())
         val enityBody: RequestBody = Entity.toString().toRequestBody("text/plain".toMediaTypeOrNull())

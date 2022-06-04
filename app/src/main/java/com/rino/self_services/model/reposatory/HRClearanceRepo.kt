@@ -199,8 +199,8 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         return result
     }
 
-    suspend fun createAttachment(attachments:CreateAttachmentRequest):Result<AttachmentResponse?>{
-        var result: Result<AttachmentResponse?> = Result.Loading
+    suspend fun createAttachment(attachments:CreateAttachmentRequest):Result<HRClearanceDetails?>{
+        var result: Result<HRClearanceDetails?> = Result.Loading
         var list:List<MultipartBody.Part> = listOf(attachments.parts)
         try {
             val response = apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,attachments.entity,list)
