@@ -24,7 +24,7 @@
                 app:layout_constraintHeight_percent="0.8"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintWidth_percent="0.1"
                 tools:src="@tools:sample/avatars" />
 
             <androidx.cardview.widget.CardView
@@ -35,281 +35,326 @@
                 app:layout_constraintBottom_toBottomOf="@+id/stepper_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/stepper_view"
-                app:layout_constraintWidth_percent="0.75">
+                app:layout_constraintWidth_percent="0.85">
+<!-- start scroll view -->
+           <ScrollView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                   <TextView
+                       android:id="@+id/pp_error_message"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="TextView"
+                       android:visibility="gone"
+                       app:layout_constraintBottom_toTopOf="@+id/divider5"
+                       app:layout_constraintEnd_toStartOf="@+id/beneficiary_payment"
+                       app:layout_constraintHorizontal_bias="0.5"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
-                    <TextView
-                        android:id="@+id/pp_error_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@+id/divider5"
-                        app:layout_constraintEnd_toStartOf="@+id/beneficiary_payment"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="@string/order_number"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/order_number"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                   <TextView
+                       android:id="@+id/order_number_details"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="TextView"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-                    <TextView
-                        android:id="@+id/order_number_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="TextView"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView4"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="8dp"
+                       android:layout_marginTop="12dp"
+                       android:text="@string/order_date"
+                       app:layout_constraintLeft_toLeftOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/order_date"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                   <TextView
+                       android:id="@+id/order_date_details"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="8dp"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintLeft_toLeftOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                    <TextView
-                        android:id="@+id/order_date_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                   <View
+                       android:id="@+id/divider3"
+                       android:layout_width="265dp"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="10dp"
+                       android:background="?android:attr/listDivider"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_date_details" />
 
-                    <View
-                        android:id="@+id/divider3"
-                        android:layout_width="265dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_date_details" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView6"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="@string/order_status"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/order_status"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/order_state_card"
-                        android:layout_width="156dp"
-                        android:layout_height="28dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="5dp"
-                        app:layout_constraintEnd_toStartOf="@+id/textView6"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView6">
+                   <androidx.cardview.widget.CardView
+                       android:id="@+id/order_state_card"
+                       android:layout_width="156dp"
+                       android:layout_height="28dp"
+                       android:layout_marginStart="30dp"
+                       android:layout_marginEnd="5dp"
+                       app:layout_constraintEnd_toStartOf="@+id/textView6"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toTopOf="@+id/textView6">
 
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                       <androidx.constraintlayout.widget.ConstraintLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent">
 
-                            <TextView
-                                android:id="@+id/order_state"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginEnd="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
+                           <TextView
+                               android:id="@+id/order_state"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginStart="5dp"
+                               android:layout_marginTop="5dp"
+                               android:layout_marginEnd="5dp"
+                               android:layout_marginBottom="5dp"
+                               android:gravity="center"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintStart_toStartOf="parent"
+                               app:layout_constraintTop_toTopOf="parent" />
+                       </androidx.constraintlayout.widget.ConstraintLayout>
+                   </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_margin="12dp"
-                        android:text="@string/description"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_state_card" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView10"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_margin="12dp"
+                       android:text="@string/description"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_state_card" />
 
-                    <TextView
+                   <TextView
 
-                        android:id="@+id/order_description_payment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:text="TextView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                         />
+                       android:id="@+id/order_description_payment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="24dp"
+                       android:layout_marginTop="8dp"
+                       android:layout_marginEnd="4dp"
+                       android:text="TextView"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/textView10"
+                       />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/order_side"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView15"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="@string/order_side"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
-                    <TextView
-                        android:id="@+id/order_side_payment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintRight_toRightOf="@+id/textView15"
-                        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+                   <TextView
+                       android:id="@+id/order_side_payment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintRight_toRightOf="@+id/textView15"
+                       app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/beneficiary_clause"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_side_payment" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView17"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="@string/beneficiary_clause"
+                       app:layout_constraintRight_toRightOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_side_payment" />
 
-                    <TextView
-                        android:id="@+id/beneficiary_payment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintRight_toRightOf="@+id/textView17"
-                        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                   <TextView
+                       android:id="@+id/beneficiary_payment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintRight_toRightOf="@+id/textView17"
+                       app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/provision"
-                        app:layout_constraintRight_toRightOf="@+id/beneficiary_payment"
-                        app:layout_constraintTop_toBottomOf="@+id/beneficiary_payment" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView19"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="@string/provision"
+                       app:layout_constraintRight_toRightOf="@+id/beneficiary_payment"
+                       app:layout_constraintTop_toBottomOf="@+id/beneficiary_payment" />
 
-                    <TextView
-                        android:id="@+id/provision_payment_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintRight_toRightOf="@+id/textView19"
-                        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                   <TextView
+                       android:id="@+id/provision_payment_details"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintRight_toRightOf="@+id/textView19"
+                       app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/payment_method"
-                        app:layout_constraintRight_toRightOf="@+id/provision_payment_details"
-                        app:layout_constraintTop_toBottomOf="@+id/provision_payment_details" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView21"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="@string/payment_method"
+                       app:layout_constraintRight_toRightOf="@+id/provision_payment_details"
+                       app:layout_constraintTop_toBottomOf="@+id/provision_payment_details" />
 
-                    <TextView
-                        android:id="@+id/payment_method_paymentprocess_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintRight_toRightOf="@+id/textView21"
-                        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                   <TextView
+                       android:id="@+id/payment_method_paymentprocess_details"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintRight_toRightOf="@+id/textView21"
+                       app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
-                    <View
-                        android:id="@+id/divider5"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/payment_method_paymentprocess_details" />
+                   <View
+                       android:id="@+id/divider5"
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="10dp"
+                       android:background="?android:attr/listDivider"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/payment_method_paymentprocess_details" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView23"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/amount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView23"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:layout_marginEnd="8dp"
+                       android:text="@string/amount"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
-                    <TextView
-                        android:id="@+id/payment_process_details_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintEnd_toEndOf="@+id/textView23"
-                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                   <TextView
+                       android:id="@+id/payment_process_details_amount"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintEnd_toEndOf="@+id/textView23"
+                       app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-                    <ProgressBar
-                        android:id="@+id/pp_details_progress"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@+id/divider5"
-                        app:layout_constraintEnd_toStartOf="@+id/textView17"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
+                   <ProgressBar
+                       android:id="@+id/pp_details_progress"
+                       style="?android:attr/progressBarStyle"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:visibility="gone"
+                       app:layout_constraintBottom_toTopOf="@+id/divider5"
+                       app:layout_constraintEnd_toStartOf="@+id/textView17"
+                       app:layout_constraintHorizontal_bias="0.5"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/payment_limit"
-                        app:layout_constraintEnd_toEndOf="@+id/payment_process_details_amount"
-                        app:layout_constraintTop_toBottomOf="@+id/payment_process_details_amount" />
+                   <TextView
+                       android:textColor="@color/black"
+                       android:id="@+id/textView2"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="@string/payment_limit"
+                       app:layout_constraintEnd_toEndOf="@+id/payment_process_details_amount"
+                       app:layout_constraintTop_toBottomOf="@+id/payment_process_details_amount" />
 
-                    <TextView
-                        android:id="@+id/payment_limit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="TextView"
-                        app:layout_constraintEnd_toEndOf="@+id/textView2"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                   <TextView
+                       android:id="@+id/payment_limit"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="12dp"
+                       android:text="TextView"
+                       app:layout_constraintEnd_toEndOf="@+id/textView2"
+                       app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                   <View
+                       android:id="@+id/divider12"
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="10dp"
+                       android:background="?android:attr/listDivider"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/payment_limit" />
+
+                   <androidx.appcompat.widget.AppCompatButton
+
+                       android:id="@+id/add_attachment_pp"
+                       android:layout_width="0dp"
+                       android:layout_height="47dp"
+                       android:layout_marginTop="10dp"
+                       android:layout_marginEnd="10dp"
+                       android:layout_marginBottom="10dp"
+                       android:background="@drawable/brown_border_rect"
+                       android:text="@string/add_attachment"
+
+                       app:cornerRadius="10dp"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/divider12"
+                       app:layout_constraintWidth_percent="0.45" />
+
+                   <androidx.appcompat.widget.AppCompatButton
+                       android:id="@+id/view_pp_attachments"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="10dp"
+                       android:layout_marginTop="10dp"
+                       android:background="@drawable/brown_border_rect"
+                       android:text="@string/see_attachments"
+
+                       app:cornerRadius="10dp"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/divider12"
+                       app:layout_constraintWidth_percent="0.45" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+           </ScrollView>
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -318,41 +363,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/orange_rect"
                 android:text="@string/approve_head_department"
                 android:textColor="@color/white"
                 app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:layout_constraintWidth_percent="0.45" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_attachment_pp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/orange_rect"
-                android:text="@string/add_attachment"
-                android:textColor="@color/white"
-                app:cornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:layout_constraintWidth_percent="0.45" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/view_pp_attachments"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/orange_rect"
-                android:text="@string/see_attachments"
-                android:textColor="@color/white"
-                app:cornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attachment_pp"
-                app:layout_constraintWidth_percent="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/stepper_view"
+                app:layout_constraintWidth_percent="0.95" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/deny"
@@ -360,12 +379,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/brown_border_rect"
                 android:text="@string/denay"
                 app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/approve"
-                app:layout_constraintWidth_percent="0.45" />
+                app:layout_constraintWidth_percent="0.95" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

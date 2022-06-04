@@ -201,4 +201,4 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
 
 
 data class CreateAttachmentRequest(var action:String,var id:Int,var entity:Int,var parts:MultipartBody.Part)
-data class CreateAttachmentForPaymentRequest(var action:String,var id:Int,var parts:MultipartBody.Part)
+data class CreateAttachmentForPaymentRequest(var action:String,var id:Int,var parts:MultipartBody.Part?)

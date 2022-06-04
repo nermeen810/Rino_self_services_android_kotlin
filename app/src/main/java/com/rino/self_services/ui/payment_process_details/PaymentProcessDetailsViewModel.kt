@@ -73,7 +73,7 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
             }
         }
     }
-    fun createAttachment(part: MultipartBody.Part, id:Int,action:String){
+    fun createAttachment(part: MultipartBody.Part?, id:Int,action:String){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repo.createAttachment(CreateAttachmentForPaymentRequest(action,id,part))) {
@@ -81,7 +81,10 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data.let {
+//                            it?.data?.let { it1 -> Log.d("newAyman", it1.date) }
+//                            _detailsData.postValue(it)
                             _setToTrue.postValue(true)
+
                             Log.d("atchments","done")
 //                            _detailsData.postValue(it)
                         }

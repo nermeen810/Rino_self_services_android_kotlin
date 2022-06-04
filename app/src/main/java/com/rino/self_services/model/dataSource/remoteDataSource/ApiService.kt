@@ -60,6 +60,6 @@ interface ApiService {
 
     @Multipart
     @POST("api/requests/action/")
-    suspend fun createAttachmentsForPayment(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part Attachments: List<MultipartBody.Part>,@Part("Notes") notes:RequestBody):Response<AttachmentResponse>
+    suspend fun createAttachmentsForPayment(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part Attachments: List<MultipartBody.Part?>,@Part("Notes") notes:RequestBody):Response<PaymentProcessDetails>
 }
 

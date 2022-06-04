@@ -7,13 +7,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.system.Os.accept
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
@@ -73,11 +76,12 @@ class PaymentProcessDetailsFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.addAttachmentPp.setOnClickListener {
-            if(action.isEmpty()){
-                showMessage("من فضلك ادخل حاله الطلب رفض او قبول")
-            }else{
-                (activity as MainActivity).openGalary()
-            }
+
+//            if(action.isEmpty()){
+//                showMessage("من فضلك ادخل حاله الطلب رفض او قبول")
+//            }else{
+//                (activity as MainActivity).openGalary()
+//            }
 
         }
         viewModel.setToTrue.observe(viewLifecycleOwner){
@@ -86,10 +90,29 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
         }
         binding.deny.setOnClickListener {
-            action = "deny"
+
         }
         binding.approve.setOnClickListener {
-            action = "approve"
+            MaterialAlertDialogBuilder(requireContext(),R.style.MaterialAlertDialog__Center)
+
+                .setTitle(resources.getString(R.string.approve_request_number)+requestId.toString())
+//                .setMessage(resources.getString(R.string.add_attachment))
+                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which -> }
+                .setNegativeButton(resources.getString(R.string.approve_without_attachments)) { dialog, which ->
+                    action = "deny"
+                    viewModel.createAttachment(null,requestId,action)
+                }
+                .setPositiveButton(resources.getString(R.string.approve_with_attachments)) { dialog, which ->
+                    action = "approve"
+                    (activity as MainActivity).openGalary()
+
+                }
+                .show()
+
+        }
+        binding.deny.setOnClickListener {
+            action = "deny"
+
         }
 
         return binding.root
@@ -138,25 +161,24 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
             binding.paymentProcessDetailsAmount.text = details?.amount.toString()
             binding.orderSidePayment.text = details?.department
-            if(details?.limit == null){
-                binding.paymentLimit.text = "لا يوجد"
-            }else{
-                binding.paymentLimit.text = details.limit.toString()
-            }
+            binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
+            binding.approve.text = details?.current?.name
+            binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
+
             when(details?.step){
-                0 ->{ binding.stepperView.setImageResource(R.drawable.first_stepper) }
-                1 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
-                2 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
-                3 ->{ binding.stepperView.setImageResource(R.drawable.fourth_stepper) }
-                4 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
-                5 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
-                6 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
+                1 ->{ binding.stepperView.setImageResource(R.drawable.first_stepper) }
+                2 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
+                3 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
+                4 ->{ binding.stepperView.setImageResource(R.drawable.fourth_stepper) }
+                5 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
+                6 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
+                7 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
             }
-            if(details?.status =="جديد"){
+//            if(details?.status =="جديد"){
                 binding.deny.alpha = 1f
-            }else{
-                binding.deny.alpha = 0f
-            }
+//            }else{
+//                binding.deny.alpha = 0f
+//            }
 
         }
     }

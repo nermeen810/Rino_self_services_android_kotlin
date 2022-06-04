@@ -168,9 +168,9 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             result = Result.Error(e)}
         return result
     }
-    suspend fun createAttachment(attachments:CreateAttachmentForPaymentRequest):Result<AttachmentResponse?>{
-        var result: Result<AttachmentResponse?> = Result.Loading
-        var list:List<MultipartBody.Part> = listOf(attachments.parts)
+    suspend fun createAttachment(attachments:CreateAttachmentForPaymentRequest):Result<PaymentProcessDetails?>{
+        var result: Result<PaymentProcessDetails?> = Result.Loading
+        var list:List<MultipartBody.Part?> = listOf(attachments.parts)
         try {
             val response = apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,list)
             if (response.isSuccessful) {

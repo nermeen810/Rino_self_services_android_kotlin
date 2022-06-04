@@ -63,6 +63,7 @@
                     app:endIconDrawable="@drawable/ic_baseline_email_24"
                     app:endIconMode="custom"
                     android:hint="@string/login_userName_hint"
+
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:textSize="@dimen/sub_header_text" />
