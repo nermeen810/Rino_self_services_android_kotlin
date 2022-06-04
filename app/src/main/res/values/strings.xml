@@ -67,5 +67,12 @@
     <string name="request_type">نوع المخالصة</string>
     <string name="vacation_start">بداية الاجازة</string>
     <string name="vacation_end">نهاية الاجازة</string>
+    <string name="attatchment">المرفقات</string>
+    <string name="approve_msg">تم قبول الطلب</string>
+    <string name="deny_msg">تم رقض الطلب</string>
+    <string name="view_attachment">عرض المرفقات</string>
+    <string name="details">تفاصيل المخالصة</string>
+    <string name="exit_msg">اذا كنت تريد الخروج من التطبيق اضغط على زر الرجوع مره اخرى</string>
+    <string name="attachments">المرفقات</string>
 
 </resources>

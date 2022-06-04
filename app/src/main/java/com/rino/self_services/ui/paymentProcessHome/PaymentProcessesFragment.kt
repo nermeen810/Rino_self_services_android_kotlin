@@ -1,10 +1,12 @@
 package com.rino.self_services.ui.paymentProcessHome
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +17,7 @@ import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.model.pojo.payment.Data
 import com.rino.self_services.model.pojo.payment.Items
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
+import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,7 +67,16 @@ class PaymentProcessesFragment : Fragment() {
         setUpUI()
 //        checkNetwork(serviceId)
         observeData()
+        handleBackButton()
         paymentMainItemAdapter.updateItems(emptyList())
+    }
+
+    private fun handleBackButton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                PaymentProcessesFragmentDirections.paymentToHome()
+            findNavController().navigate(action)
+        }
     }
 
     private fun observeData() {

@@ -20,11 +20,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HrClearanceRepo):ViewModel(){
     private  var _detailsData = MutableLiveData<HRClearanceDetails>()
-
+    private  var _action = MutableLiveData<String>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
     val loading: LiveData<Int>
         get() = _loading
+    val action: LiveData<String>
+        get() = _action
     val setError: LiveData<String>
         get() = _setError
     val detailsData: LiveData<HRClearanceDetails>
@@ -52,6 +54,39 @@ class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HrCleara
                 }
                 is Result.Loading -> {
                     Log.i("login", "Loading")
+                    _loading.postValue(View.VISIBLE)
+                }
+            }
+        }
+    }
+    fun actionApproveOrDeny(entity :Int?,
+                id :Int?, action :String){
+        _loading.postValue(View.VISIBLE)
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repo.postActionApproveOrDeny(entity,id,action)) {
+                is Result.Success -> {
+                    _loading.postValue(View.GONE)
+                    withContext(Dispatchers.Main) {
+                        result.data.let {
+                            if(action=="approve") {
+                                _action.postValue("approve")
+                            }
+                            else if(action=="deny"){
+                                _action.postValue("deny")
+                            }
+                        }
+                        Log.i("see All network:", "done")
+                    }
+                }
+                is Result.Error -> {
+                    Log.e("actionApproveOrDeny:", "${result.exception.message}")
+                    _loading.postValue(View.GONE)
+                    _setError.postValue(result.exception.message)
+
+
+                }
+                is Result.Loading -> {
+                    Log.i("actionApproveOrDeny", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }

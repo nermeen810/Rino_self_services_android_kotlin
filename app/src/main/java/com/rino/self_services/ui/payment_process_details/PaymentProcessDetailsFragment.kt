@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
@@ -14,6 +15,7 @@ import com.rino.self_services.databinding.FragmentPaymentProcessesBinding
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessFragmentDirections
 import com.rino.self_services.ui.seeAllPayment.SeeAllPaymentProcessViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,8 +39,16 @@ class PaymentProcessDetailsFragment : Fragment() {
         observeLoading()
         oberveData()
         obseveError()
+        handleBackBotton()
         viewModel.getData(requestId)
         return binding.root
+    }
+    private fun handleBackBotton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToPaymentHome()
+            findNavController().navigate(action)
+        }
     }
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {

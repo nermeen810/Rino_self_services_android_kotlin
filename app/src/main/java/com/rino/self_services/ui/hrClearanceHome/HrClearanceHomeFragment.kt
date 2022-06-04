@@ -63,11 +63,18 @@ class HrClearanceHomeFragment : Fragment() {
 //        searchHistoryAdapter = HrClearanceSubAdapter(searchHistoryList, viewModel,requireContext())
 //        searchHistoryAdapter.updateItems(searchHistoryList)
         setUpUI()
+        handleBackButton()
 //        checkNetwork(serviceId)
         observeData()
         hrClearanceMainAdapter.updateItems(emptyList())
     }
-
+    private fun handleBackButton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                HrClearanceHomeFragmentDirections.hrToHome()
+            findNavController().navigate(action)
+        }
+    }
     private fun observeData() {
         observeHistoryData()
         observeNoData()

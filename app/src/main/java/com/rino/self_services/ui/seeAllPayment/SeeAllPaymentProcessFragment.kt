@@ -16,6 +16,7 @@ import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 
 import com.rino.self_services.model.pojo.SeeAllRequest
+import com.rino.self_services.ui.hrClearanceDetails.HRClearanceDetailsFragmentDirections
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +42,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
 
         observeLoading()
         overseError()
-
+        handleBackBotton()
         adapter = SeeAllPaymentProcessRVAdapter(period.currentFutuer,ArrayList()){
             getPressesdItemIndex(it)
         }
@@ -62,6 +63,13 @@ class SeeAllPaymentProcessFragment : Fragment() {
             }
         })
         return binding.root
+    }
+    private fun handleBackBotton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                SeeAllPaymentProcessFragmentDirections.seeAllPaymentProcessFragmentToPaymentHome()
+            findNavController().navigate(action)
+        }
     }
     fun oserveData(){
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
