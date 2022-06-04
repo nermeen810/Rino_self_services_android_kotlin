@@ -72,5 +72,7 @@
     <string name="deny_msg">تم رقض الطلب</string>
     <string name="view_attachment">عرض المرفقات</string>
     <string name="details">تفاصيل المخالصة</string>
+    <string name="exit_msg">اذا كنت تريد الخروج من التطبيق اضغط على زر الرجوع مره اخرى</string>
+    <string name="attachments">المرفقات</string>
 
 </resources>

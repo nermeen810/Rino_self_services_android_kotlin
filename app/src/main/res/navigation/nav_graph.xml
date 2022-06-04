@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_hrClearanceHomeFragment_to_HRClearanceDetailsFragment"
             app:destination="@id/HRClearanceDetailsFragment" />
+        <action
+            android:id="@+id/hr_to_home"
+            app:destination="@id/homeFragment"/>
     </fragment>
     <fragment
         android:id="@+id/seeAllPaymentProcessFragment"
@@ -53,14 +56,16 @@
         <argument
             android:name="nav_see_all"
             app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <action
+            android:id="@+id/seeAllPaymentProcessFragment_toPaymentHome"
+            app:destination="@id/paymentProcessesFragment" />
         <action
             android:id="@+id/action_seeAllPaymentProcessFragment_to_paymentProcessDetailsFragment"
-            app:destination="@id/paymentProcessDetailsFragment" >
-            <argument
-                android:name="id"
-                app:argType="integer"
-                android:defaultValue="1" />
-        </action>
+            app:destination="@id/paymentProcessDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentProcessesFragment"
@@ -73,6 +78,9 @@
         <action
             android:id="@+id/action_paymentProcessesFragment_to_paymentProcessDetailsFragment"
             app:destination="@id/paymentProcessDetailsFragment" />
+        <action
+            android:id="@+id/payment_to_home"
+            app:destination="@id/homeFragment"/>
 
     </fragment>
     <fragment
@@ -85,6 +93,9 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/paymentProcessDetailsFragment_toPaymentHome"
+            app:destination="@id/paymentProcessesFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllHrClearanceFragment"
@@ -94,6 +105,9 @@
         <action
             android:id="@+id/action_seeAllHrClearanceFragment_to_HRClearanceDetailsFragment"
             app:destination="@id/HRClearanceDetailsFragment" />
+        <action
+            android:id="@+id/seeAllHrClearanceFragment_to_HrClearanceHome"
+            app:destination="@id/hrClearanceHomeFragment" />
         <argument
             android:name="nav_to_see_all_clearance"
             app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
@@ -102,15 +116,32 @@
         android:id="@+id/HRClearanceDetailsFragment"
         android:name="com.rino.self_services.ui.hrClearanceDetails.HRClearanceDetailsFragment"
         android:label="fragment_hr_clearance_details"
-        tools:layout="@layout/fragment_hr_clearance_details" >
+        tools:layout="@layout/fragment_hr_clearance_details"
+        >
         <argument
             android:name="hr_clearance_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
+        <action
+            android:id="@+id/hRClearanceDetailsFragment_toHrHome"
+            app:destination="@id/hrClearanceHomeFragment" />
+        <action
+            android:id="@+id/hr_clearance_details_toHrViewAttachments"
+            app:destination="@id/viewAttatchmentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewAttatchmentsFragment"
         android:name="com.rino.self_services.ui.viewAttatchment.ViewAttatchmentsFragment"
         android:label="fragment_view_attatchments"
-        tools:layout="@layout/fragment_view_attatchments" />
+        tools:layout="@layout/fragment_view_attatchments" >
+        <argument
+            android:name="attachment"
+            app:argType="com.rino.self_services.ui.viewAttatchment.Attachment[]" />
+        <argument
+            android:name="back_to_hr_details"
+            app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
+        <action
+            android:id="@+id/hrViewAttachments_to_hr_clearance_details"
+            app:destination="@id/HRClearanceDetailsFragment" />
+    </fragment>
 
 </navigation>

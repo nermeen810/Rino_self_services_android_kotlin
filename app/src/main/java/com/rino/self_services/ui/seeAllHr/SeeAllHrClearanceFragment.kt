@@ -16,6 +16,7 @@ import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 
 
@@ -44,6 +45,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         observeLoading()
         oserveData()
         overseError()
+        handleBack()
         adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
             getPressesdItemIndex(it)
         }
@@ -63,6 +65,15 @@ class SeeAllHrClearanceFragment : Fragment() {
         })
         return binding.root
     }
+
+    private fun handleBack() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                SeeAllHrClearanceFragmentDirections.seeAllHrClearanceFragmentToHrClearanceHome()
+            findNavController().navigate(action)
+        }
+    }
+
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {

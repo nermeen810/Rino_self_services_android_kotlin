@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceDetailsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.ui.payment_process_details.PaymentProcessDetailsViewModel
+import com.rino.self_services.ui.seeAllHr.SeeAllHrClearanceFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,8 @@ class HRClearanceDetailsFragment : Fragment() {
         observeLoading()
         obseveError()
         oberveData()
+        handleBackBotton()
+        navToViewAttachments()
         binding.addAttachment.setOnClickListener {
             val intent = Intent()
                 .setType("*/*")
@@ -50,6 +54,19 @@ class HRClearanceDetailsFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun navToViewAttachments() {
+
+    }
+
+    private fun handleBackBotton() {
+        binding.backbtn.setOnClickListener {
+            val action =
+                HRClearanceDetailsFragmentDirections.hRClearanceDetailsFragmentToHrHome()
+            findNavController().navigate(action)
+        }
+    }
+
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
@@ -141,6 +158,20 @@ class HRClearanceDetailsFragment : Fragment() {
                     binding.hrApprove.alpha = 0f
                     viewModel.actionApproveOrDeny(details?.entity,details?.id,"approve")
 
+                }
+            }
+            if(details.attachment.size==0)
+            {
+                binding.viewAttachment.visibility =View.GONE
+            }
+            else {
+                binding.viewAttachment.setOnClickListener {
+                    val action =
+                        HRClearanceDetailsFragmentDirections.hrClearanceDetailsToHrViewAttachments(
+                            details.attachment,
+                            hrClearanceDetailsRequest
+                        )
+                    findNavController().navigate(action)
                 }
             }
 
