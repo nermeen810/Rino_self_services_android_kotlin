@@ -6,18 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentViewAttatchmentsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.hrClearanceDetails.HRClearanceDetailsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewAttatchmentsFragment : Fragment() {
     private lateinit var binding: FragmentViewAttatchmentsBinding
-    private lateinit var serviceAdapter: AttatchmentAdapter
+    private lateinit var serviceAdapter: AttachmentAdapter
     private lateinit var servicesList: ArrayList<Attachment>
     private lateinit var hrClearanceDetailsRequest: HRClearanceDetailsRequest
 
@@ -46,7 +43,7 @@ class ViewAttatchmentsFragment : Fragment() {
     }
 
     private fun init() {
-        serviceAdapter = AttatchmentAdapter(arrayListOf(), requireActivity())
+        serviceAdapter = AttachmentAdapter(arrayListOf(), requireActivity())
         setUpUI()
         serviceAdapter.updateItems(servicesList)
 

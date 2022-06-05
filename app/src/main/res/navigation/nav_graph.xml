@@ -49,6 +49,9 @@
         <action
             android:id="@+id/hr_to_home"
             app:destination="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_hrClearanceHomeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllPaymentProcessFragment"
@@ -84,6 +87,9 @@
         <action
             android:id="@+id/payment_to_home"
             app:destination="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_paymentProcessesFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
 
     </fragment>
     <fragment
@@ -168,6 +174,21 @@
         <action
             android:id="@+id/action_forgetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.rino.self_services.ui.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" >
+        <argument
+            android:name="fromWhere"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_paymentProcessesFragment"
+            app:destination="@id/paymentProcessesFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_hrClearanceHomeFragment"
+            app:destination="@id/hrClearanceHomeFragment" />
     </fragment>
 
 </navigation>

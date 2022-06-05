@@ -84,9 +84,19 @@ class PaymentProcessesFragment : Fragment() {
         observeNoData()
         observeSearchHistoryData()
         observeNavToSeeAll()
+        observeNavigationCount()
         observeNavToServiceDetails()
         observeLoading()
         observeShowError()
+    }
+
+    private fun observeNavigationCount() {
+        viewModel.getNotificationCount()
+        viewModel.getNotificationCount.observe(viewLifecycleOwner) {
+            it?.let {
+           binding.countTxt.text = it.data.toString()
+            }
+        }
     }
 
     private fun observeNoData() {
@@ -196,6 +206,12 @@ class PaymentProcessesFragment : Fragment() {
 
     private fun setUpUI() {
         bottomNavigationSetup()
+        binding.countTxt.setOnClickListener {
+            navToNotification()
+        }
+        binding.notificationBtn.setOnClickListener {
+            navToNotification()
+        }
         binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -228,6 +244,11 @@ class PaymentProcessesFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun navToNotification() {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToNotificationsFragment("payment")
+        findNavController().navigate(action)
     }
 
     private fun bottomNavigationSetup() {

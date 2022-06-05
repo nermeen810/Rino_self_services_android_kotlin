@@ -6,6 +6,7 @@ import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
+import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -75,5 +76,12 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
     ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
 
     suspend fun approveRequest( auth: String, entity :Int?,
-                              id :Int?, action :String) =apiService.approveRequest(auth,entity,id,action)
+                              id :Int?, action :String) = apiService.approveRequest(auth,entity,id,action)
+
+
+    suspend fun getNotificationsCount(auth: String) = apiService.getNotificationsCount(auth)
+
+    suspend fun getAllNotifications(auth: String) = apiService.getAllNotifications(auth)
+
+    suspend fun setNotificationAsRead(auth: String,notification_id :Int)  = apiService.setNotificationAsRead(auth,notification_id)
 }

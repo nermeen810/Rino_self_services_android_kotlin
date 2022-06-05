@@ -13,6 +13,9 @@ import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.model.pojo.hrClearance.ActionApproveOrDeny
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
+import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
+import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
 
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
@@ -79,5 +82,14 @@ interface ApiService {
     @Multipart
     @POST("api/requests/action/")
     suspend fun createAttachmentsForPayment(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part Attachments: List<MultipartBody.Part?>,@Part("Notes") notes:RequestBody):Response<PaymentProcessDetails>
+
+    @GET("api/notifications/new/count")
+    suspend fun getNotificationsCount(@Header("Authorization") auth: String):Response<NotificationCountResponse>
+
+    @GET("api/notifications")
+    suspend fun getAllNotifications(@Header("Authorization") auth: String):Response<AllNotificationResponse>
+
+    @PUT("api/notifications/read/{notification_id}")
+    suspend fun setNotificationAsRead(@Header("Authorization") auth: String,@Path("notification_id") notification_id :Int):Response<SetNotificationAsRead>
 }
 
