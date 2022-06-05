@@ -11,7 +11,7 @@ import com.rino.self_services.databinding.NotificationItemBinding
 import com.rino.self_services.model.pojo.notifications.Data
 
 
-class NotificationAdapter (private var notificationList: ArrayList<Data>, private var context: Context) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter (private var notificationList: ArrayList<Data>,private  var viewModel: NotificationViewModel) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,7 +41,14 @@ class NotificationAdapter (private var notificationList: ArrayList<Data>, privat
             holder.binding.notificationIsReadImg.setImageResource(unread_msg)
         }
 
+         holder.binding.card.setOnClickListener{
 
+             if(notificationList[position].isread == false){
+                 holder.binding.notificationIsReadImg.setImageResource(read_msg)
+                 viewModel.setNotificationAsRead(notificationList[position].id?:-1)
+             }
+
+          }
 
     }
 
@@ -59,5 +66,4 @@ class NotificationAdapter (private var notificationList: ArrayList<Data>, privat
     inner class NotificationViewHolder(val binding: NotificationItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-}
 }
