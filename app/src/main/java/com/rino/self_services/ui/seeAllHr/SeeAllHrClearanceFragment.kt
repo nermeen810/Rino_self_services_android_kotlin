@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,6 +48,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         overseError()
         handleBack()
         adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
+//            Toast.makeText(requireContext(),"index"+it+"size"+viewModel.arrayList.size,Toast.LENGTH_LONG).show()
             getPressesdItemIndex(it)
         }
 
@@ -56,7 +58,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         binding.hrClearanceSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    if (viewModel.pageNumber < totalPages?:1 && viewModel.loading.value == View.GONE){
+                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
                         viewModel.pageNumber += 1
                         viewModel.getData(period)
                     }
@@ -125,8 +127,8 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun getPressesdItemIndex(index:Int){
 
 
-            val id = viewModel.arrayList.get(index-1).id
-            val entity = viewModel.arrayList.get(index).entity
+            val id = viewModel.arrayList[index].id
+            val entity = viewModel.arrayList[index].entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
                 HRClearanceDetailsRequest(entity!!,id)
             )

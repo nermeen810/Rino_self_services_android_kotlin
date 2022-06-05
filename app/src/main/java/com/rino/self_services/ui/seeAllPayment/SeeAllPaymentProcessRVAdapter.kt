@@ -14,6 +14,7 @@ import com.rino.self_services.model.pojo.Item
 class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private var itemList: ArrayList<Item>, private val onItemClicked: (position: Int) -> Unit): RecyclerView.Adapter<SeeAllPaymentProcessRVAdapter.MyViewHolder>()  {
 
     fun updateItems(itemList: List<Item>){
+        this.itemList.clear()
         this.itemList.addAll(itemList)
 
         notifyDataSetChanged()
@@ -51,13 +52,13 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemList[position]
         holder.orderNumber.text = item.id.toString()
-        holder.date.text = item.date
+        holder.date.text = item.date.split("T")[0]
         holder.amount.text = item.amount?.toString()
         holder.orderState.text = item.current.name
         holder.side.text = item.beneficiary
         holder.paymentMethod.text = "cash"
         holder.forwerd.text = item.current.users[0]
-        holder.balance.text = "٠.٠ر س"
+        holder.balance.text = "ر.س"+(item?.balance ?: 0.0).toString()
         if (currentFeatuer == "me"){
             holder.orderState.setBackgroundColor(Color.parseColor("#f6ac07"))
             holder.forwerdLabel.alpha = 0f

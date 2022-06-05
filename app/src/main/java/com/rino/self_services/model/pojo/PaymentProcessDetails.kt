@@ -16,7 +16,7 @@ data class PaymentProcessDetailsData(
     ,@SerializedName("amount") var amount:Double?
     ,@SerializedName("limit") var limit:Double?
     ,@SerializedName("paymentmethod") var paymentMethod:String
-    ,@SerializedName("balance") var balance:Int?
+    ,@SerializedName("balance") var balance:Double?
     ,@SerializedName("paytype") var payType:String?
     ,@SerializedName("beneficiary") var beneficiary:String
     ,@SerializedName("status_code") var statusCode:String
@@ -28,6 +28,8 @@ data class PaymentProcessDetailsData(
     ,@SerializedName("action") var action:Action
     ,@SerializedName("notes") var notes:String?
     ,@SerializedName("attachments") var attachments:List<AttachmentPayment>?
+    ,@SerializedName("hasPermission") var hasPermission:Boolean?
+    ,@SerializedName("hasApprovedRequest") var hasApproved:Boolean?
 )
 @Parcelize
 data class AttachmentPayment(

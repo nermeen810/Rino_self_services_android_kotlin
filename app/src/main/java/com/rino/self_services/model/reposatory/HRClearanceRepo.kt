@@ -201,9 +201,9 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
 
     suspend fun createAttachment(attachments:CreateAttachmentRequest):Result<HRClearanceDetails?>{
         var result: Result<HRClearanceDetails?> = Result.Loading
-        var list:List<MultipartBody.Part> = listOf(attachments.parts)
+
         try {
-            val response = apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,attachments.entity,list)
+            val response = apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,attachments.entity,attachments.parts)
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
                 Log.i("getHrClearanceHomeList", "Result $result")
@@ -245,5 +245,5 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
 }
 
 
-data class CreateAttachmentRequest(var action:String,var id:Int,var entity:Int,var parts:MultipartBody.Part)
-data class CreateAttachmentForPaymentRequest(var action:String,var id:Int,var parts:MultipartBody.Part?)
+data class CreateAttachmentRequest(var action:String,var id:Int,var entity:Int,var parts:List<MultipartBody.Part>?)
+data class CreateAttachmentForPaymentRequest(var action:String,var id:Int,var parts:ArrayList<MultipartBody.Part?>?)

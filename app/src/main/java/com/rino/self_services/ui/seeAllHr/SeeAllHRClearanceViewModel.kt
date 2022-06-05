@@ -39,8 +39,8 @@ class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearan
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data?.let {
-                            _seeAllData.postValue(it)
                             arrayList.addAll(it.date)
+                            _seeAllData.postValue(it)
                         }
                         Log.i("see All network:", "done")
                     }
