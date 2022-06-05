@@ -13,6 +13,9 @@
         <action
             android:id="@+id/login_to_home"
             app:destination="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/hr_to_home"
             app:destination="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_hrClearanceHomeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllPaymentProcessFragment"
@@ -81,6 +87,9 @@
         <action
             android:id="@+id/payment_to_home"
             app:destination="@id/homeFragment"/>
+        <action
+            android:id="@+id/action_paymentProcessesFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
 
     </fragment>
     <fragment
@@ -123,15 +132,15 @@
         android:label="fragment_hr_clearance_details"
         tools:layout="@layout/fragment_hr_clearance_details"
         >
+        <action
+            android:id="@+id/hRClearanceDetailsFragment_toHrHome"
+            app:destination="@id/hrClearanceHomeFragment" />
         <argument
             android:name="hr_clearance_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
         <action
-            android:id="@+id/hRClearanceDetailsFragment_toHrHome"
-            app:destination="@id/hrClearanceHomeFragment" />
-        <action
-            android:id="@+id/hr_clearance_details_toHrViewAttachments"
-            app:destination="@id/viewAttatchmentsFragment" />
+            android:id="@+id/action_HRClearanceDetailsFragment_to_PPAttachmentFragment"
+            app:destination="@id/PPAttachmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewAttatchmentsFragment"
@@ -139,14 +148,8 @@
         android:label="fragment_view_attatchments"
         tools:layout="@layout/fragment_view_attatchments" >
         <argument
-            android:name="attachment"
-            app:argType="com.rino.self_services.ui.viewAttatchment.Attachment[]" />
-        <argument
             android:name="back_to_hr_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
-        <action
-            android:id="@+id/hrViewAttachments_to_hr_clearance_details"
-            app:destination="@id/HRClearanceDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/PPAttachmentFragment"
@@ -155,7 +158,31 @@
         tools:layout="@layout/fragment_p_p_attachment" >
         <argument
             android:name="attachments"
-            app:argType="com.rino.self_services.model.pojo.AttachmentPayment[]" />
+            app:argType="com.rino.self_services.model.pojo.Attachment[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.rino.self_services.ui.forgetPassword.ForgetPasswordFragment"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.rino.self_services.ui.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" >
+        <argument
+            android:name="fromWhere"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_paymentProcessesFragment"
+            app:destination="@id/paymentProcessesFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_hrClearanceHomeFragment"
+            app:destination="@id/hrClearanceHomeFragment" />
     </fragment>
 
 </navigation>

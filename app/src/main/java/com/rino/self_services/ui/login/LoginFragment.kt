@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
 
     private fun init() {
         loginButtonOnClick()
-        //    resetPassOnClick()
+            resetPassOnClick()
         privacyPolicyOnClick()
         observeData()
     }
@@ -71,16 +71,16 @@ class LoginFragment : Fragment() {
         }
     }
 
-//    private fun resetPassOnClick() {
-//        binding.resetPassTxt.setOnClickListener {
-//            navigateToResetPass()
-//        }
-//    }
+    private fun resetPassOnClick() {
+        binding.resetPassTxt.setOnClickListener {
+            navigateToResetPass()
+        }
+    }
 
-//    private fun navigateToResetPass() {
-//        val action = .actionLoginToResetPass()
-//        findNavController().navigate(action)
-//    }
+    private fun navigateToResetPass() {
+        val action = LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment()
+        findNavController().navigate(action)
+    }
 
     private fun observeData() {
         observeSuccessLogin()
