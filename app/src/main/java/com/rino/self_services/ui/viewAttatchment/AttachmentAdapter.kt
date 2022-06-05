@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.AttatchmentItemBinding
 
 
-class AttatchmentAdapter (private var attachmentList: ArrayList<Attachment>, private var context: Context) : RecyclerView.Adapter<AttatchmentAdapter.AttatchmentViewHolder>() {
+class AttachmentAdapter (private var attachmentList: ArrayList<Attachment>, private var context: Context) : RecyclerView.Adapter<AttachmentAdapter.AttatchmentViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

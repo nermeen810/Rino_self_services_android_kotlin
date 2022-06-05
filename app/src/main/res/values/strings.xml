@@ -94,6 +94,7 @@
     <string name="code">كود التفعيل</string>
     <string name="saveNewPaswword">حفظ كلمة المرور الجديدة</string>
     <string name="request_otp_Code">ارسال الكود التفعيلى</string>
+    <string name="notifications">الاشعارات</string>
 
 
 </resources>

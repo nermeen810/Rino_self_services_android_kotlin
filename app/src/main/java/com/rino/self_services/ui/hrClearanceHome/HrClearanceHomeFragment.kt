@@ -79,12 +79,20 @@ class HrClearanceHomeFragment : Fragment() {
         observeHistoryData()
         observeNoData()
   //      observeSearchHistoryData()
+        observeNavigationCount()
         observeNavToSeeAll()
-           observeNavToServiceDetails()
+        observeNavToServiceDetails()
         observeLoading()
         observeShowError()
     }
-
+    private fun observeNavigationCount() {
+        viewModel.getNotificationCount()
+        viewModel.getNotificationCount.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.countTxt.text = it.data.toString()
+            }
+        }
+    }
     private fun observeNoData() {
         viewModel.noData.observe(viewLifecycleOwner) {
             binding.historyRecycle.visibility = View.GONE
@@ -192,6 +200,13 @@ class HrClearanceHomeFragment : Fragment() {
 
     private fun setUpUI() {
         bottomNavigationSetup()
+        binding.notificationBtn.setOnClickListener {
+            navToNotification()
+        }
+        binding.countTxt.setOnClickListener {
+            navToNotification()
+        }
+
 //        binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -224,6 +239,11 @@ class HrClearanceHomeFragment : Fragment() {
 //            }
 //        })
 
+    }
+
+    private fun navToNotification() {
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToNotificationsFragment("hr")
+        findNavController().navigate(action)
     }
 
     private fun bottomNavigationSetup() {

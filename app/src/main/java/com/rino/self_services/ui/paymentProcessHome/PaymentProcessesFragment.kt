@@ -84,9 +84,19 @@ class PaymentProcessesFragment : Fragment() {
         observeNoData()
         observeSearchHistoryData()
         observeNavToSeeAll()
+        observeNavigationCount()
         observeNavToServiceDetails()
         observeLoading()
         observeShowError()
+    }
+
+    private fun observeNavigationCount() {
+        viewModel.getNotificationCount()
+        viewModel.getNotificationCount.observe(viewLifecycleOwner) {
+            it?.let {
+           binding.countTxt.text = it.data.toString()
+            }
+        }
     }
 
     private fun observeNoData() {
