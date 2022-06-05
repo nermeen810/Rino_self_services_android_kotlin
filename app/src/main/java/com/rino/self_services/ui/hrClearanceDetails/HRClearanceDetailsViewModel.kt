@@ -7,9 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rino.self_services.model.pojo.CreateAttachmentRequest
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.model.reposatory.CreateAttachmentRequest
+//import com.rino.self_services.model.reposatory.CreateAttachmentRequest
 import com.rino.self_services.model.reposatory.HrClearanceRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel

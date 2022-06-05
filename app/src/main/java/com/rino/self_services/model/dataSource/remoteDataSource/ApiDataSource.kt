@@ -1,16 +1,14 @@
 package com.rino.self_services.model.dataSource.remoteDataSource
 
 
-import com.rino.self_services.model.pojo.AttachmentResponse
+
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
-import retrofit2.http.Header
-import retrofit2.http.Path
+
 import javax.inject.Inject
 
 class ApiDataSource @Inject constructor(private val apiService: ApiService) {
@@ -68,6 +66,5 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         period_value: String
     ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
 
-    suspend fun approveRequest( auth: String, entity :Int?,
-                              id :Int?, action :String) =apiService.approveRequest(auth,entity,id,action)
+
 }

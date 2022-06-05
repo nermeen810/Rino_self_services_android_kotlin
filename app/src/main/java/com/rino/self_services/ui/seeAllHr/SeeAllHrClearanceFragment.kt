@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,7 +16,6 @@ import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 
 

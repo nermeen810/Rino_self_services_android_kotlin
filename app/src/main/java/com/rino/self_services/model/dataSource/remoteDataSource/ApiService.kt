@@ -8,7 +8,7 @@ import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
-import com.rino.self_services.model.pojo.hrClearance.ActionApproveOrDeny
+//import com.rino.self_services.model.pojo.hrClearance.ActionApproveOrDeny
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 
 
@@ -60,11 +60,11 @@ interface ApiService {
     @POST("api/clearancerequests/action/")
     suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part("Entity") Entity:RequestBody, @Part Attachments: List<MultipartBody.Part>?,@Part("Notes") notes:RequestBody):Response<HRClearanceDetails>
 
-    @POST("api/clearancerequests/action/{entity}/{id}/{action}")
-    suspend fun approveRequest(@Header("Authorization"   ) auth: String,
-                                       @Path("entity")entity :Int?,
-                                       @Path("id")id :Int?,
-                                      @Path("action")action :String):Response<ActionApproveOrDeny>
+//    @POST("api/clearancerequests/action/{entity}/{id}/{action}")
+//    suspend fun approveRequest(@Header("Authorization"   ) auth: String,
+//                                       @Path("entity")entity :Int?,
+//                                       @Path("id")id :Int?,
+//                                      @Path("action")action :String):Response<ActionApproveOrDeny>
 
 
     @Multipart

@@ -11,9 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
+import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
 import com.rino.self_services.model.pojo.PaymentProcessDetails
-import com.rino.self_services.model.reposatory.CreateAttachmentForPaymentRequest
-import com.rino.self_services.model.reposatory.CreateAttachmentRequest
 import com.rino.self_services.model.reposatory.PaymentRepo
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -59,11 +58,12 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                     }
                 }
                 is Result.Error -> {
+                    Log.i("error", "error")
                     _loading.postValue(View.GONE)
                     _setError.postValue(result.exception.message)
                 }
                 is Result.Loading -> {
-                    Log.i("login", "Loading")
+                    Log.i("details", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }

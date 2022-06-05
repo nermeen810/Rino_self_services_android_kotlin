@@ -1,53 +1,19 @@
 package com.rino.self_services.ui.hrClearanceDetails
 
-import android.Manifest
-import android.app.Activity.RESULT_OK
-import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
-
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceDetailsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.main.MainActivity
-import com.rino.self_services.ui.payment_process_details.PaymentProcessDetailsViewModel
-import com.rino.self_services.ui.seeAllHr.SeeAllHrClearanceFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -106,13 +72,13 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun obseveError(){
         viewModel.setError.observe(viewLifecycleOwner){
             showMessage(it)
-            if(it != null && it != ""){
-
-//                binding.ppErrorMessage.text = it
-//                binding.ppErrorMessage.visibility = View.VISIBLE
-            }else{
-//                binding.ppErrorMessage.visibility = View.GONE
-            }
+//            if(it != null && it != ""){
+//
+////                binding.ppErrorMessage.text = it
+////                binding.ppErrorMessage.visibility = View.VISIBLE
+//            }else{
+////                binding.ppErrorMessage.visibility = View.GONE
+//            }
         }
     }
     private fun showMessage(msg: String) {
@@ -143,13 +109,13 @@ class HRClearanceDetailsFragment : Fragment() {
             binding.hrDStatus.text = details.status
 
             when(details?.step){
-                0 ->{ binding.clearanceStepper.setImageResource(R.drawable.first_stepper) }
                 1 ->{ binding.clearanceStepper.setImageResource(R.drawable.second_stepper) }
                 2 ->{ binding.clearanceStepper.setImageResource(R.drawable.third_stepper) }
                 3 ->{ binding.clearanceStepper.setImageResource(R.drawable.fourth_stepper) }
                 4 ->{ binding.clearanceStepper.setImageResource(R.drawable.fifth_stepper) }
                 5 ->{ binding.clearanceStepper.setImageResource(R.drawable.sixth_stepper) }
                 6 ->{ binding.clearanceStepper.setImageResource(R.drawable.seventh_stepper) }
+                7 ->{ binding.clearanceStepper.setImageResource(R.drawable.seventh_stepper) }
             }
             if(details.type?.contains("خروج وعوده") == true && details.start != null && details.end != null){
                 binding.hrLEnd.alpha = 1f

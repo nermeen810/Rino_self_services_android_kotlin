@@ -6,12 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentViewAttatchmentsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.hrClearanceDetails.HRClearanceDetailsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -13,7 +13,8 @@ import android.content.Context
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
-import com.rino.self_services.model.pojo.AttachmentResponse
+import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
+//import com.rino.self_services.model.pojo.AttachmentResponse
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
 import com.rino.self_services.utils.PREF_FILE_NAME
@@ -168,7 +169,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             result = Result.Error(e)}
         return result
     }
-    suspend fun createAttachment(attachments:CreateAttachmentForPaymentRequest):Result<PaymentProcessDetails?>{
+    suspend fun createAttachment(attachments: CreateAttachmentForPaymentRequest):Result<PaymentProcessDetails?>{
         var result: Result<PaymentProcessDetails?> = Result.Loading
         try {
             val response = attachments.parts?.let {

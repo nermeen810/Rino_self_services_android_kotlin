@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -141,7 +141,7 @@
                         android:layout_marginEnd="28dp"
                         android:background="@drawable/orange_rect"
                         android:padding="8dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toLeftOf="@+id/textView24"
                         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -198,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
@@ -220,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -242,7 +242,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -274,7 +274,7 @@
                         android:layout_margin="@dimen/paddingText"
                         android:background="@drawable/orange_rect"
                         android:padding="5dp"
-                        android:text="TextView"
+
                         app:layout_constraintBottom_toBottomOf="@+id/textView39"
 
                         app:layout_constraintEnd_toStartOf="@+id/textView39"
@@ -308,7 +308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
@@ -355,7 +355,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="TextView"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_l_start" />
 
@@ -363,7 +363,7 @@
                         android:id="@+id/hr_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+
                         app:layout_constraintRight_toRightOf="@+id/hr_l_end"
                         app:layout_constraintTop_toTopOf="@+id/hr_start" />
 
