@@ -38,21 +38,19 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         page: Int
     ) = apiService.getAllHRRecords(token,meOrOthers,from,to,page)
 
-    suspend fun createAttachment(token:String,id:Int,Action:String,Entity:Int,parts:List<MultipartBody.Part>?): retrofit2.Response<HRClearanceDetails> {
+    suspend fun createAttachment(token:String,id:Int,Entity:Int,parts:List<MultipartBody.Part>?): retrofit2.Response<HRClearanceDetails> {
         val idBody: RequestBody = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val actionBody: RequestBody = Action.toRequestBody("text/plain".toMediaTypeOrNull())
+//        val actionBody: RequestBody = Action.toRequestBody("text/plain".toMediaTypeOrNull())
         val enityBody: RequestBody = Entity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val notes:RequestBody = "".toRequestBody()
 
-        return  apiService.createAttachments(token,idBody,actionBody,enityBody,parts,notes)
+        return  apiService.createAttachments(token,idBody,enityBody,parts,notes)
     }
-    suspend fun createAttachmentForPayment(token:String,id:Int,Action:String,parts:List<MultipartBody.Part?>): retrofit2.Response<PaymentProcessDetails> {
+    suspend fun createAttachmentForPayment(token:String,id:Int,parts:List<MultipartBody.Part>?): retrofit2.Response<PaymentProcessDetails> {
         val idBody: RequestBody = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val actionBody: RequestBody = Action.toRequestBody("text/plain".toMediaTypeOrNull())
+        val notes:RequestBody = " ".toRequestBody()
 
-        val notes:RequestBody = "hello".toRequestBody()
-
-        return  apiService.createAttachmentsForPayment(token,idBody,actionBody,parts,notes)
+        return  apiService.createAttachmentsForPayment(token,idBody,parts,notes)
     }
 
     suspend fun getPaymentDetails(token:String,id:Int) = apiService.getPaymentDetails(token,id)

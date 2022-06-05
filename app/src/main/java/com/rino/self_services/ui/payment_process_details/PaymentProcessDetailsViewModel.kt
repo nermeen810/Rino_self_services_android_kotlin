@@ -69,7 +69,7 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
             }
         }
     }
-    fun createAttachment(part: ArrayList<MultipartBody.Part?>?, id:Int,action:String){
+    fun createAttachment(part: ArrayList<MultipartBody.Part>?, id:Int,action:String){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repo.createAttachment(CreateAttachmentForPaymentRequest(action,id,part))) {

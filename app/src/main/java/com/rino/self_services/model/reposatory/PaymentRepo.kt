@@ -173,8 +173,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
         var result: Result<PaymentProcessDetails?> = Result.Loading
         try {
             val response = attachments.parts?.let {
-                apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,
-                    it.toList())
+                apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id, it.toList())
             }
             if (response != null) {
                 if (response.isSuccessful) {

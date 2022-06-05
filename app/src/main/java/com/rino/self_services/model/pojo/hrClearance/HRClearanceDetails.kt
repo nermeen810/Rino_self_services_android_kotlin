@@ -1,7 +1,7 @@
 package com.rino.self_services.model.pojo
 
 import com.google.gson.annotations.SerializedName
-import com.rino.self_services.ui.viewAttatchment.Attachment
+
 
 data class HRClearanceDetails (@SerializedName("data") var data:HRClearanceData)
 data class HRClearanceData(

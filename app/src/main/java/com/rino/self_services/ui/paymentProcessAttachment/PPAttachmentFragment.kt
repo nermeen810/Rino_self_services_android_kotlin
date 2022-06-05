@@ -9,7 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rino.self_services.databinding.FragmentPPAttachmentBinding
-import com.rino.self_services.model.pojo.AttachmentPayment
+import com.rino.self_services.model.pojo.Attachment
+//import com.rino.self_services.model.pojo.AttachmentPayment
 import com.rino.self_services.ui.payment_process_details.PPAttachmentViewAdapter
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,12 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class PPAttachmentFragment : Fragment() {
 
 private lateinit var binding:FragmentPPAttachmentBinding
-private lateinit var array: Array<AttachmentPayment>
+private lateinit var array: Array<Attachment>
 private lateinit var adapter:PPAttachmentViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            array = arguments?.get("attachments") as Array<AttachmentPayment>
+            array = arguments?.get("attachments") as Array<Attachment>
 
 
             adapter = PPAttachmentViewAdapter(array){

@@ -135,12 +135,12 @@
         <action
             android:id="@+id/hRClearanceDetailsFragment_toHrHome"
             app:destination="@id/hrClearanceHomeFragment" />
-        <action
-            android:id="@+id/hr_clearance_details_toHrViewAttachments"
-            app:destination="@id/viewAttatchmentsFragment" />
         <argument
             android:name="hr_clearance_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
+        <action
+            android:id="@+id/action_HRClearanceDetailsFragment_to_PPAttachmentFragment"
+            app:destination="@id/PPAttachmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewAttatchmentsFragment"
@@ -148,14 +148,8 @@
         android:label="fragment_view_attatchments"
         tools:layout="@layout/fragment_view_attatchments" >
         <argument
-            android:name="attachment"
-            app:argType="com.rino.self_services.ui.viewAttatchment.Attachment[]" />
-        <argument
             android:name="back_to_hr_details"
             app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
-        <action
-            android:id="@+id/hrViewAttachments_to_hr_clearance_details"
-            app:destination="@id/HRClearanceDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/PPAttachmentFragment"
@@ -164,7 +158,7 @@
         tools:layout="@layout/fragment_p_p_attachment" >
         <argument
             android:name="attachments"
-            app:argType="com.rino.self_services.model.pojo.AttachmentPayment[]" />
+            app:argType="com.rino.self_services.model.pojo.Attachment[]" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
