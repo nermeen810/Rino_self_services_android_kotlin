@@ -170,35 +170,39 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
     }
     suspend fun createAttachment(attachments:CreateAttachmentForPaymentRequest):Result<PaymentProcessDetails?>{
         var result: Result<PaymentProcessDetails?> = Result.Loading
-        var list:List<MultipartBody.Part?> = listOf(attachments.parts)
         try {
-            val response = apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,list)
-            if (response.isSuccessful) {
-                result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
-            } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
-                when (response.code()) {
-                    400 -> {
-                        Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
-                    }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
-                    }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("time out"))
-                    }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+            val response = attachments.parts?.let {
+                apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,
+                    it.toList())
+            }
+            if (response != null) {
+                if (response.isSuccessful) {
+                    result = Result.Success(response.body())
+                    Log.i("getHrClearanceHomeList", "Result $result")
+                } else {
+                    Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                    when (response.code()) {
+                        400 -> {
+                            Log.e("Error 400", "Bad Request")
+                            result = Result.Error(Exception("Bad Reques "))
+                        }
+                        404 -> {
+                            Log.e("Error 404", "Not Found")
+                            result = Result.Error(Exception("Not Found"))
+                        }
+                        500 -> {
+                            Log.e("Error 500", "Server Error")
+                            result = Result.Error(Exception("server is down"))
+                        }
+                        502 -> {
+                            Log.e("Error 502", "Time out")
+                            result =
+                                Result.Error(Exception("time out"))
+                        }
+                        else -> {
+                            Log.e("Error", response.code().toString())
+                            result = Result.Error(Exception("Error"))
+                        }
                     }
                 }
             }

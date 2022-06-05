@@ -40,7 +40,7 @@
             <ImageView
 
                 android:id="@+id/clearance_stepper"
-                android:layout_width="70dp"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
                 android:layout_marginTop="20dp"
@@ -261,6 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
                         android:text="محال الى"
                         android:textColor="@color/black"
                         app:layout_constraintRight_toRightOf="parent"
@@ -391,20 +392,6 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/add_attachment"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:background="@drawable/brown_border_rect"
-                        android:text="اضافة مرفقات"
-                        android:textColor="@color/dark_gray"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/line3"
-                        app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
-                        app:layout_constraintWidth_percent="0.9" />
-
                     <View
                         android:id="@+id/line3"
                         android:layout_width="1dp"
@@ -420,14 +407,18 @@
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/view_attachment"
-                        android:layout_width="120dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/brown_border_rect"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="13dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/brown_border_rect"
                         android:text="@string/view_attachment"
                         android:textColor="@color/dark_gray"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/line3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
                         app:layout_constraintWidth_percent="0.9" />
@@ -451,16 +442,17 @@
                 app:layout_constraintWidth_percent="0.4" />
 
 
-
             <androidx.appcompat.widget.AppCompatButton
 
                 android:id="@+id/hr_denay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-             android:layout_margin="@dimen/paddingLayout"
-                android:textStyle="bold"
+                android:layout_margin="@dimen/paddingLayout"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/brown_border_rect"
                 android:text="رفض"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hr_approve"
                 app:layout_constraintWidth_percent="0.4" />

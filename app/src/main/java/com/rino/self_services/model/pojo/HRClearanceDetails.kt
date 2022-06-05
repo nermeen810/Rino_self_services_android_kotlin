@@ -24,7 +24,9 @@ data class HRClearanceData(
 ,@SerializedName("current") var current:HRClearancecurrent?
 ,@SerializedName("action") var action: HRClearanceAction?
 ,@SerializedName("employee") var employee:String
-    ,@SerializedName("attachments") var attachment: Array<Attachment>)
+,@SerializedName("attachments") var attachment: Array<Attachment>
+,@SerializedName("hasPermission") var hasPermission:Boolean?
+,@SerializedName("hasApprovedRequest") var hasApproved:Boolean?)
 data class HRClearancecurrent(
     @SerializedName("name") var name:String?
 ,@SerializedName("users") var users:List<String>?)

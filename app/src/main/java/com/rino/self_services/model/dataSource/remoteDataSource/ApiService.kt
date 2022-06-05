@@ -70,7 +70,7 @@ interface ApiService {
 
     @Multipart
     @POST("api/clearancerequests/action/")
-    suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part("Entity") Entity:RequestBody, @Part Attachments: List<MultipartBody.Part>,@Part("Notes") notes:RequestBody):Response<HRClearanceDetails>
+    suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody, @Part("Action") Action:RequestBody, @Part("Entity") Entity:RequestBody, @Part Attachments: List<MultipartBody.Part>?,@Part("Notes") notes:RequestBody):Response<HRClearanceDetails>
 
     @POST("api/clearancerequests/action/{entity}/{id}/{action}")
     suspend fun approveRequest(@Header("Authorization"   ) auth: String,

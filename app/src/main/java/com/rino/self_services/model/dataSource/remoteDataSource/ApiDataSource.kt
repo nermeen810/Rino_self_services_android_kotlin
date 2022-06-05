@@ -38,11 +38,11 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         page: Int
     ) = apiService.getAllHRRecords(token,meOrOthers,from,to,page)
 
-    suspend fun createAttachment(token:String,id:Int,Action:String,Entity:Int,parts:List<MultipartBody.Part>): retrofit2.Response<HRClearanceDetails> {
+    suspend fun createAttachment(token:String,id:Int,Action:String,Entity:Int,parts:List<MultipartBody.Part>?): retrofit2.Response<HRClearanceDetails> {
         val idBody: RequestBody = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val actionBody: RequestBody = Action.toRequestBody("text/plain".toMediaTypeOrNull())
         val enityBody: RequestBody = Entity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val notes:RequestBody = "hello".toRequestBody()
+        val notes:RequestBody = "".toRequestBody()
 
         return  apiService.createAttachments(token,idBody,actionBody,enityBody,parts,notes)
     }
