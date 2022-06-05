@@ -1,25 +1,15 @@
 package com.rino.self_services.ui.notifications
 
 import android.os.Bundle
-import android.system.Os.close
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-
-import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentNotificationsBinding
-import com.rino.self_services.databinding.FragmentViewAttatchmentsBinding
-import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.notifications.Data
-import com.rino.self_services.ui.viewAttatchment.Attachment
-import com.rino.self_services.ui.viewAttatchment.AttachmentAdapter
-import com.rino.self_services.ui.viewAttatchment.ViewAttatchmentsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

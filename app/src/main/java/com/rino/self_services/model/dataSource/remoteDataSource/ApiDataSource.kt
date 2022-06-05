@@ -4,6 +4,8 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
+import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
+import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -64,5 +66,13 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         period_value: String
     ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
 
+    suspend fun requestOTP(requestOTP: RequestOTP) =apiService.requestOTP(requestOTP)
+
+    suspend fun resetPassword(resetPasswrdRequest: ResetPasswordRequest)= apiService.resetPassword(resetPasswrdRequest)
+    suspend fun getNotificationsCount(auth: String) = apiService.getNotificationsCount(auth)
+
+    suspend fun getAllNotifications(auth: String) = apiService.getAllNotifications(auth)
+
+    suspend fun setNotificationAsRead(auth: String,notification_id :Int)  = apiService.setNotificationAsRead(auth,notification_id)
 
 }

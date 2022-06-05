@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_border_all_24.xml" value="0.194" />
         <entry key="app/src/main/res/drawable/rectangle.xml" value="0.194" />
         <entry key="app/src/main/res/layout/attachment_item_pp.xml" value="0.5165794066317626" />
+        <entry key="app/src/main/res/layout/fragment_forget_password.xml" value="0.18566362715298884" />
         <entry key="app/src/main/res/layout/fragment_hr_clearance_details.xml" value="0.3661627875434028" />
         <entry key="app/src/main/res/layout/fragment_p_p_attachment.xml" value="0.4061994199399595" />
         <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.25622067406063986" />
