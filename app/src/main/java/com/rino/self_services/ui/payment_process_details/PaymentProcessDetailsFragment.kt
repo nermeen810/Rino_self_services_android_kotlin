@@ -1,7 +1,6 @@
 package com.rino.self_services.ui.payment_process_details
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -156,7 +155,7 @@ class PaymentProcessDetailsFragment : Fragment() {
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
             details?.attachments?.let { it1 -> array.addAll(it1) }
-
+            Toast.makeText(requireContext(),"done",Toast.LENGTH_LONG).show()
             binding.orderNumberDetails.text = details?.id.toString()
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
@@ -171,12 +170,12 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
 
             when(details?.step){
-                1 ->{ binding.stepperView.setImageResource(R.drawable.first_stepper) }
-                2 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
-                3 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
-                4 ->{ binding.stepperView.setImageResource(R.drawable.fourth_stepper) }
-                5 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
-                6 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
+                1 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
+                2 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
+                3 ->{ binding.stepperView.setImageResource(R.drawable.fourth_stepper) }
+                4 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
+                5 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
+                6 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
                 7 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
             }
                 if(details?.hasApproved == false && details.hasPermission == true){

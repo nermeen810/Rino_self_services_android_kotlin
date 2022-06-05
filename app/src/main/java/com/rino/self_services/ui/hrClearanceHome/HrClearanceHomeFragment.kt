@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,6 @@ import com.rino.self_services.databinding.FragmentHrClearanceHomeBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Data
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
-import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.*
 
 import dagger.hilt.android.AndroidEntryPoint

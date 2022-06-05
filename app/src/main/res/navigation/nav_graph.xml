@@ -132,15 +132,15 @@
         android:label="fragment_hr_clearance_details"
         tools:layout="@layout/fragment_hr_clearance_details"
         >
-        <argument
-            android:name="hr_clearance_details"
-            app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
         <action
             android:id="@+id/hRClearanceDetailsFragment_toHrHome"
             app:destination="@id/hrClearanceHomeFragment" />
         <action
             android:id="@+id/hr_clearance_details_toHrViewAttachments"
             app:destination="@id/viewAttatchmentsFragment" />
+        <argument
+            android:name="hr_clearance_details"
+            app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
     </fragment>
     <fragment
         android:id="@+id/viewAttatchmentsFragment"
