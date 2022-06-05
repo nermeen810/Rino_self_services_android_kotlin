@@ -86,15 +86,5 @@
     <string name="exit_msg">اذا كنت تريد الخروج من التطبيق اضغط على زر الرجوع مره اخرى</string>
     <string name="attachments">المرفقات</string>
 
-    <string name="qrCode_must_4number">الكود ا لتفعيلى يجب ان يحتوى على 4 ارقام</string>
-    <string name="weak_password">كلمة المرور ضعيفة</string>
-    <string name="pass_not_matched">كلمة المرور غير متطابقة</string>
-    <string name="reset_password_hint">كلمة المرور الجديدة</string>
-    <string name="reset_confirm_password_hint">تأكيد كلمة المرور الجديدة</string>
-    <string name="code">كود التفعيل</string>
-    <string name="saveNewPaswword">حفظ كلمة المرور الجديدة</string>
-    <string name="request_otp_Code">ارسال الكود التفعيلى</string>
-    <string name="notifications">الاشعارات</string>
-
 
 </resources>
