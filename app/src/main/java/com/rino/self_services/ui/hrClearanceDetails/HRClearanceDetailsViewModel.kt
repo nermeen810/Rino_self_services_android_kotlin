@@ -62,10 +62,10 @@ class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HrCleara
             }
         }
     }
-fun createAttachment(part:List<MultipartBody.Part>?, id:Int, entity:Int,action:String){
+fun createAttachment(part:List<MultipartBody.Part>?, id:Int, entity:Int){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repo.createAttachment(CreateAttachmentRequest(action,id,entity,part))) {
+            when (val result = repo.createAttachment(CreateAttachmentRequest(id,entity,part))) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {

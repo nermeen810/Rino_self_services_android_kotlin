@@ -9,11 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
-import com.rino.self_services.model.pojo.AttachmentPayment
+import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,11 +24,11 @@ import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
-    private  var parts = ArrayList<MultipartBody.Part?>()
+    private  var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
-    private  var array:ArrayList<AttachmentPayment> = ArrayList()
+    private  var array:ArrayList<Attachment> = ArrayList()
      var requestId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,40 +76,15 @@ class PaymentProcessDetailsFragment : Fragment() {
         }
         binding.deny.setOnClickListener {
             action = "deny"
-            MaterialAlertDialogBuilder(requireContext(),R.style.MaterialAlertDialog__Center)
-                .setTitle(resources.getString(R.string.denay)+requestId.toString())
-//                .setMessage(resources.getString(R.string.add_attachment))
-                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which -> }
-                .setNegativeButton(resources.getString(R.string.deny_without_attachments)) { dialog, which ->
-                    viewModel.createAttachment(null,requestId,action)
 
-                }
-                .setPositiveButton(resources.getString(R.string.deny_with_attachments)) { dialog, which ->
-
-                    (activity as MainActivity).caller = FileCaller.paymentDetails
-                    (activity as MainActivity).openGalary()
-
-                }
-                .show()
         }
         binding.approve.setOnClickListener {
             action = "approve"
-            MaterialAlertDialogBuilder(requireContext(),R.style.MaterialAlertDialog__Center)
 
-                .setTitle(resources.getString(R.string.approve_request_number)+requestId.toString())
-//                .setMessage(resources.getString(R.string.add_attachment))
-                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which -> }
-                .setNegativeButton(resources.getString(R.string.approve_without_attachments)) { dialog, which ->
-                    viewModel.createAttachment(null,requestId,action)
-
-                }
-                .setPositiveButton(resources.getString(R.string.approve_with_attachments)) { dialog, which ->
-
-                    (activity as MainActivity).caller = FileCaller.paymentDetails
-                    (activity as MainActivity).openGalary()
-                }
-                .show()
-
+        }
+        binding.ppAddAttachment.setOnClickListener{
+            (activity as MainActivity).caller = FileCaller.paymentDetails
+            (activity as MainActivity).openGalary()
         }
         return binding.root
     }

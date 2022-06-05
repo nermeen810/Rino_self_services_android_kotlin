@@ -12,8 +12,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceDetailsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.ui.main.FileCaller
+import com.rino.self_services.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -21,7 +26,7 @@ class HRClearanceDetailsFragment : Fragment() {
     val viewModel: HRClearanceDetailsViewModel by viewModels()
     private lateinit var binding: FragmentHrClearanceDetailsBinding
     private lateinit var hrClearanceDetailsRequest: HRClearanceDetailsRequest
-    private  var parts:ArrayList<MultipartBody.Part?> = arrayListOf()
+    private  var parts:ArrayList<MultipartBody.Part> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,7 +52,24 @@ class HRClearanceDetailsFragment : Fragment() {
 
         }
         viewModel.getData(hrClearanceDetailsRequest)
-
+        (activity as MainActivity).hrdetailsFile.observe(viewLifecycleOwner){
+            parts = ArrayList()
+            it.map {
+                val requestFile: RequestBody =
+                    it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                var  part = MultipartBody.Part.createFormData(
+                    "Attachments",
+                    it.name.trim(),
+                    requestFile
+                )
+                parts.add(part)
+            }
+            viewModel.createAttachment(parts, entity = hrClearanceDetailsRequest.entity, id = hrClearanceDetailsRequest.requestID)
+        }
+        binding.hrCreateAttachment.setOnClickListener {
+            (activity as MainActivity).caller = FileCaller.hrDetails
+            (activity as MainActivity).openGalary()
+        }
         return binding.root
     }
 
@@ -145,10 +167,7 @@ class HRClearanceDetailsFragment : Fragment() {
             else {
                 binding.viewAttachment.setOnClickListener {
                     val action =
-                        HRClearanceDetailsFragmentDirections.hrClearanceDetailsToHrViewAttachments(
-                            details.attachment,
-                            hrClearanceDetailsRequest
-                        )
+                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(details.attachment)
                     findNavController().navigate(action)
                 }
             }

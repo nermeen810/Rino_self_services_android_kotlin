@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rino.self_services.databinding.FragmentViewAttatchmentsBinding
+import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -59,10 +60,10 @@ class ViewAttatchmentsFragment : Fragment() {
 
     }
     private fun handleBackButton() {
-        binding.backbtn.setOnClickListener {
-            val action =
-                ViewAttatchmentsFragmentDirections.hrViewAttachmentsToHrClearanceDetails(hrClearanceDetailsRequest)
-            findNavController().navigate(action)
-        }
+//        binding.backbtn.setOnClickListener {
+//            val action =
+//                ViewAttatchmentsFragmentDirections.hrViewAttachmentsToHrClearanceDetails(hrClearanceDetailsRequest)
+//            findNavController().navigate(action)
+//        }
     }
 }

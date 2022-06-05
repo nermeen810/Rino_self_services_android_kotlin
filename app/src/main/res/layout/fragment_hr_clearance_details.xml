@@ -274,9 +274,7 @@
                         android:layout_margin="@dimen/paddingText"
                         android:background="@drawable/orange_rect"
                         android:padding="5dp"
-
                         app:layout_constraintBottom_toBottomOf="@+id/textView39"
-
                         app:layout_constraintEnd_toStartOf="@+id/textView39"
                         app:layout_constraintTop_toTopOf="@+id/textView39" />
 
@@ -308,7 +306,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
@@ -332,7 +329,6 @@
                         android:layout_marginEnd="10dp"
                         android:text="بداية الاجازة"
                         android:textColor="@color/black"
-
                         android:textStyle="bold"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_type" />
@@ -345,7 +341,6 @@
                         android:text="نهاية الاجازة"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-
                         app:layout_constraintRight_toLeftOf="@+id/hr_l_start"
                         app:layout_constraintTop_toTopOf="@+id/hr_l_start" />
 
@@ -355,7 +350,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_l_start" />
 
@@ -363,7 +357,6 @@
                         android:id="@+id/hr_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         app:layout_constraintRight_toRightOf="@+id/hr_l_end"
                         app:layout_constraintTop_toTopOf="@+id/hr_start" />
 
@@ -400,7 +393,6 @@
                         app:guidelineUseRtl="true"
                         android:background="?android:attr/listDivider"
                         app:layout_constraintBottom_toBottomOf="parent"
-
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_end" />
@@ -410,18 +402,31 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/brown_border_rect"
                         android:text="@string/view_attachment"
                         android:textColor="@color/dark_gray"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
-                        app:layout_constraintWidth_percent="0.9" />
+                        app:layout_constraintWidth_percent="0.45" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/hr_create_attachment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/brown_border_rect"
+                        android:text="@string/create_attachment"
+                        android:textColor="@color/dark_gray"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
+                        app:layout_constraintWidth_percent="0.45
+" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

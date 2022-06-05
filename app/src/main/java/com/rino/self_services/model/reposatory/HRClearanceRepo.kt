@@ -158,33 +158,39 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         var result: Result<HRClearanceDetails?> = Result.Loading
 
         try {
-            val response = apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.action,attachments.entity,attachments.parts)
-            if (response.isSuccessful) {
-                result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
-            } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
-                when (response.code()) {
-                    400 -> {
-                        Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
-                    }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
-                    }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("time out"))
-                    }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+            val response = attachments.parts?.let {
+                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.entity,
+                    it
+                )
+            }
+            if (response != null) {
+                if (response.isSuccessful) {
+                    result = Result.Success(response.body())
+                    Log.i("getHrClearanceHomeList", "Result $result")
+                } else {
+                    Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                    when (response.code()) {
+                        400 -> {
+                            Log.e("Error 400", "Bad Request")
+                            result = Result.Error(Exception("Bad Reques "))
+                        }
+                        404 -> {
+                            Log.e("Error 404", "Not Found")
+                            result = Result.Error(Exception("Not Found"))
+                        }
+                        500 -> {
+                            Log.e("Error 500", "Server Error")
+                            result = Result.Error(Exception("server is down"))
+                        }
+                        502 -> {
+                            Log.e("Error 502", "Time out")
+                            result =
+                                Result.Error(Exception("time out"))
+                        }
+                        else -> {
+                            Log.e("Error", response.code().toString())
+                            result = Result.Error(Exception("Error"))
+                        }
                     }
                 }
             }
