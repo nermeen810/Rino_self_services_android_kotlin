@@ -8,6 +8,9 @@ import com.rino.self_services.model.pojo.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
+import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
+import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.model.pojo.hrClearance.ActionApproveOrDeny
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 
@@ -28,6 +31,12 @@ interface ApiService {
                       @Field("password") password:String,
                       @Field("client_id") client_id:String,
     ): Response<LoginResponse>
+
+    @POST("api/identity/password/reset")
+    suspend fun requestOTP(@Body requestOTP: RequestOTP): Response<ResponseOTP>
+
+    @POST("api/identity/password/confirm-reset")
+    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Response<ResponseOTP>
 
 
     @GET("api/{future}/{me}/from/{from}/to/{to}/page/{page}")
