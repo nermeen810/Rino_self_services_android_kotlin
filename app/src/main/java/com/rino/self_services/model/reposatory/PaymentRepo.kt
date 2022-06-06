@@ -14,12 +14,12 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
-//import com.rino.self_services.model.pojo.AttachmentResponse
+import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
+import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
-import okhttp3.MultipartBody
 import java.io.IOException
 import javax.inject.Inject
 
@@ -34,7 +34,59 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
 
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
+    private suspend fun refreshToken(): Result<RefreshTokenResponse?> {
+        var result: Result<RefreshTokenResponse?> = Result.Loading
 
+        try {
+            val response = apiDataSource.refreshToken("refresh_token",sharedPreference.getRefreshToken(),Constants.client_id)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("refreshToken", "Result $result")
+                sharedPreference.setToken(response.body()?.accessToken!!)
+                sharedPreference.setRefreshToken(response.body()?.refreshToken!!)
+            } else {
+                Log.i("refreshToken", "Error${response.message()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Login Required"))
+                        logout()
+                        Log.i("refreshToken refresh token:", "Result $result")
+
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+
+    fun logout() {
+        sharedPreference.setLogin(false)
+        sharedPreference.setToken("")
+        sharedPreference.setRefreshToken("")
+
+    }
     suspend fun getPaymentHomeList(me_or_other: String,
                               period_value: String): Result<PaymentHomeResponse?> {
         var result: Result<PaymentHomeResponse?> = Result.Loading
@@ -48,11 +100,22 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
                           result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        result = Result.Error(Exception("Not Auth please, logout and login again"))
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            refreshToken()
+                        }
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
@@ -98,6 +161,17 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         Log.e("Error 404", "Not Found")
                         result = Result.Error(Exception("Not Found"))
                     }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        result = Result.Error(Exception("Not Auth please, logout and login again"))
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            refreshToken()
+                        }
+                    }
                     500 -> {
                         Log.e("Error 500", "Server Error")
                         result = Result.Error(Exception("server is down"))
@@ -140,6 +214,17 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         result =
                             Result.Error(Exception("time out"))
                     }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        result = Result.Error(Exception("Not Auth please, logout and login again"))
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            refreshToken()
+                        }
+                    }
                 }
             }
         }catch(e: IOException) {
@@ -162,6 +247,17 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     502 -> {
                         result =
                             Result.Error(Exception("time out"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        result = Result.Error(Exception("Not Auth please, logout and login again"))
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            refreshToken()
+                        }
                     }
                 }
             }
@@ -189,6 +285,17 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         404 -> {
                             Log.e("Error 404", "Not Found")
                             result = Result.Error(Exception("Not Found"))
+                        }
+                        401 ->{
+                            Log.e("Error 401", "Not Auth please, logout and login again")
+                            result = Result.Error(Exception("Not Auth please, logout and login again"))
+                            if (sharedPreference.isLogin()) {
+                                Log.i(
+                                    "Model Repo:",
+                                    "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                                )
+                                refreshToken()
+                            }
                         }
                         500 -> {
                             Log.e("Error 500", "Server Error")

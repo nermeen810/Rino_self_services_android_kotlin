@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/paymentProcessesFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_hrClearanceHomeFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_hrClearanceHomeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllPaymentProcessFragment"
@@ -90,6 +93,9 @@
         <action
             android:id="@+id/action_paymentProcessesFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_paymentProcessesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
     </fragment>
     <fragment
@@ -182,6 +188,24 @@
             app:destination="@id/paymentProcessesFragment" />
         <action
             android:id="@+id/action_notificationsFragment_to_hrClearanceHomeFragment"
+            app:destination="@id/hrClearanceHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.rino.self_services.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_paymentProcessesFragment"
+            app:destination="@id/paymentProcessesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <argument
+            android:name="from_where"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_profileFragment_to_hrClearanceHomeFragment"
             app:destination="@id/hrClearanceHomeFragment" />
     </fragment>
 

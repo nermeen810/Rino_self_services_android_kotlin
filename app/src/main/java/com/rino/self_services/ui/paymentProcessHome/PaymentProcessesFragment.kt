@@ -212,6 +212,9 @@ class PaymentProcessesFragment : Fragment() {
         binding.notificationBtn.setOnClickListener {
             navToNotification()
         }
+        binding.profileBtn.setOnClickListener {
+            navToProfile()
+        }
         binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -244,6 +247,11 @@ class PaymentProcessesFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun navToProfile() {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToProfileFragment("payment")
+        findNavController().navigate(action)
     }
 
     private fun navToNotification() {

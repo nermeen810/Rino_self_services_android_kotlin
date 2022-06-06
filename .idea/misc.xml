@@ -3,6 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/brown_border_rect.xml" value="0.2735" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/orange_rect.xml" value="0.2735" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/attachment_item_pp.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/attatchment_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_complaints.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_forget_password.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_hr_clearance_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_hr_clearance_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_p_p_attachment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_payment_process_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_payment_processes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_view_attatchments.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/notification_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/payment_history_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/payment_home_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/see_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/drawable/ic_baseline_visibility_off_24.xml" value="0.2945" />
         <entry key="..\:/Self_Services/app/src/main/res/font/helva.xml" value="0.396875" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
@@ -12,25 +35,6 @@
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_see_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/drawable/ic_baseline_auto_graph_24.xml" value="0.194" />
-        <entry key="app/src/main/res/drawable/ic_baseline_border_all_24.xml" value="0.194" />
-        <entry key="app/src/main/res/drawable/rectangle.xml" value="0.194" />
-        <entry key="app/src/main/res/layout/attachment_item_pp.xml" value="0.5165794066317626" />
-        <entry key="app/src/main/res/layout/fragment_forget_password.xml" value="0.18566362715298884" />
-        <entry key="app/src/main/res/layout/fragment_hr_clearance_details.xml" value="0.3661627875434028" />
-        <entry key="app/src/main/res/layout/fragment_p_p_attachment.xml" value="0.4061994199399595" />
-        <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.25622067406063986" />
-        <entry key="app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_view_attatchments.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/hr_clearance_home_item.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/hr_see_all_item.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/payment_history_item.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/payment_home_item.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/period_item.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/request_to_item.xml" value="0.1" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.194" />
       </map>
     </option>
   </component>

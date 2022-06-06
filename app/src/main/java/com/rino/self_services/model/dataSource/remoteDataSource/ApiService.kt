@@ -4,7 +4,7 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 
 import com.rino.self_services.model.pojo.*
 
-import com.rino.self_services.model.pojo.LoginResponse
+import com.rino.self_services.model.pojo.login.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
@@ -12,6 +12,7 @@ import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
@@ -33,6 +34,14 @@ interface ApiService {
                       @Field("password") password:String,
                       @Field("client_id") client_id:String,
     ): Response<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("connect/token")
+    suspend fun refreshToken(@Field("grant_type") grant_type:String,
+                             @Field("refresh_token") refresh_token:String,
+                             @Field("client_id") client_id:String,
+    ): Response<RefreshTokenResponse>
+
     @POST("api/identity/password/reset")
     suspend fun requestOTP(@Body requestOTP: RequestOTP): Response<ResponseOTP>
 

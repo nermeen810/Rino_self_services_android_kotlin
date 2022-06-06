@@ -204,7 +204,9 @@ class HrClearanceHomeFragment : Fragment() {
         binding.countTxt.setOnClickListener {
             navToNotification()
         }
-
+        binding.profileBtn.setOnClickListener {
+            navToProfile()
+        }
 //        binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -237,6 +239,11 @@ class HrClearanceHomeFragment : Fragment() {
 //            }
 //        })
 
+    }
+
+    private fun navToProfile() {
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToProfileFragment("hr")
+        findNavController().navigate(action)
     }
 
     private fun navToNotification() {
