@@ -94,7 +94,7 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun overseError(){
         viewModel.setError.observe(viewLifecycleOwner){
             if (it != null || it != ""){
-                if (viewModel.seeAllPaymentProcessData.value?.date?.isNotEmpty() == true){
+                if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){
 
                 }else{
                     showMessage(it)
@@ -128,7 +128,7 @@ class SeeAllHrClearanceFragment : Fragment() {
             val id = viewModel.arrayList[index].id
             val entity = viewModel.arrayList[index].entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
-                HRClearanceDetailsRequest(entity!!,id)
+                HRClearanceDetailsRequest(entity!!,id?:-1)
             )
             findNavController().navigate(action)
 

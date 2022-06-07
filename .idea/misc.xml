@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/brown_border_rect.xml" value="0.2735" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/orange_rect.xml" value="0.2735" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/rectangle.xml" value="0.2695" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/attachment_item_pp.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/attatchment_item.xml" value="0.36666666666666664" />
@@ -22,6 +23,8 @@
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_view_attatchments.xml" value="0.36666666666666664" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/hr_clearance_home_item.xml" value="0.3625" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/hr_see_all_item.xml" value="0.3625" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/notification_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/payment_history_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/payment_home_item.xml" value="0.36666666666666664" />
