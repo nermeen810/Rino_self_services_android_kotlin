@@ -29,10 +29,10 @@ class PaymentHomeViewModel @Inject constructor(private val modelRepository: Paym
         private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()
         private var _navToSeeAll: MutableLiveData<NavSeeAll> = MutableLiveData()
         private var _navToTaskDetails: MutableLiveData<Int> = MutableLiveData()
-
+        var me_or_others = "me"
 
         companion object {
-            var me_or_others = "me"
+
           var periodTimeList_en =
                 arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
             var lastSelectedPos = periodTimeList_en.size-1

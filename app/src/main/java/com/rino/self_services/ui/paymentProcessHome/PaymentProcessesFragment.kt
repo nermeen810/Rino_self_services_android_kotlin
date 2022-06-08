@@ -56,7 +56,7 @@ class PaymentProcessesFragment : Fragment() {
         periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
         periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
-        PaymentHomeViewModel.me_or_others = me_or_others
+        viewModel.me_or_others = me_or_others
         paymentList = arrayListOf()
         searchHistoryList = arrayListOf()
         periodAdapter = PeriodAdapter(periodTimeList_ar,viewModel)
@@ -264,12 +264,12 @@ class PaymentProcessesFragment : Fragment() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.me_item -> {
-                    PaymentHomeViewModel.me_or_others = "me"
+                    viewModel.me_or_others = "me"
                     viewModel.getPaymentData()
                     true
                 }
                 R.id.others_item -> {
-                    PaymentHomeViewModel.me_or_others = "others"
+                    viewModel.me_or_others = "others"
                     viewModel.getPaymentData()
                     true
                 }

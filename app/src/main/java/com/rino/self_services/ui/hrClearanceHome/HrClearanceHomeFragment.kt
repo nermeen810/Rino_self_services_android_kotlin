@@ -52,7 +52,7 @@ class HrClearanceHomeFragment : Fragment() {
         periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
         periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
-        PaymentHomeViewModel.me_or_others = me_or_others
+        viewModel.me_or_others = me_or_others
         hrClearanceList = arrayListOf()
 //        searchHistoryList = arrayListOf()
         periodAdapter = HrPeriodAdapter(periodTimeList_ar,viewModel)
@@ -102,7 +102,7 @@ class HrClearanceHomeFragment : Fragment() {
 
 
     private fun observeHistoryData() {
-        viewModel.getPaymentData()
+        viewModel.getPaymentData("me")
         viewModel.getPaymentData.observe(viewLifecycleOwner) {
             it?.let {
                 hrClearanceHomeResponse = it
@@ -256,13 +256,13 @@ class HrClearanceHomeFragment : Fragment() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.me_item -> {
-                    PaymentHomeViewModel.me_or_others = "me"
-                    viewModel.getPaymentData()
+                    viewModel.me_or_others = "me"
+                    viewModel.getPaymentData("me")
                     true
                 }
                 R.id.others_item -> {
-                    PaymentHomeViewModel.me_or_others = "others"
-                    viewModel.getPaymentData()
+                    viewModel.me_or_others = "others"
+                    viewModel.getPaymentData("others")
                     true
                 }
                 else-> false

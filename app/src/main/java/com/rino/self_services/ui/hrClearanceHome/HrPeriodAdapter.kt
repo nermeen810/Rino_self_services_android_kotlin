@@ -69,7 +69,7 @@ class HrPeriodAdapter (private var periodList: ArrayList<String>,private val hrC
             binding.categoryCard.setOnClickListener {
                 HrClearanceViewModel.lastSelectedPos = position
                 Log.e("lastPos", HrClearanceViewModel.lastSelectedPos.toString())
-                hrClearanceHomeViewModel.getPaymentData()
+                hrClearanceHomeViewModel.getPaymentData(hrClearanceHomeViewModel.me_or_others)
                 lastSelectedCard?.setCardBackgroundColor(
                     ContextCompat.getColor(
                         it.context,

@@ -107,7 +107,8 @@
                 android:text="@string/forgot_password"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/normal_text"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
 
             <LinearLayout
@@ -125,7 +126,8 @@
                     android:padding="@dimen/paddingText"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/normal_text"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
 
                 <TextView
@@ -137,7 +139,8 @@
                     android:text="@string/privacy_policy"
                     android:textColor="@color/brown"
                     android:textSize="@dimen/normal_text"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
 

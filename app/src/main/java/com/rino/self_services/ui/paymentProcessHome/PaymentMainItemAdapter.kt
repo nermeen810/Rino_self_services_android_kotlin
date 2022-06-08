@@ -51,15 +51,15 @@ class PaymentMainItemAdapter (private var filteredHistoryList: ArrayList<Data>,
         }
         historyAdapter.updateItems(temp.items)
         holder.binding.showAllTxt.setOnClickListener {
-            paymentHomeViewModel.navToSeeAll(NavSeeAll(PaymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
+            paymentHomeViewModel.navToSeeAll(NavSeeAll(paymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
                 temp.endPeriod.toString()))
         }
         holder.binding.showAllBtn.setOnClickListener {
-            paymentHomeViewModel.navToSeeAll(NavSeeAll(PaymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
+            paymentHomeViewModel.navToSeeAll(NavSeeAll(paymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
                 temp.endPeriod.toString()))
             }
         holder.binding.card.setOnClickListener {
-            paymentHomeViewModel.navToSeeAll(NavSeeAll(PaymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
+            paymentHomeViewModel.navToSeeAll(NavSeeAll(paymentHomeViewModel.me_or_others, temp.startPeriod.toString(),
                 temp.endPeriod.toString()))
                     }
 
