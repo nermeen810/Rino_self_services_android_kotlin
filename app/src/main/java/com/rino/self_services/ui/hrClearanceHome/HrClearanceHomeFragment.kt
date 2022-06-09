@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,6 @@ import com.rino.self_services.databinding.FragmentHrClearanceHomeBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Data
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
-import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.*
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +52,7 @@ class HrClearanceHomeFragment : Fragment() {
         periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
         periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
-        PaymentHomeViewModel.me_or_others = me_or_others
+        viewModel.me_or_others = me_or_others
         hrClearanceList = arrayListOf()
 //        searchHistoryList = arrayListOf()
         periodAdapter = HrPeriodAdapter(periodTimeList_ar,viewModel)
@@ -104,7 +102,7 @@ class HrClearanceHomeFragment : Fragment() {
 
 
     private fun observeHistoryData() {
-        viewModel.getPaymentData()
+        viewModel.getPaymentData("me")
         viewModel.getPaymentData.observe(viewLifecycleOwner) {
             it?.let {
                 hrClearanceHomeResponse = it
@@ -206,7 +204,9 @@ class HrClearanceHomeFragment : Fragment() {
         binding.countTxt.setOnClickListener {
             navToNotification()
         }
-
+        binding.profileBtn.setOnClickListener {
+            navToProfile()
+        }
 //        binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -241,6 +241,11 @@ class HrClearanceHomeFragment : Fragment() {
 
     }
 
+    private fun navToProfile() {
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToProfileFragment("hr")
+        findNavController().navigate(action)
+    }
+
     private fun navToNotification() {
         val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToNotificationsFragment("hr")
         findNavController().navigate(action)
@@ -251,13 +256,13 @@ class HrClearanceHomeFragment : Fragment() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.me_item -> {
-                    PaymentHomeViewModel.me_or_others = "me"
-                    viewModel.getPaymentData()
+                    viewModel.me_or_others = "me"
+                    viewModel.getPaymentData("me")
                     true
                 }
                 R.id.others_item -> {
-                    PaymentHomeViewModel.me_or_others = "others"
-                    viewModel.getPaymentData()
+                    viewModel.me_or_others = "others"
+                    viewModel.getPaymentData("others")
                     true
                 }
                 else-> false

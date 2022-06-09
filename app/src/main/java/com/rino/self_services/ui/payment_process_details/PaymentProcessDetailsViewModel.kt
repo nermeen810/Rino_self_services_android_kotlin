@@ -11,9 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
+import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
 import com.rino.self_services.model.pojo.PaymentProcessDetails
-import com.rino.self_services.model.reposatory.CreateAttachmentForPaymentRequest
-import com.rino.self_services.model.reposatory.CreateAttachmentRequest
 import com.rino.self_services.model.reposatory.PaymentRepo
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -56,24 +55,21 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                         result.data?.let {
                             _detailsData.postValue(it)
                         }
-                        Log.i("see All network:", "done")
                     }
                 }
                 is Result.Error -> {
-                    Log.e("login:", "${result.exception.message}")
+                    Log.i("error", "error")
                     _loading.postValue(View.GONE)
                     _setError.postValue(result.exception.message)
-
-
                 }
                 is Result.Loading -> {
-                    Log.i("login", "Loading")
+                    Log.i("details", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }
         }
     }
-    fun createAttachment(part: MultipartBody.Part?, id:Int,action:String){
+    fun createAttachment(part: ArrayList<MultipartBody.Part>?, id:Int,action:String){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = repo.createAttachment(CreateAttachmentForPaymentRequest(action,id,part))) {
@@ -82,24 +78,18 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                     withContext(Dispatchers.Main) {
                         result.data.let {
 //                            it?.data?.let { it1 -> Log.d("newAyman", it1.date) }
-                            _detailsData.postValue(it)
+//                            _detailsData.postValue(it)
                             _setToTrue.postValue(true)
-
-                            Log.d("atchments","done")
 //                            _detailsData.postValue(it)
                         }
-                        Log.i("see All network:", "done")
                     }
                 }
                 is Result.Error -> {
-                    Log.e("login:", "${result.exception.message}")
                     _loading.postValue(View.GONE)
-                    _setError.postValue(result.exception.message)
-
-
+                    _setToTrue.postValue(false)
+//                    _setError.postValue(result.exception.message)
                 }
                 is Result.Loading -> {
-                    Log.i("login", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }

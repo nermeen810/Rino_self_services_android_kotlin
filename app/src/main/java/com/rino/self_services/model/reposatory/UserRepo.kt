@@ -1,21 +1,33 @@
 package com.rino.self_services.model.reposatory
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
+import com.rino.self_services.model.dataSource.localDataSource.Preference
+import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
-import com.rino.self_services.model.pojo.LoginRequest
-import com.rino.self_services.model.pojo.LoginResponse
+import com.rino.self_services.model.pojo.login.LoginRequest
+import com.rino.self_services.model.pojo.login.LoginResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.PREF_FILE_NAME
 import java.io.IOException
 import javax.inject.Inject
 import com.rino.self_services.utils.Result
 import java.net.SocketTimeoutException
 
-class UserRepo@Inject constructor(private val apiDataSource: ApiDataSource)
+class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,private  val context: Application)
 {
+    private val preference = MySharedPreference(
+        context.getSharedPreferences(
+            PREF_FILE_NAME,
+            Context.MODE_PRIVATE))
+
+    private val sharedPreference: Preference = PreferenceDataSource(preference)
 
     suspend fun login(loginRequest: LoginRequest): Result<LoginResponse?> {
         var result: Result<LoginResponse?> = Result.Loading
@@ -162,5 +174,12 @@ class UserRepo@Inject constructor(private val apiDataSource: ApiDataSource)
             }
         }
         return result
+    }
+
+    fun logout() {
+        sharedPreference.setLogin(false)
+        sharedPreference.setToken("")
+        sharedPreference.setRefreshToken("")
+
     }
 }
