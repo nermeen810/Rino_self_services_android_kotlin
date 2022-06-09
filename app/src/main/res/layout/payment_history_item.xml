@@ -47,7 +47,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/paddingLayout"
-                    android:layout_marginBottom="2dp"
                     android:padding="4dp"
                     android:text="25"
                     android:textColor="@color/dark_gray"
@@ -55,7 +54,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/serviceNumTxt"
                     app:layout_constraintRight_toLeftOf="@+id/serviceNumTxt"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/serviceNumTxt" />
 
                 <View
                     android:id="@+id/line1"
@@ -104,7 +103,6 @@
                     android:id="@+id/agencyTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
                     android:text="@string/request_agency"
                     android:textColor="@color/black"
@@ -116,7 +114,7 @@
                     android:id="@+id/agencyValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingText"
+                    android:layout_marginTop="1dp"
                     android:maxWidth="200dp"
                     android:maxLines="2"
                     android:padding="4dp"
@@ -128,13 +126,12 @@
                     app:layout_constraintBottom_toBottomOf="@+id/agencyTxt"
                     app:layout_constraintEnd_toEndOf="@+id/amountValue"
                     app:layout_constraintRight_toLeftOf="@+id/agencyTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/amountValue" />
+                    app:layout_constraintTop_toTopOf="@+id/agencyTxt" />
 
                 <TextView
                     android:id="@+id/paymentMethodTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
                     android:text="@string/payment_method"
                     android:textColor="@color/black"
@@ -146,7 +143,7 @@
                     android:id="@+id/paymentMethodValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingText"
+                    android:layout_marginTop="2dp"
                     android:maxWidth="150dp"
                     android:maxLines="2"
                     android:padding="4dp"
@@ -158,7 +155,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/paymentMethodTxt"
                     app:layout_constraintEnd_toEndOf="@+id/agencyValue"
                     app:layout_constraintRight_toLeftOf="@+id/paymentMethodTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/agencyValue" />
+                    app:layout_constraintTop_toTopOf="@+id/paymentMethodTxt" />
 
                 <View
                     android:id="@+id/line2"
@@ -247,7 +244,7 @@
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/serviceNumValue" />
 
 
                 <!--                <TextView-->
