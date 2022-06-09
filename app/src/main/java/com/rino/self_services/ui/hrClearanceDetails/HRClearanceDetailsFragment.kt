@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentHrClearanceDetailsBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,13 +28,14 @@ class HRClearanceDetailsFragment : Fragment() {
     private lateinit var binding: FragmentHrClearanceDetailsBinding
     private lateinit var hrClearanceDetailsRequest: HRClearanceDetailsRequest
     private  var parts:ArrayList<MultipartBody.Part> = arrayListOf()
+    var shouldShowActions = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             hrClearanceDetailsRequest =  arguments?.get("hr_clearance_details") as HRClearanceDetailsRequest
+            shouldShowActions = hrClearanceDetailsRequest.isActionBefore
         }
     }
-
 
 
     override fun onCreateView(
@@ -45,30 +47,59 @@ class HRClearanceDetailsFragment : Fragment() {
         obseveError()
         oberveData()
         handleBackBotton()
-        binding.hrApprove.setOnClickListener {
-
-        }
-        binding.hrDenay.setOnClickListener {
-
-        }
         viewModel.getData(hrClearanceDetailsRequest)
-        (activity as MainActivity).hrdetailsFile.observe(viewLifecycleOwner){
-            parts = ArrayList()
-            it.map {
-                val requestFile: RequestBody =
-                    it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                var  part = MultipartBody.Part.createFormData(
-                    "Attachments",
-                    it.name.trim(),
-                    requestFile
-                )
-                parts.add(part)
-            }
-            viewModel.createAttachment(parts, entity = hrClearanceDetailsRequest.entity, id = hrClearanceDetailsRequest.requestID)
+
+        if (!shouldShowActions){
+            binding.hrApprove.visibility = View.GONE
+//            binding.approve.visibility = View.GONE
+//            binding.deny.visibility = View.GONE
         }
+        binding.hrApprove.setOnClickListener {
+        viewModel.createAction(hrClearanceDetailsRequest.requestID,"approve",hrClearanceDetailsRequest.entity)
+        }
+        binding.hrDenay.visibility = View.GONE
+
+        if (hrClearanceDetailsRequest.meOrOthers != "me"){
+            binding.hrCreateAttachment.visibility = View.GONE
+        }else{
+            binding.hrCreateAttachment.visibility = View.VISIBLE
+        }
+
         binding.hrCreateAttachment.setOnClickListener {
             (activity as MainActivity).caller = FileCaller.hrDetails
             (activity as MainActivity).openGalary()
+            (activity as MainActivity).hrdetailsFile.observe(viewLifecycleOwner){
+                if (!it.isEmpty()){
+                    parts = ArrayList()
+                    it.map {
+                        val requestFile: RequestBody =
+                            it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        var  part = MultipartBody.Part.createFormData(
+                            "Attachments",
+                            it.name.trim(),
+                            requestFile
+                        )
+                        parts.add(part)
+                    }
+                    viewModel.createAttachment(parts, id = hrClearanceDetailsRequest.requestID, entity = 1)
+                    (activity as MainActivity).caller = FileCaller.none
+                    (activity as MainActivity)._hrDetailsFiles.value = ArrayList()
+
+                }
+
+
+
+
+            }
+        }
+        viewModel.isTrue.observe(viewLifecycleOwner){
+            if (it){
+                showMessage("تم اضافه المرفقات بنجاح")
+                binding.viewAttachment.visibility = View.VISIBLE
+                shouldShowActions = false
+            }else{
+                showMessage("حدث خطأً الرجاء المحاوله في وقت لاحق")
+            }
         }
         return binding.root
     }
@@ -94,13 +125,6 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun obseveError(){
         viewModel.setError.observe(viewLifecycleOwner){
             showMessage(it)
-//            if(it != null && it != ""){
-//
-////                binding.ppErrorMessage.text = it
-////                binding.ppErrorMessage.visibility = View.VISIBLE
-//            }else{
-////                binding.ppErrorMessage.visibility = View.GONE
-//            }
         }
     }
     private fun showMessage(msg: String) {
@@ -160,36 +184,22 @@ class HRClearanceDetailsFragment : Fragment() {
                 binding.hrApprove.alpha = 0f
             }
 
-            if(details.attachment.size==0)
-            {
-                binding.viewAttachment.visibility =View.GONE
+            if(details.attachment.size==0){
+                binding.viewAttachment.visibility = View.GONE
             }
             else {
                 binding.viewAttachment.setOnClickListener {
                     val action =
-                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(details.attachment)
+                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(NavToAttachment(hrClearanceDetailsRequest.entity,viewModel.attachments.toList().toTypedArray(),false,hrClearanceDetailsRequest.meOrOthers,hrClearanceDetailsRequest.requestID,shouldShowActions))
                     findNavController().navigate(action)
                 }
+            }
+            if (shouldShowActions){
+                binding.hrApprove.visibility = View.VISIBLE
+            }else{
+                binding.hrApprove.visibility = View.GONE
             }
 
         }
     }
-
-//    private fun observeAction() {
-//        viewModel.action.observe(viewLifecycleOwner){
-//            var msg = ""
-//             if(it=="approve"){
-//                msg = getString(R.string.approve_msg)
-//            }
-//            else if(it=="deny"){
-//                  msg = getString(R.string.deny_msg)
-//             }
-//            Toast.makeText(
-//                requireActivity(),
-//               msg,
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
-//    }
-
 }

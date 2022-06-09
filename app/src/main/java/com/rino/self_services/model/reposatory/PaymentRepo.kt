@@ -4,17 +4,19 @@ package com.rino.self_services.model.reposatory
 
 import android.util.Log
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
-import com.rino.self_services.model.pojo.PaymentProcessDetails
-import com.rino.self_services.model.pojo.SeeAllRequest
-import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
 
 import android.app.Application
 import android.content.Context
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
+
+import com.rino.self_services.model.pojo.*
+//import com.rino.self_services.model.pojo.AttachmentResponse
+
 import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
+
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
 import com.rino.self_services.utils.Constants
@@ -265,11 +267,15 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             result = Result.Error(e)}
         return result
     }
-    suspend fun createAttachment(attachments: CreateAttachmentForPaymentRequest):Result<PaymentProcessDetails?>{
-        var result: Result<PaymentProcessDetails?> = Result.Loading
+
+    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<ArrayList<Attachment>?>{
+        var result: Result<ArrayList<Attachment>?> = Result.Loading
+
         try {
             val response = attachments.parts?.let {
-                apiDataSource.createAttachmentForPayment("Bearer "+sharedPreference.getToken(),attachments.id, it.toList())
+                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.attachmentType,
+                    it
+                )
             }
             if (response != null) {
                 if (response.isSuccessful) {
@@ -320,6 +326,28 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             Log.e("ModelRepository", "IOException ${e.localizedMessage}")
 
         }
+        return result
+    }
+    suspend fun paymentAction(id:Int,action:String): Result<ActionResponse?> {
+        var result: Result<ActionResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.paymentAction("Bearer "+sharedPreference.getToken(), action = action, id = id)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+
+            } else {
+                when (response.code()) {
+                    500 -> {
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        result =
+                            Result.Error(Exception("time out"))
+                    }
+                }
+            }
+        }catch(e: IOException) {
+            result = Result.Error(e)}
         return result
     }
 }

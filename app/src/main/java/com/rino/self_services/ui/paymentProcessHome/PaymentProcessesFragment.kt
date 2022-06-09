@@ -160,8 +160,8 @@ class PaymentProcessesFragment : Fragment() {
         }
     }
 
-    private fun navToServiceDetails(id: Int) {
-        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(id)
+    private fun navToServiceDetails(navToDetails: NavToDetails) {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(navToDetails)
         findNavController().navigate(action)
     }
 

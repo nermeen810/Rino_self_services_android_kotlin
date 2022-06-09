@@ -69,7 +69,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
             hrClearanceViewModel.navToServiceDetails(
-                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0)
+                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0,true,PaymentHomeViewModel.me_or_others)
                 )
         }
 

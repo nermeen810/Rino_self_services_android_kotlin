@@ -53,7 +53,8 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
             Log.i("id",paymentSubList[position].id.toString()?:"")
-            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
+            paymentHomeViewModel.navToServiceDetails(NavToDetails(PaymentHomeViewModel.me_or_others,paymentSubList[position].id!!,true))
+//            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
         }
 
     }
