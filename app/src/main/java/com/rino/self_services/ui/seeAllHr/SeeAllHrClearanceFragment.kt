@@ -26,12 +26,14 @@ class SeeAllHrClearanceFragment : Fragment() {
     private lateinit var adapter:HRSeeAllRVAdapter
     private lateinit var period: HRClearanceRequest
     private lateinit var binding: FragmentSeeAllHrClearanceBinding
+    private lateinit var v:NavSeeAll
     private var totalPages = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            var v = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
+             v = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
             period = HRClearanceRequest(v.startPeriod,v.endPeriod,v.me_or_others,1)
+
         }
     }
 
@@ -123,12 +125,10 @@ class SeeAllHrClearanceFragment : Fragment() {
         }
     }
     private fun getPressesdItemIndex(index:Int){
-
-
             val id = viewModel.arrayList[index].id
             val entity = viewModel.arrayList[index].entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
-                HRClearanceDetailsRequest(entity!!,id)
+                HRClearanceDetailsRequest(entity!!,id,true,v.me_or_others)
             )
             findNavController().navigate(action)
 

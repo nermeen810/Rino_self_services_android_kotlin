@@ -11,3 +11,8 @@ data class Attachment(
     ,@SerializedName("userName") var userName:String?
     ,@SerializedName("jobTitle") var jobTitle:String?
     ,@SerializedName("date") var date: String?): Parcelable
+
+
+
+@Parcelize
+data class NavToAttachment(var enity:Int?,var attachments:Array<Attachment>,var isPaymentProcess:Boolean,var meOrOther:String,var id:Int,var isActionBefore:Boolean):Parcelable

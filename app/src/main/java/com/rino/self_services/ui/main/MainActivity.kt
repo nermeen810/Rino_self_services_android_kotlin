@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,15 +32,15 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private  var _paymentProcessFiles = MutableLiveData<ArrayList<File>>()
+    var _paymentProcessFiles = MutableLiveData<ArrayList<File>>()
     val paymentProcessFiles: LiveData<ArrayList<File>>
         get() = _paymentProcessFiles
 
-    private  var _hrDetailsFiles = MutableLiveData<ArrayList<File>>()
+    var _hrDetailsFiles = MutableLiveData<ArrayList<File>>()
     val hrdetailsFile: LiveData<ArrayList<File>>
-        get() = _paymentProcessFiles
+        get() = _hrDetailsFiles
     private var  count = 0
-    lateinit var caller:FileCaller
+     var caller:FileCaller = FileCaller.none
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -135,8 +136,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        emitFileForCaller(data,resultCode)
-
+        if (caller != FileCaller.none){
+            emitFileForCaller(data,resultCode)
+        }
     }
     fun emitFileForCaller(data:Intent?,resultCode:Int){
         if (resultCode == Activity.RESULT_OK && data != null) {
@@ -153,7 +155,6 @@ class MainActivity : AppCompatActivity() {
                         val file = getImageFromUri(imageUri)
                         file?.let {
                             array.add(it)
-
                         }
                     }
                 }
@@ -168,12 +169,21 @@ class MainActivity : AppCompatActivity() {
             }
             when(caller){
                 FileCaller.hrDetails  -> {
+                    Log.d("hr","hr")
                     _hrDetailsFiles.postValue(array)
+
+//                    caller = FileCaller.none
                 }
                 FileCaller.paymentDetails  -> {
                     _paymentProcessFiles.postValue(array)
+
+//                    caller = FileCaller.none
+                }
+                FileCaller.none -> {
+
                 }
             }
+
         }
     }
 
@@ -194,5 +204,5 @@ override fun onSupportNavigateUp(): Boolean {
 
 }
 enum class FileCaller{
-     paymentDetails,hrDetails
+     paymentDetails,hrDetails,none
 }

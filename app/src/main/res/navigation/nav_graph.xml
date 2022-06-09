@@ -98,10 +98,6 @@
         android:label="fragment_payment_process_details"
         tools:layout="@layout/fragment_payment_process_details" >
 
-        <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="1" />
         <action
 
             android:id="@+id/action_paymentProcessDetailsFragment_to_PPAttachmentFragment"
@@ -109,6 +105,9 @@
         <action
             android:id="@+id/paymentProcessDetailsFragment_toPaymentHome"
             app:destination="@id/paymentProcessesFragment" />
+        <argument
+            android:name="nav_to_pp_details"
+            app:argType="com.rino.self_services.ui.paymentProcessHome.NavToDetails" />
 
     </fragment>
     <fragment
@@ -158,7 +157,13 @@
         tools:layout="@layout/fragment_p_p_attachment" >
         <argument
             android:name="attachments"
-            app:argType="com.rino.self_services.model.pojo.Attachment[]" />
+            app:argType="com.rino.self_services.model.pojo.NavToAttachment" />
+        <action
+            android:id="@+id/action_PPAttachmentFragment_to_paymentProcessDetailsFragment"
+            app:destination="@id/paymentProcessDetailsFragment" />
+        <action
+            android:id="@+id/action_PPAttachmentFragment_to_HRClearanceDetailsFragment"
+            app:destination="@id/HRClearanceDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"

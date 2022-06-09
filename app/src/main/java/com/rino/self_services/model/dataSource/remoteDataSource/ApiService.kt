@@ -2,6 +2,7 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 
 
 
+import com.google.gson.annotations.SerializedName
 import com.rino.self_services.model.pojo.*
 
 import com.rino.self_services.model.pojo.LoginResponse
@@ -67,15 +68,8 @@ interface ApiService {
 
 
     @Multipart
-    @POST("api/clearancerequests/action/")
-    suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody,@Part("Entity") Entity:RequestBody, @Part Attachments: List<MultipartBody.Part>?,@Part("Notes") notes:RequestBody):Response<HRClearanceDetails>
-
-
-
-    @Multipart
-    @POST("api/requests/action/")
-    suspend fun createAttachmentsForPayment(@Header("Authorization") auth: String,@Part("id") id:RequestBody,@Part Attachments: List<MultipartBody.Part>?,@Part("Notes") notes:RequestBody):Response<PaymentProcessDetails>
-
+    @POST("api/Attachments/")
+    suspend fun createAttachments(@Header("Authorization") auth: String,@Part("id") id:RequestBody,@Part("RequestType") RequestType:RequestBody ,@Part Attachments: List<MultipartBody.Part>?):Response<ArrayList<Attachment>>
 
     @GET("api/notifications/new/count")
     suspend fun getNotificationsCount(@Header("Authorization") auth: String):Response<NotificationCountResponse>
@@ -86,5 +80,21 @@ interface ApiService {
     @PUT("api/notifications/read/{notification_id}")
     suspend fun setNotificationAsRead(@Header("Authorization") auth: String,@Path("notification_id") notification_id :Int):Response<SetNotificationAsRead>
 
+    @POST("api/requests/action/{id}/{action}")
+    suspend fun paymentAction(
+    @Header("Authorization") auth: String
+    ,@Path("id")  id:Int
+    ,@Path("action") action:String
+):Response<ActionResponse>
+
+
+    @POST("api/clearancerequests/action/{entity}/{id}/{action}")
+    suspend fun clearanceAction(
+        @Header("Authorization") auth: String
+        ,@Path("entity") entity:Int
+        ,@Path("id") id:Int
+        ,@Path("action") action: String
+    ):Response<ActionResponse>
 }
+
 
