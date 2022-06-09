@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Field
 
 import javax.inject.Inject
 
@@ -22,6 +23,12 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         password: String,
         client_id: String
     ) = apiService.login(grant_type, username, password, client_id)
+
+    suspend fun refreshToken(
+        grant_type:String,
+        refresh_token:String,
+        client_id:String) = apiService.refreshToken(grant_type,refresh_token,client_id)
+
 
     suspend fun getAllRecords(token:String,future:String,me:String,from:String,to:String,page:Long) = apiService.getAllRecords(token, future,me,from, to, page)
     suspend fun getAllHRRecords(

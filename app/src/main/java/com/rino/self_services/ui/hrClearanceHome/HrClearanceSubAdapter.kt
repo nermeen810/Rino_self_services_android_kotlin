@@ -58,10 +58,10 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
             holder.binding.vacationEndValue.visibility = View.GONE
             holder.binding.vacationEndTxt.visibility =View.GONE
         }
-        if(PaymentHomeViewModel.me_or_others=="others") {
+        if(hrClearanceViewModel.me_or_others=="others") {
             holder.binding.requestToValue.text = clearanceSubList[position].current?.users?.get(0)
         }
-        else if(PaymentHomeViewModel.me_or_others=="me")
+        else if(hrClearanceViewModel.me_or_others=="me")
         {
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE

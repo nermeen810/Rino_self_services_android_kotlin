@@ -15,7 +15,7 @@ import com.rino.self_services.ui.paymentProcessHome.PaymentHomeViewModel
 import com.rino.self_services.utils.Constants
 
 class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
-                              private val HrClearanceHomeViewModel: HrClearanceViewModel, private val context: Context
+                              private val hrClearanceViewModel: HrClearanceViewModel, private val context: Context
 )
     : RecyclerView.Adapter<HrClearanceMainAdapter.HrClearanceMainViewHolder>() {
     override fun onCreateViewHolder(
@@ -44,7 +44,7 @@ class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
             R.string.task)+")"
 
         holder.binding.historyRecycle.visibility = View.VISIBLE
-        var historyAdapter = HrClearanceSubAdapter(arrayListOf(),HrClearanceHomeViewModel,context)
+        var historyAdapter = HrClearanceSubAdapter(arrayListOf(),hrClearanceViewModel,context)
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
         linearLayoutManager.stackFromEnd = true
         holder.binding.historyRecycle.apply {
@@ -53,23 +53,23 @@ class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
         }
         historyAdapter.updateItems(temp.items)
         holder.binding.showAllTxt.setOnClickListener {
-            HrClearanceHomeViewModel.navToSeeAll(
+            hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
-                    PaymentHomeViewModel.me_or_others, temp.start.toString(),
+                    hrClearanceViewModel.me_or_others, temp.start.toString(),
                 temp.end.toString())
             )
         }
         holder.binding.showAllBtn.setOnClickListener {
-            HrClearanceHomeViewModel.navToSeeAll(
+            hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
-                    PaymentHomeViewModel.me_or_others, temp.start.toString(),
+                    hrClearanceViewModel.me_or_others, temp.start.toString(),
                 temp.end.toString())
             )
         }
         holder.binding.card.setOnClickListener {
-            HrClearanceHomeViewModel.navToSeeAll(
+            hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
-                    PaymentHomeViewModel.me_or_others, temp.start.toString(),
+                    hrClearanceViewModel.me_or_others, temp.start.toString(),
                 temp.end.toString())
             )
         }
