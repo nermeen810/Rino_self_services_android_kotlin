@@ -87,6 +87,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
              //   binding.progressBar.visibility = it
                 if(it == View.VISIBLE)
                 {
+                    binding.shimmer.visibility = View.VISIBLE
                     binding.shimmer.startShimmer()
                     binding.paymentProcessSeeAllRv.visibility = View.GONE
 

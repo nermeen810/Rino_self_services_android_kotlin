@@ -134,6 +134,7 @@ class HrClearanceHomeFragment : Fragment() {
            //     binding.progress.visibility = it
                 if(it == View.VISIBLE)
                 {
+                    binding.shimmer.visibility = View.VISIBLE
                     binding.shimmer.startShimmer()
                     binding.historyRecycle.visibility = View.GONE
                     binding.noDataAnim.visibility = View.GONE

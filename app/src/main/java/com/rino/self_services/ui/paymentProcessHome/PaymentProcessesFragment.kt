@@ -144,6 +144,7 @@ class PaymentProcessesFragment : Fragment() {
                 if(it == View.VISIBLE)
                 {
                     Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
                     binding.shimmer.startShimmer()
                     binding.historyRecycle.visibility = View.GONE
                     binding.searchHistoryRecycle.visibility = View.GONE

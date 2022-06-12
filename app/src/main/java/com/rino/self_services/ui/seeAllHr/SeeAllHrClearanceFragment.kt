@@ -81,6 +81,7 @@ class SeeAllHrClearanceFragment : Fragment() {
                 if(it == View.VISIBLE)
                 {
                     binding.shimmer.startShimmer()
+                    binding.shimmer.visibility = View.VISIBLE
                     binding.hrClearanceSeeAllRv.visibility = View.GONE
 
                 }
