@@ -24,7 +24,7 @@ import javax.inject.Inject
 class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrClearanceRepo, private  val notificationRepo: NotificationRepo) : ViewModel() {
     private var _setError = MutableLiveData<String>()
     private var _noData = MutableLiveData<Boolean>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
     private var _getPaymentData = MutableLiveData<HrClearanceResponse?>()
     private var _getNotificationCount = MutableLiveData<NotificationCountResponse?>()
     private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()

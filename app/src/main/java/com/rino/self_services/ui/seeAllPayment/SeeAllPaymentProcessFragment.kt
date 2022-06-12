@@ -84,7 +84,19 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.progressBar.visibility = it
+             //   binding.progressBar.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    binding.shimmer.startShimmer()
+                    binding.paymentProcessSeeAllRv.visibility = View.GONE
+
+                }
+                else if(it == View.GONE){
+                    binding.shimmer.stopShimmer()
+                    binding.paymentProcessSeeAllRv.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
             }
         }
     }

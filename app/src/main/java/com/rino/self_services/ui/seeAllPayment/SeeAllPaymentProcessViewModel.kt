@@ -36,7 +36,7 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
 //    private  var seeAllarray = MutableLiveData<Item>()
     var seeAllarray = ArrayList<Item>()
     private var _setError = MutableLiveData<String>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
      var pageNumber:Long = 1
 
     val loading: LiveData<Int>

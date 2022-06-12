@@ -21,7 +21,7 @@ import javax.inject.Inject
 class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearanceRepo): ViewModel() {
     private  var _seeAllData = MutableLiveData<HRSeeAllData>()
     private var _setError = MutableLiveData<String>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
     var pageNumber:Int = 1
 
     val loading: LiveData<Int>
