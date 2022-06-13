@@ -7,12 +7,9 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
-import com.rino.self_services.model.pojo.LoginRequest
-import com.rino.self_services.model.pojo.LoginResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
-import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException

@@ -16,7 +16,6 @@ import com.rino.self_services.R
 import dagger.hilt.android.AndroidEntryPoint
 import com.rino.self_services.databinding.FragmentSeeAllHrClearanceBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 
 
@@ -27,12 +26,14 @@ class SeeAllHrClearanceFragment : Fragment() {
     private lateinit var adapter:HRSeeAllRVAdapter
     private lateinit var period: HRClearanceRequest
     private lateinit var binding: FragmentSeeAllHrClearanceBinding
+    private lateinit var v:NavSeeAll
     private var totalPages = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            var v = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
+             v = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
             period = HRClearanceRequest(v.startPeriod,v.endPeriod,v.me_or_others,1)
+
         }
     }
 
@@ -47,6 +48,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         overseError()
         handleBack()
         adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
+//            Toast.makeText(requireContext(),"index"+it+"size"+viewModel.arrayList.size,Toast.LENGTH_LONG).show()
             getPressesdItemIndex(it)
         }
 
@@ -56,7 +58,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         binding.hrClearanceSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    if (viewModel.pageNumber < totalPages?:1 && viewModel.loading.value == View.GONE){
+                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
                         viewModel.pageNumber += 1
                         viewModel.getData(period)
                     }
@@ -77,7 +79,20 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.clearanceSeeAllProgress.visibility = it
+            //       binding.clearanceSeeAllProgress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    binding.shimmer.startShimmer()
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.hrClearanceSeeAllRv.visibility = View.GONE
+
+                }
+                else if(it == View.GONE){
+                    binding.shimmer.stopShimmer()
+                    binding.hrClearanceSeeAllRv.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
             }
         }
     }
@@ -94,7 +109,7 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun overseError(){
         viewModel.setError.observe(viewLifecycleOwner){
             if (it != null || it != ""){
-                if (viewModel.seeAllPaymentProcessData.value?.date?.isNotEmpty() == true){
+                if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){
 
                 }else{
                     showMessage(it)
@@ -123,12 +138,12 @@ class SeeAllHrClearanceFragment : Fragment() {
         }
     }
     private fun getPressesdItemIndex(index:Int){
-
-
-            val id = viewModel.arrayList.get(index-1).id
-            val entity = viewModel.arrayList.get(index).entity
+            val id = viewModel.arrayList[index].id
+            val entity = viewModel.arrayList[index].entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
-                HRClearanceDetailsRequest(entity!!,id)
+
+                HRClearanceDetailsRequest(entity!!,id?:-1,true,v.me_or_others)
+
             )
             findNavController().navigate(action)
 

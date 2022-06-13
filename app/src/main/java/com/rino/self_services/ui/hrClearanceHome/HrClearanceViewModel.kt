@@ -24,16 +24,16 @@ import javax.inject.Inject
 class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrClearanceRepo, private  val notificationRepo: NotificationRepo) : ViewModel() {
     private var _setError = MutableLiveData<String>()
     private var _noData = MutableLiveData<Boolean>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
     private var _getPaymentData = MutableLiveData<HrClearanceResponse?>()
     private var _getNotificationCount = MutableLiveData<NotificationCountResponse?>()
     private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()
     private var _navToSeeAll: MutableLiveData<NavSeeAll> = MutableLiveData()
     private var _navToTaskDetails: MutableLiveData<HRClearanceDetailsRequest> = MutableLiveData()
-
+    var me_or_others = "me"
 
     companion object {
-        var me_or_others = "me"
+
         var periodTimeList_en =
             arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         var lastSelectedPos = periodTimeList_en.size-1
@@ -71,10 +71,10 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             _navToTaskDetails.value = item
         }
 
-    fun getPaymentData() {
+    fun getPaymentData(me_or_other :String) {
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            Log.i("lastSelectedPosHr:",  periodTimeList_en[lastSelectedPos])
+            Log.i("me_or_others:",me_or_others)
             when (val result = modelRepository.getHrClearanceHomeList(me_or_others,periodTimeList_en[lastSelectedPos])) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)

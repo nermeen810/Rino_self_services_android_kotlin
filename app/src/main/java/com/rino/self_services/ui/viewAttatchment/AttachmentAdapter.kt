@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.AttatchmentItemBinding
+import com.rino.self_services.model.pojo.Attachment
 
 
 class AttachmentAdapter (private var attachmentList: ArrayList<Attachment>, private var context: Context) : RecyclerView.Adapter<AttachmentAdapter.AttatchmentViewHolder>() {

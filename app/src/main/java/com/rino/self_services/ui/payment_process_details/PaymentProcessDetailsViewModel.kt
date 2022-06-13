@@ -11,9 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
+import com.rino.self_services.model.pojo.ActionResponse
+import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.CreateAttachmentRequest
 import com.rino.self_services.model.pojo.PaymentProcessDetails
-import com.rino.self_services.model.reposatory.CreateAttachmentForPaymentRequest
-import com.rino.self_services.model.reposatory.CreateAttachmentRequest
 import com.rino.self_services.model.reposatory.PaymentRepo
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -46,6 +47,11 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
         get() = _setError
     val detailsData: LiveData<PaymentProcessDetails>
         get() = _detailsData
+
+    val action: LiveData<ActionResponse>
+        get() = _actionData
+    var _actionData = MutableLiveData<ActionResponse>()
+    var attachments = ArrayList<Attachment>()
     fun getData(id:Int){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
@@ -55,51 +61,70 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
                     withContext(Dispatchers.Main) {
                         result.data?.let {
                             _detailsData.postValue(it)
+                            attachments.clear()
+                            it.data?.attachments?.let { it1 -> attachments.addAll(it1) }
                         }
-                        Log.i("see All network:", "done")
                     }
                 }
                 is Result.Error -> {
-                    Log.e("login:", "${result.exception.message}")
+                    Log.i("error", "error")
                     _loading.postValue(View.GONE)
                     _setError.postValue(result.exception.message)
-
-
                 }
                 is Result.Loading -> {
-                    Log.i("login", "Loading")
+                    Log.i("details", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }
         }
     }
-    fun createAttachment(part: MultipartBody.Part?, id:Int,action:String){
+    fun createAttachment(part: ArrayList<MultipartBody.Part>?, id:Int){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repo.createAttachment(CreateAttachmentForPaymentRequest(action,id,part))) {
+            when (val result = repo.createAttachment(CreateAttachmentRequest(id,0,part))) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data.let {
 //                            it?.data?.let { it1 -> Log.d("newAyman", it1.date) }
-                            _detailsData.postValue(it)
+//                            _detailsData.postValue(it)
+                            if (it != null) {
+                                attachments.addAll(it)
+                            }
                             _setToTrue.postValue(true)
-
-                            Log.d("atchments","done")
 //                            _detailsData.postValue(it)
                         }
-                        Log.i("see All network:", "done")
                     }
                 }
                 is Result.Error -> {
-                    Log.e("login:", "${result.exception.message}")
                     _loading.postValue(View.GONE)
-                    _setError.postValue(result.exception.message)
-
-
+                    _setToTrue.postValue(false)
+//                    _setError.postValue(result.exception.message)
                 }
                 is Result.Loading -> {
-                    Log.i("login", "Loading")
+                    _loading.postValue(View.VISIBLE)
+                }
+            }
+        }
+    }
+    fun createAction(id:Int,action:String){
+        _loading.postValue(View.VISIBLE)
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repo.paymentAction(id,action)) {
+                is Result.Success -> {
+                    _loading.postValue(View.GONE)
+                    withContext(Dispatchers.Main) {
+                        result.data.let {
+                            _actionData.postValue(it)
+                        }
+                    }
+                }
+                is Result.Error -> {
+                    _loading.postValue(View.GONE)
+//                    _setToTrue.postValue(false)
+                    _setError.postValue(result.exception.message)
+                }
+                is Result.Loading -> {
                     _loading.postValue(View.VISIBLE)
                 }
             }

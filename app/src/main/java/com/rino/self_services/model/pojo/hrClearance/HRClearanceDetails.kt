@@ -1,7 +1,7 @@
 package com.rino.self_services.model.pojo
 
 import com.google.gson.annotations.SerializedName
-import com.rino.self_services.ui.viewAttatchment.Attachment
+
 
 data class HRClearanceDetails (@SerializedName("data") var data:HRClearanceData)
 data class HRClearanceData(
@@ -24,7 +24,9 @@ data class HRClearanceData(
 ,@SerializedName("current") var current:HRClearancecurrent?
 ,@SerializedName("action") var action: HRClearanceAction?
 ,@SerializedName("employee") var employee:String
-    ,@SerializedName("attachments") var attachment: Array<Attachment>)
+,@SerializedName("attachments") var attachment: Array<Attachment>
+,@SerializedName("hasPermission") var hasPermission:Boolean?
+,@SerializedName("hasApprovedRequest") var hasApproved:Boolean?)
 data class HRClearancecurrent(
     @SerializedName("name") var name:String?
 ,@SerializedName("users") var users:List<String>?)
