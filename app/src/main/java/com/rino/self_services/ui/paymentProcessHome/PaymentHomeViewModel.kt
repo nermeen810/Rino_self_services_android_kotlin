@@ -23,7 +23,7 @@ import javax.inject.Inject
 class PaymentHomeViewModel @Inject constructor(private val modelRepository: PaymentRepo,private  val notificationRepo: NotificationRepo, private val context: Application) : ViewModel() {
         private var _setError = MutableLiveData<String>()
         private var _noData = MutableLiveData<Boolean>()
-        private var _loading = MutableLiveData<Int>(View.GONE)
+        private var _loading = MutableLiveData<Int>()
         private var _getPaymentData = MutableLiveData<PaymentHomeResponse?>()
         private var _getNotificationCount = MutableLiveData<NotificationCountResponse?>()
         private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()

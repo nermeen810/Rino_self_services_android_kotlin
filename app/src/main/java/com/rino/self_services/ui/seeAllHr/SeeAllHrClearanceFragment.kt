@@ -79,7 +79,20 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.clearanceSeeAllProgress.visibility = it
+            //       binding.clearanceSeeAllProgress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    binding.shimmer.startShimmer()
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.hrClearanceSeeAllRv.visibility = View.GONE
+
+                }
+                else if(it == View.GONE){
+                    binding.shimmer.stopShimmer()
+                    binding.hrClearanceSeeAllRv.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
             }
         }
     }

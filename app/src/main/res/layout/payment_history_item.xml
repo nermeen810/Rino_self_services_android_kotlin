@@ -260,14 +260,6 @@
                 <!--                    app:layout_constraintTop_toTopOf="parent" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/trip_img"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="30dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_margin="5dp"-->
-            <!--                android:src="@drawable/service_icon" />-->
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

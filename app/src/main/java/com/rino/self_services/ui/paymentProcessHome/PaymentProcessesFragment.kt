@@ -2,6 +2,7 @@ package com.rino.self_services.ui.paymentProcessHome
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -139,7 +140,24 @@ class PaymentProcessesFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.progress.visibility = it
+             //   binding.progress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.shimmer.startShimmer()
+                    binding.historyRecycle.visibility = View.GONE
+                    binding.searchHistoryRecycle.visibility = View.GONE
+                    binding.noDataAnim.visibility = View.GONE
+                    binding.textNoData.visibility = View.GONE
+                }
+                else{
+                    Log.e("shimmer","stop")
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.visibility = View.GONE
+
+                }
+
             }
         }
     }

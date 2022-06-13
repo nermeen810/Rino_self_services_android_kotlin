@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +16,6 @@ import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 
 import com.rino.self_services.model.pojo.SeeAllRequest
-import com.rino.self_services.ui.hrClearanceDetails.HRClearanceDetailsFragmentDirections
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +41,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
         binding = FragmentSeeAllPaymentProcessBinding.inflate(inflater, container, false)
 
         observeLoading()
-        overseError()
+        obverseError()
         handleBackBotton()
         adapter = SeeAllPaymentProcessRVAdapter(period.currentFutuer,ArrayList()){
             getPressesdItemIndex(it)
@@ -53,7 +51,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
         binding.paymentProcessSeeAllRv.layoutManager = LinearLayoutManager(this.context)
 
         viewModel.getData(period)
-        oserveData()
+        observeData()
         binding.paymentProcessSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) { //check for scroll down
@@ -73,7 +71,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-    fun oserveData(){
+    fun observeData(){
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
                 totalPages = it.totalPages
@@ -85,11 +83,24 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.progressBar.visibility = it
+             //   binding.progressBar.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.shimmer.startShimmer()
+                    binding.paymentProcessSeeAllRv.visibility = View.GONE
+
+                }
+                else if(it == View.GONE){
+                    binding.shimmer.stopShimmer()
+                    binding.paymentProcessSeeAllRv.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
             }
         }
     }
-    private fun overseError(){
+    private fun obverseError(){
         viewModel.setError.observe(viewLifecycleOwner){
             if (it != null || it != ""){
                 if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){

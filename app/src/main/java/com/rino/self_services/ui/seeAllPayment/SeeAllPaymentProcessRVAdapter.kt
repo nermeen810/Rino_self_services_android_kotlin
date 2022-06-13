@@ -55,7 +55,7 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
         val item = itemList[position]
         holder.orderNumber.text = Constants.convertNumsToArabic(item.id.toString())
         holder.date.text = Constants.convertNumsToArabic(item.date.split("T")[0])
-        holder.amount.text = Constants.convertNumsToArabic(item.amount?.toString()?:"")
+        holder.amount.text = Constants.convertNumsToArabic(item.amount?.toString()?:"")+" ر.س "
         holder.orderState.text = item.current.name
         holder.side.text = item.department
         holder.paymentMethod.text = "كاش"
