@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
-import com.rino.self_services.model.pojo.LoginRequest
+import com.rino.self_services.model.pojo.login.LoginRequest
 import com.rino.self_services.model.reposatory.UserRepo
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result

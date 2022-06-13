@@ -3,31 +3,33 @@ package com.rino.self_services.model.pojo
 import com.google.gson.annotations.SerializedName
 
 data class HRSeeAllData(
-    @SerializedName("data") var date: List<HRSeeAllItem>
-,@SerializedName("total") var totalPages:Int)
+    @SerializedName("data"    ) var data    : ArrayList<HRSeeAllItem> = arrayListOf(),
+    @SerializedName("total"   ) var total   : Int?            = null,
+    @SerializedName("success" ) var success : Boolean?        = null,
+    @SerializedName("message" ) var message : String?         = null
+)
 
 data class HRSeeAllItem(
-    @SerializedName("id") var id:Int
-,@SerializedName("data") var date:String
-,@SerializedName("department") var department:String
-,@SerializedName("status_code") var statusCode:String
-,@SerializedName("status") var status:String
-,@SerializedName("step") var step:Int
-,@SerializedName("action") var action:HRSeeAllAction
-,@SerializedName("paymentmethod") var paymentmethod:String?
-,@SerializedName("balance") var balance:Double?
-,@SerializedName("beneficiary") var beneficiary:String?
-,@SerializedName("status_date") var statusDate:String?
-,@SerializedName("status_by") var statusBy:String?
-,@SerializedName("start") var start:String?
-,@SerializedName("end") var end:String?
-,@SerializedName("code") var code:String
-,@SerializedName("reason") var reason:String?
-,@SerializedName("type") var type:String?
-,@SerializedName("entity") var entity:Int?
-,@SerializedName("employee") var employee:String
-,@SerializedName("current") var current:HRSeeAllCurrent?)
-data class HRSeeAllAction(
+
+    @SerializedName("id"          ) var id         : Int?     = null,
+    @SerializedName("date"        ) var date       : String?  = null,
+    @SerializedName("department"  ) var department : String?  = null,
+    @SerializedName("status_code" ) var statusCode : String?  = null,
+    @SerializedName("status"      ) var status     : String?  = null,
+    @SerializedName("step"        ) var step       : Int?     = null,
+    @SerializedName("status_date" ) var statusDate : String?  = null,
+    @SerializedName("status_by"   ) var statusBy   : String?  = null,
+    @SerializedName("action"      ) var action     : HRSeeAllAction ,
+    @SerializedName("current"     ) var current    : HRSeeAllCurrent,
+    @SerializedName("start"       ) var start      : String?  = null,
+    @SerializedName("end"         ) var end        : String?  = null,
+    @SerializedName("employee"    ) var employee   : String?  = null,
+    @SerializedName("code"        ) var code       : String?  = null,
+    @SerializedName("reason"      ) var reason     : String?  = null,
+    @SerializedName("entity"      ) var entity     : Int?     = null,
+    @SerializedName("type"        ) var type       : String?  = null)
+
+            data class HRSeeAllAction(
     @SerializedName("name") var name:String?
     ,@SerializedName("since") var since:String?
     ,@SerializedName("cancel") var cancel:Boolean?

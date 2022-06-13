@@ -15,4 +15,5 @@
     <dimen name="marginTextField">8dp</dimen>
     <dimen name="welcomeMarginTop">40dp</dimen>
     <dimen name="subTextTextSize">10sp</dimen>
+    <dimen name="marginTxt">8dp</dimen>
 </resources>

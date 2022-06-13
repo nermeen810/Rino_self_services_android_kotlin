@@ -9,6 +9,7 @@
     <color name="black_transperant">#5E000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_orange">#EF8A21</color>
+    <color name="shimmer_color">#DDDDDD</color>
     <color name="brown">#784311</color>
     <color name="gray">#787878</color>
     <color name="dark_gray">#3D3D3D</color>

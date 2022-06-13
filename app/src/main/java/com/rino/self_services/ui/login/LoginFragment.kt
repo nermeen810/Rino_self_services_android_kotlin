@@ -10,15 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentLoginBinding
-import com.rino.self_services.model.pojo.LoginRequest
-import com.rino.self_services.ui.main.MainActivity
+import com.rino.self_services.model.pojo.login.LoginRequest
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

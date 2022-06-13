@@ -58,10 +58,10 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
             holder.binding.vacationEndValue.visibility = View.GONE
             holder.binding.vacationEndTxt.visibility =View.GONE
         }
-        if(PaymentHomeViewModel.me_or_others=="others") {
+        if(hrClearanceViewModel.me_or_others=="others") {
             holder.binding.requestToValue.text = clearanceSubList[position].current?.users?.get(0)
         }
-        else if(PaymentHomeViewModel.me_or_others=="me")
+        else if(hrClearanceViewModel.me_or_others=="me")
         {
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
@@ -69,7 +69,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
             hrClearanceViewModel.navToServiceDetails(
-                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0)
+                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0,true,hrClearanceViewModel.me_or_others)
                 )
         }
 

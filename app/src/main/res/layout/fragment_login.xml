@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginFragment">
 
-    <FrameLayout
-        android:id="@+id/logo_layout"
-        android:layout_width="match_parent"
-        android:padding="@dimen/paddingLayout"
-        android:layout_margin="@dimen/paddingLayout"
-        android:layout_height="100dp"
-        android:background="@drawable/final_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scrollView2"
-        app:layout_constraintTop_toTopOf="parent" >
-
-    </FrameLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -28,7 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_layout">
+        app:layout_constraintTop_toTopOf="parent">
+
 
 
         <LinearLayout
@@ -36,20 +24,27 @@
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
-            android:layout_gravity="center"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:padding="@dimen/paddingLayout">
 
+
+            <FrameLayout
+                android:id="@+id/logo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/final_logo"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputEmail"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textDirection="rtl"
+                android:layout_margin="@dimen/paddingLayout"
                 android:layoutDirection="rtl"
-                android:layout_marginTop="10dp"
+                android:textDirection="rtl"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -57,12 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/brown"
-                    android:textDirection="rtl"
-                    android:layoutDirection="rtl"
-                    app:endIconDrawable="@drawable/ic_baseline_email_24"
-                    app:endIconMode="custom"
                     android:hint="@string/login_userName_hint"
-
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:textSize="@dimen/sub_header_text" />
@@ -73,8 +63,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/paddingLayout"
                 android:layout_marginTop="10dp"
-                android:textDirection="rtl"
                 android:layoutDirection="rtl"
                 app:errorEnabled="true"
                 app:passwordToggleDrawable="@drawable/show_password_selector"
@@ -83,16 +73,15 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPassword"
                     android:layout_width="match_parent"
-                    android:textDirection="rtl"
-                    android:layoutDirection="rtl"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:hint="@string/login_password_hint"
                     android:inputType="textPassword"
+                    android:layoutDirection="rtl"
                     android:maxLines="1"
+                    android:textDirection="rtl"
                     android:textSize="@dimen/sub_header_text" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -101,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:layout_margin="@dimen/paddingLayout"
                 android:background="@drawable/orange_rect"
                 android:text="@string/login"
                 android:textColor="@color/white"
@@ -112,44 +102,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="30dp"
+                android:layout_marginTop="30dp"
                 android:clickable="true"
-                android:minHeight="48dp"
                 android:padding="@dimen/paddingText"
                 android:text="@string/forgot_password"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/normal_text"
-                android:textStyle="bold" />
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/dont_have_account_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:textStyle="bold"
-                    android:padding="@dimen/paddingText"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/normal_text" />
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
 
                 <TextView
                     android:id="@+id/privacyPolicy_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:layout_margin="@dimen/paddingText"
                     android:clickable="true"
+                    android:padding="@dimen/paddingText"
+                    android:layout_gravity="center"
                     android:text="@string/privacy_policy"
                     android:textColor="@color/brown"
-                    android:textSize="@dimen/normal_text" />
-            </LinearLayout>
+                    android:textSize="@dimen/normal_text"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
 
 
             <ProgressBar

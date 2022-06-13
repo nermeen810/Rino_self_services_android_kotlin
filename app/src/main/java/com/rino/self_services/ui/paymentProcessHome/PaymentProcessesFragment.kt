@@ -2,6 +2,7 @@ package com.rino.self_services.ui.paymentProcessHome
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +57,7 @@ class PaymentProcessesFragment : Fragment() {
         periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
         periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
         binding.historyRecycle.visibility = View.GONE
-        PaymentHomeViewModel.me_or_others = me_or_others
+        viewModel.me_or_others = me_or_others
         paymentList = arrayListOf()
         searchHistoryList = arrayListOf()
         periodAdapter = PeriodAdapter(periodTimeList_ar,viewModel)
@@ -139,7 +140,24 @@ class PaymentProcessesFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.progress.visibility = it
+             //   binding.progress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.shimmer.startShimmer()
+                    binding.historyRecycle.visibility = View.GONE
+                    binding.searchHistoryRecycle.visibility = View.GONE
+                    binding.noDataAnim.visibility = View.GONE
+                    binding.textNoData.visibility = View.GONE
+                }
+                else{
+                    Log.e("shimmer","stop")
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.visibility = View.GONE
+
+                }
+
             }
         }
     }
@@ -160,8 +178,8 @@ class PaymentProcessesFragment : Fragment() {
         }
     }
 
-    private fun navToServiceDetails(id: Int) {
-        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(id)
+    private fun navToServiceDetails(navToDetails: NavToDetails) {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToPaymentProcessDetailsFragment(navToDetails)
         findNavController().navigate(action)
     }
 
@@ -212,6 +230,9 @@ class PaymentProcessesFragment : Fragment() {
         binding.notificationBtn.setOnClickListener {
             navToNotification()
         }
+        binding.profileBtn.setOnClickListener {
+            navToProfile()
+        }
         binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
@@ -246,6 +267,11 @@ class PaymentProcessesFragment : Fragment() {
 
     }
 
+    private fun navToProfile() {
+        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToProfileFragment("payment")
+        findNavController().navigate(action)
+    }
+
     private fun navToNotification() {
         val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToNotificationsFragment("payment")
         findNavController().navigate(action)
@@ -256,12 +282,12 @@ class PaymentProcessesFragment : Fragment() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.me_item -> {
-                    PaymentHomeViewModel.me_or_others = "me"
+                    viewModel.me_or_others = "me"
                     viewModel.getPaymentData()
                     true
                 }
                 R.id.others_item -> {
-                    PaymentHomeViewModel.me_or_others = "others"
+                    viewModel.me_or_others = "others"
                     viewModel.getPaymentData()
                     true
                 }

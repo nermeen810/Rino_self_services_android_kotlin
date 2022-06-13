@@ -38,14 +38,14 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         holder.binding.serviceNumValue.text = Constants.convertNumsToArabic(paymentSubList[position].id.toString())
         val dateRes = paymentSubList[position].date.split("T")
         holder.binding.dateFromTxt.text     = Constants.convertNumsToArabic(dateRes[0])
-        holder.binding.amountValue.text     = Constants.convertNumsToArabic(paymentSubList[position].amount.toString())
-        holder.binding.agencyValue.text     = Constants.convertNumsToArabic(paymentSubList[position].department?:"")
+        holder.binding.amountValue.text     = Constants.convertNumsToArabic(paymentSubList[position].amount.toString())+" ر.س "
+        holder.binding.agencyValue.text     = Constants.convertNumsToArabic( paymentSubList[position].department?:"")
         holder.binding.paymentMethodValue.text     = context.getText(R.string.cash)
         holder.binding.requestStatusValue.text     = paymentSubList[position].status?:""
-        if(PaymentHomeViewModel.me_or_others=="others") {
+        if(paymentHomeViewModel.me_or_others=="others") {
             holder.binding.requestToValue.text = paymentSubList[position].current?.users?.get(0)
         }
-        else if(PaymentHomeViewModel.me_or_others=="me")
+        else if(paymentHomeViewModel.me_or_others=="me")
         {
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
@@ -53,7 +53,8 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
             Log.i("id",paymentSubList[position].id.toString()?:"")
-            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
+            paymentHomeViewModel.navToServiceDetails(NavToDetails(paymentHomeViewModel.me_or_others,paymentSubList[position].id!!,true))
+//            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
         }
 
     }

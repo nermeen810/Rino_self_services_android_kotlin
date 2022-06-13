@@ -98,5 +98,13 @@
     <string name="saveNewPaswword">حفظ كلمة المرور الجديدة</string>
     <string name="request_otp_Code">ارسال الكود التفعيلى</string>
     <string name="notifications">الاشعارات</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="edit_profile">حسابى</string>
+    <string name="complaints">الشكاوى والمقترحات</string>
+    <string name="setting">الحساب الشخصى</string>
+    <string name="department_txt">الادارة المختصة</string>
+    <string name="notes">الشكاوى والمقرحات</string>
+    <string name="send">ارسال</string>
+    <string name="administrator">المسئول</string>
 
 </resources>

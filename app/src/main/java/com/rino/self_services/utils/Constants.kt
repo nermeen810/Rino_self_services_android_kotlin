@@ -1,7 +1,10 @@
 package com.rino.self_services.utils
 
 object Constants {
-    val base_url = "https://rino-app-staging.azurewebsites.net/"
+
+//    val base_url = "https://rino-app-staging.azurewebsites.net/"
+
+    val base_url = "https://rino-app.azurewebsites.net/"
 
 //    val base_url = "https://7a28-156-214-121-181.ngrok.io/"
   

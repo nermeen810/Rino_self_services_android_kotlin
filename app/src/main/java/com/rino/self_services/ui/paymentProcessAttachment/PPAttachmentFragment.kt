@@ -7,9 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPPAttachmentBinding
 import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.model.pojo.NavToAttachment
+import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 //import com.rino.self_services.model.pojo.AttachmentPayment
 import com.rino.self_services.ui.payment_process_details.PPAttachmentViewAdapter
 
@@ -19,19 +26,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class PPAttachmentFragment : Fragment() {
 
 private lateinit var binding:FragmentPPAttachmentBinding
-private lateinit var array: Array<Attachment>
+private lateinit var data: NavToAttachment
 private lateinit var adapter:PPAttachmentViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            array = arguments?.get("attachments") as Array<Attachment>
+            data = arguments?.get("attachments") as NavToAttachment
 
 
-            adapter = PPAttachmentViewAdapter(array){
+            adapter = PPAttachmentViewAdapter(data.attachments){
                 val openURL = Intent(Intent.ACTION_VIEW)
-                openURL.data = Uri.parse(array[it].url)
+                openURL.data = Uri.parse(data.attachments[it].url)
                 startActivity(openURL)
             }
+
         }
     }
 
@@ -43,7 +51,35 @@ private lateinit var adapter:PPAttachmentViewAdapter
         binding.ppAttachmentRv.layoutManager = LinearLayoutManager(requireContext())
         binding.ppAttachmentRv.adapter = adapter
         adapter.notifyDataSetChanged()
+        if (data.attachments.isEmpty()){
+            showMessage("لم يتم اضافه مرفقات لهذا الطلب")
+        }
+        binding.backbtn.setOnClickListener {
+            if (data.isPaymentProcess){
+                var action = PPAttachmentFragmentDirections.actionPPAttachmentFragmentToPaymentProcessDetailsFragment(NavToDetails(data.meOrOther,data.id,data.isActionBefore))
+                findNavController().navigate(action)
+            }else{
+                var action =  PPAttachmentFragmentDirections.actionPPAttachmentFragmentToHRClearanceDetailsFragment(
+                    HRClearanceDetailsRequest(data.enity!!,data.id,data.isActionBefore,data.meOrOther)
+                )
+                findNavController().navigate(action)
+            }
+        }
         return binding.root
+    }
+    private fun showMessage(msg: String) {
+        lifecycleScope.launchWhenResumed {
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                    resources.getColor(
+                        R.color.color_orange
+                    )
+                )
+                .setActionTextColor(resources.getColor(R.color.white))
+                .setAction(getString(R.string.dismiss))
+                {
+                }.show()
+        }
     }
 
 
