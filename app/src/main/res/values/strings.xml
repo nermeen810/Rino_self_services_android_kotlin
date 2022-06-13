@@ -106,5 +106,6 @@
     <string name="notes">الشكاوى والمقرحات</string>
     <string name="send">ارسال</string>
     <string name="administrator">المسئول</string>
+    <string name="payment_details">تفاصيل الطلب</string>
 
 </resources>

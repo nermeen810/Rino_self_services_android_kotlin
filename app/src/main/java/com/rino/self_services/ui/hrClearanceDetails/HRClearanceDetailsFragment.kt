@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.hrClearanceDetails
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -117,7 +118,21 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.clearanceDetailsProgress.visibility = it
+              //  binding.clearanceDetailsProgress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.shimmer.startShimmer()
+
+                }
+                else{
+                    Log.e("shimmer","stop")
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.visibility = View.GONE
+
+                }
+
             }
         }
     }

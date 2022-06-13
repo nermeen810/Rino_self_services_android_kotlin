@@ -72,9 +72,9 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
             val response = apiDataSource.getHRDetails("Bearer "+sharedPreference.getToken(),hrClearanceDetailsRequest.entity,hrClearanceDetailsRequest.requestID)
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
+                Log.i("getHRDetails", "Result $result")
             } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                Log.i("getHRDetails", "Error${response.errorBody()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
