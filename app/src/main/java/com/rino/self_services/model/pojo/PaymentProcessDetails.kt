@@ -1,10 +1,5 @@
 package com.rino.self_services.model.pojo
-
-
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-
-import kotlinx.android.parcel.Parcelize
 
 data class PaymentProcessDetails(
     @SerializedName("data") var data:PaymentProcessDetailsData?)
@@ -30,5 +25,5 @@ data class PaymentProcessDetailsData(
     ,@SerializedName("notes") var notes:String?
     ,@SerializedName("attachments") var attachments:List<Attachment>?
     ,@SerializedName("hasPermission") var hasPermission:Boolean?
-    ,@SerializedName("hasApprovedRequest") var hasApproved:Boolean?
+    ,@SerializedName("hasMadeAction") var hasMadeAction:Boolean?
 )

@@ -391,6 +391,7 @@
                 app:layout_constraintWidth_percent="0.95" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
                 android:id="@+id/deny"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

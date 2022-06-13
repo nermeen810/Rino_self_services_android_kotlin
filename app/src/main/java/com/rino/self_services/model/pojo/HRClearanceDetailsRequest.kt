@@ -6,4 +6,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class HRClearanceDetailsRequest(
     var entity:Int
-,var requestID:Int): Parcelable
+,var requestID:Int,val isActionBefore:Boolean,val meOrOthers:String): Parcelable

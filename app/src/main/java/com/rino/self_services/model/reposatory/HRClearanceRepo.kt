@@ -7,10 +7,7 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
-import com.rino.self_services.model.pojo.CreateAttachmentRequest
-import com.rino.self_services.model.pojo.HRClearanceDetails
-import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.model.pojo.HRSeeAllData
+import com.rino.self_services.model.pojo.*
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 import com.rino.self_services.ui.seeAllHr.HRClearanceRequest
 import com.rino.self_services.utils.PREF_FILE_NAME
@@ -154,12 +151,12 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         return result
     }
 
-    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<HRClearanceDetails?>{
-        var result: Result<HRClearanceDetails?> = Result.Loading
+    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<ArrayList<Attachment>?>{
+        var result: Result<ArrayList<Attachment>?> = Result.Loading
 
         try {
             val response = attachments.parts?.let {
-                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.entity,
+                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.attachmentType,
                     it
                 )
             }
@@ -201,6 +198,28 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
             Log.e("ModelRepository", "IOException ${e.localizedMessage}")
 
         }
+        return result
+    }
+    suspend fun clearanceAction(id:Int,action:String,entity:Int): Result<ActionResponse?> {
+        var result: Result<ActionResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.clearanceAction("Bearer "+sharedPreference.getToken(), action = action, id = id, enity = entity)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+
+            } else {
+                when (response.code()) {
+                    500 -> {
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        result =
+                            Result.Error(Exception("time out"))
+                    }
+                }
+            }
+        }catch(e: IOException) {
+            result = Result.Error(e)}
         return result
     }
 }

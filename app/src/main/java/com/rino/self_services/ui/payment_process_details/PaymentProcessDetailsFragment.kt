@@ -1,20 +1,22 @@
 package com.rino.self_services.ui.payment_process_details
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
-import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
+import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -24,16 +26,18 @@ import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
+    var shouldShowActions = true
     private  var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
-    private  var array:ArrayList<Attachment> = ArrayList()
-     var requestId = 0
+    private  lateinit var navToDetails: NavToDetails
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            requestId = arguments?.get("id") as Int
+            navToDetails = arguments?.get("nav_to_pp_details") as NavToDetails
+            shouldShowActions = navToDetails.isActionBefore
+
         }
     }
 
@@ -46,25 +50,19 @@ class PaymentProcessDetailsFragment : Fragment() {
         oberveData()
         obseveError()
         handleBackBotton()
-        viewModel.getData(requestId)
-        (activity as MainActivity).paymentProcessFiles.observe(viewLifecycleOwner){
-            parts = ArrayList()
-            it.map {
-                val requestFile: RequestBody =
-                    it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                var  part = MultipartBody.Part.createFormData(
-                    "Attachments",
-                    it.name.trim(),
-                    requestFile
-                )
-                parts.add(part)
-            }
-
-            viewModel.createAttachment(parts,requestId,action)
+        viewModel.getData(navToDetails.id)
+        if(navToDetails.me_or_others == "others"){
+            binding.approve.visibility = View.GONE
         }
+        if (!navToDetails.isActionBefore ){
+            binding.approve.visibility = View.GONE
+            binding.deny.visibility = View.GONE
+        }
+
+
         binding.viewPpAttachments.setOnClickListener {
 
-            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(array.toList().toTypedArray())
+            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions))
             findNavController().navigate(action)
         }
         viewModel.setToTrue.observe(viewLifecycleOwner){
@@ -75,16 +73,52 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
         }
         binding.deny.setOnClickListener {
-            action = "deny"
+//            action = "deny"
+//            viewModel.createAction(requestId,action)
+
 
         }
         binding.approve.setOnClickListener {
             action = "approve"
-
+            viewModel.createAction(navToDetails.id,action)
+        }
+        if (navToDetails.me_or_others != "me"){
+            binding.ppAddAttachment.visibility = View.GONE
+        }else{
+            binding.ppAddAttachment.visibility = View.VISIBLE
         }
         binding.ppAddAttachment.setOnClickListener{
             (activity as MainActivity).caller = FileCaller.paymentDetails
             (activity as MainActivity).openGalary()
+            (activity as MainActivity).paymentProcessFiles.observe(viewLifecycleOwner){
+                if (!it.isEmpty()){
+                    parts = ArrayList()
+                    it.map {
+                        val requestFile: RequestBody =
+                            it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        var  part = MultipartBody.Part.createFormData(
+                            "Attachments",
+                            it.name.trim(),
+                            requestFile
+                        )
+                        parts.add(part)
+                    }
+
+                    viewModel.createAttachment(parts,navToDetails.id)
+                    (activity as MainActivity)._paymentProcessFiles.value = ArrayList()
+                }
+            }
+        }
+        viewModel.action.observe(viewLifecycleOwner){
+            if (it.success == true){
+                shouldShowActions = false
+                binding.approve.alpha = 0f
+                binding.deny.alpha = 0f
+                showMessage("تم تعديل حاله الطلب بنجاح")
+                viewModel.getData(navToDetails.id)
+            }else{
+                it.message?.let { it1 -> showMessage(it1) }
+            }
         }
         return binding.root
     }
@@ -99,6 +133,13 @@ class PaymentProcessDetailsFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
                 binding.ppDetailsProgress.visibility = it
+//                if( it == View.GONE){
+//                    binding.deny.alpha = 0f
+//                    binding.approve.alpha = 0f
+//                }else{
+//                    binding.deny.alpha = 0f
+//                    binding.approve.alpha = 0f
+//                }
             }
         }
     }
@@ -128,8 +169,6 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
-            details?.attachments?.let { it1 -> array.addAll(it1) }
-            Toast.makeText(requireContext(),"done",Toast.LENGTH_LONG).show()
             binding.orderNumberDetails.text = details?.id.toString()
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
@@ -152,13 +191,23 @@ class PaymentProcessDetailsFragment : Fragment() {
                 6 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
                 7 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
             }
-                if(details?.hasApproved == false && details.hasPermission == true){
-                    binding.deny.alpha = 1f
-                    binding.approve.alpha = 1f
-                }else{
-                    binding.deny.alpha = 0f
-                    binding.approve.alpha = 0f
-                }
+
+//            if(details?.hasMadeAction == false && details?.status == "جديد"){
+//                binding.deny.alpha = 1f
+//                binding.approve.alpha = 1f
+//            }else if(details?.hasMadeAction == true){
+//                binding.deny.alpha = 0f
+//                binding.approve.alpha = 0f
+//            }else if(details?.hasMadeAction == false &&  details?.status == "تم اعتماد مدير القسم"){
+//                binding.approve.alpha = 1f
+//
+//            }else if(details?.hasMadeAction == true &&  details?.status == "تم اعتماد مدير القسم"){
+//                binding.deny.alpha = 0f
+//                binding.approve.alpha = 0f
+//            }else if(details?.status?.contains("تم اعتماد مدير الحسابات") == true && details?.hasMadeAction == true){
+//                binding.deny.alpha = 0f
+//                binding.approve.alpha = 0f
+//            }else if(details?.status?.contains("اعتماد المراةع المالي") == true){}
         }
     }
 }

@@ -17,6 +17,7 @@ import com.rino.self_services.databinding.FragmentSeeAllPaymentProcessBinding
 
 import com.rino.self_services.model.pojo.SeeAllRequest
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -114,16 +115,9 @@ class SeeAllPaymentProcessFragment : Fragment() {
     }
     private fun getPressesdItemIndex(index:Int){
 
-            val id = viewModel.seeAllarray.get(index).id
-            var action = id?.let {
-                SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
-                    it
-                )
-            }
-
-            if (action != null) {
+            val id = viewModel.seeAllarray[index].id
+            var action = SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(NavToDetails(navSeeAll.me_or_others,id!!,true))
                 findNavController().navigate(action)
-            }
     }
     private fun showMessage(msg: String) {
         lifecycleScope.launchWhenResumed {
