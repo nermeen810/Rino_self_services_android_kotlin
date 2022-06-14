@@ -106,5 +106,7 @@
     <string name="notes">الشكاوى والمقرحات</string>
     <string name="send">ارسال</string>
     <string name="administrator">المسئول</string>
+    <string name="complaint_id">رقم الشكوى</string>
+    <string name="add_complaint">اضافه شكوى</string>
 
 </resources>
