@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "681555393436",
+    "project_id": "rino-90528",
+    "storage_bucket": "rino-90528.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681555393436:android:7d134965b6fed30ebfa659",
+        "android_client_info": {
+          "package_name": "com.rino.self_services"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681555393436-1406d1nuku2rmlujufnn6ilf3g2lq4pa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rino.self_services",
+            "certificate_hash": "4ef6291bc99ef2e7587d5a35b7ea8f37c18eea7c"
+          }
+        },
+        {
+          "client_id": "681555393436-kvj9dp2lkl19qonvik168e5j1u9u5l7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD78SlVprA840L-hc8GXDQcUTYHOcfViIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681555393436-kvj9dp2lkl19qonvik168e5j1u9u5l7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
