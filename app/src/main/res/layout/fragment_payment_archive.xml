@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.viewComplints.ViewComplaintsFragment">
+    tools:context=".ui.paymrntArchive.PaymentArchiveFragment">
 
     <ImageView
         android:id="@+id/backbtn"
@@ -12,20 +12,20 @@
         android:layout_height="35dp"
         android:layout_margin="@dimen/paddingLayout"
         android:src="@drawable/ic_baseline_arrow_forward_24"
-        app:layout_constraintBottom_toBottomOf="@+id/complaintsTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/paymentArchiveTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/complaintsTitle" />
+        app:layout_constraintTop_toTopOf="@+id/paymentArchiveTitle" />
 
 
     <TextView
-        android:id="@+id/complaintsTitle"
+        android:id="@+id/paymentArchiveTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:gravity="center"
         android:padding="@dimen/paddingText"
-        android:text="@string/complaints"
+        android:text="@string/payment_archive"
         android:textColor="@color/brown"
         android:textSize="@dimen/headerTextSize"
         android:textStyle="bold"
@@ -35,7 +35,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/complaintsRecycle"
+        android:id="@+id/paymentArchiveRecycle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -45,18 +45,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/complaintsTitle"
-        tools:listitem="@layout/complaint_item" />
+        app:layout_constraintTop_toBottomOf="@+id/paymentArchiveTitle"
+        tools:listitem="@layout/payment_archive_item" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="mini"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/add_complaint"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

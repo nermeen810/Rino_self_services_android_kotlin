@@ -108,5 +108,10 @@
     <string name="administrator">المسئول</string>
     <string name="complaint_id">رقم الشكوى</string>
     <string name="add_complaint">اضافه شكوى</string>
+    <string name="payment_archive">كشف الحركات المالية</string>
+    <string name="move_num">رقم الحركة</string>
+    <string name="realAmount">المبلغ الاصلى</string>
+    <string name="updateAmount">المبلغ الجديد</string>
+    <string name="differance">الفرق</string>
 
 </resources>

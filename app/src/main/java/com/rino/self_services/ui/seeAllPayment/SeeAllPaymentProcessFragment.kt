@@ -116,7 +116,8 @@ class SeeAllPaymentProcessFragment : Fragment() {
     private fun getPressesdItemIndex(index:Int){
 
             val id = viewModel.seeAllarray[index].id
-            var action = SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(NavToDetails(navSeeAll.me_or_others,id!!,true))
+            var action = SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
+                NavToDetails(navSeeAll.me_or_others,id!!,true),navSeeAll)
                 findNavController().navigate(action)
     }
     private fun showMessage(msg: String) {

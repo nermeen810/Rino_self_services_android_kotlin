@@ -15,6 +15,7 @@ import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -29,11 +30,14 @@ class HRClearanceDetailsFragment : Fragment() {
     private lateinit var hrClearanceDetailsRequest: HRClearanceDetailsRequest
     private  var parts:ArrayList<MultipartBody.Part> = arrayListOf()
     var shouldShowActions = true
+    lateinit var seeAll: NavSeeAll
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             hrClearanceDetailsRequest =  arguments?.get("hr_clearance_details") as HRClearanceDetailsRequest
             shouldShowActions = hrClearanceDetailsRequest.isActionBefore
+            seeAll = arguments?.get("nav_to_see_all_clearance") as NavSeeAll
+
         }
     }
 
@@ -107,9 +111,18 @@ class HRClearanceDetailsFragment : Fragment() {
 
     private fun handleBackBotton() {
         binding.backbtn.setOnClickListener {
-            val action =
-                HRClearanceDetailsFragmentDirections.hRClearanceDetailsFragmentToHrHome()
-            findNavController().navigate(action)
+            if(seeAll.me_or_others==""&&seeAll.startPeriod==""&&seeAll.endPeriod=="")
+            {
+                val action =
+                    HRClearanceDetailsFragmentDirections.hRClearanceDetailsFragmentToHrHome()
+                findNavController().navigate(action)
+            }
+            else{
+                val action =
+                    HRClearanceDetailsFragmentDirections.hRClearanceDetailsFragmentToHrSeeAll(seeAll)
+                findNavController().navigate(action)
+            }
+
         }
     }
 
@@ -190,7 +203,8 @@ class HRClearanceDetailsFragment : Fragment() {
             else {
                 binding.viewAttachment.setOnClickListener {
                     val action =
-                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(NavToAttachment(hrClearanceDetailsRequest.entity,viewModel.attachments.toList().toTypedArray(),false,hrClearanceDetailsRequest.meOrOthers,hrClearanceDetailsRequest.requestID,shouldShowActions))
+                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(
+                            NavToAttachment(hrClearanceDetailsRequest.entity,viewModel.attachments.toList().toTypedArray(),false,hrClearanceDetailsRequest.meOrOthers,hrClearanceDetailsRequest.requestID,shouldShowActions),seeAll)
                     findNavController().navigate(action)
                 }
             }

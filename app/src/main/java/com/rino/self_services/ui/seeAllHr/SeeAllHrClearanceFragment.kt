@@ -142,9 +142,7 @@ class SeeAllHrClearanceFragment : Fragment() {
             val entity = viewModel.arrayList[index].entity
             var action = SeeAllHrClearanceFragmentDirections.actionSeeAllHrClearanceFragmentToHRClearanceDetailsFragment(
 
-                HRClearanceDetailsRequest(entity!!,id?:-1,true,v.me_or_others)
-
-            )
+                HRClearanceDetailsRequest(entity!!,id?:-1,true,v.me_or_others), v )
             findNavController().navigate(action)
 
 
