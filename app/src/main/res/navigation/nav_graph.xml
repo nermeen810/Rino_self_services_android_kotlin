@@ -65,10 +65,10 @@
         <argument
             android:name="nav_see_all"
             app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
-        <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="1" />
+<!--        <argument-->
+<!--            android:name="id"-->
+<!--            app:argType="integer"-->
+<!--            android:defaultValue="1" />-->
         <action
             android:id="@+id/seeAllPaymentProcessFragment_toPaymentHome"
             app:destination="@id/paymentProcessesFragment" />
@@ -227,5 +227,20 @@
             android:id="@+id/action_profileFragment_to_hrClearanceHomeFragment"
             app:destination="@id/hrClearanceHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/complaintsFragment"
+        android:name="com.rino.self_services.ui.complaints.ComplaintsFragment"
+        android:label="fragment_complaints"
+        tools:layout="@layout/fragment_complaints" />
+    <fragment
+        android:id="@+id/paymentArchiveFragment"
+        android:name="com.rino.self_services.ui.paymrntArchive.PaymentArchiveFragment"
+        android:label="fragment_payment_archive"
+        tools:layout="@layout/fragment_payment_archive" />
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.rino.self_services.ui.myProfile.MyProfileFragment"
+        android:label="fragment_my_profile"
+        tools:layout="@layout/fragment_my_profile" />
 
 </navigation>

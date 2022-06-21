@@ -113,5 +113,8 @@
     <string name="realAmount">المبلغ الاصلى</string>
     <string name="updateAmount">المبلغ الجديد</string>
     <string name="differance">الفرق</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="last_login">تاريخ اخر تسجيل دخول</string>
+    <string name="phone_num">رقم الهاتف</string>
 
 </resources>
