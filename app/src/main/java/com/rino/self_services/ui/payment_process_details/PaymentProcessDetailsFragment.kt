@@ -134,6 +134,7 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
             else{
          //       Log.e("seeAll",seeAll.me_or_others+" , "+seeAll.startPeriod+" , "+seeAll.endPeriod)
+                val action =
                 PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToSeeAllPayment(seeAll)
                 findNavController().navigate(action)
             }
