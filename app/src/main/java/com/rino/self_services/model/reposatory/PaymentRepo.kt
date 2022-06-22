@@ -168,7 +168,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
