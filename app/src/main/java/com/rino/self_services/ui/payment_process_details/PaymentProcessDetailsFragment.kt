@@ -143,7 +143,22 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.ppDetailsProgress.visibility = it
+      //          binding.ppDetailsProgress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.detailsLayout.visibility = View.GONE
+                    binding.shimmer.startShimmer()
+
+                }
+                else{
+                    Log.e("shimmer","stop")
+                    binding.shimmer.stopShimmer()
+                    binding.detailsLayout.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
 //                if( it == View.GONE){
 //                    binding.deny.alpha = 0f
 //                    binding.approve.alpha = 0f
