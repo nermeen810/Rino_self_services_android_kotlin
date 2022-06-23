@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,11 +34,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun init() {
+
         binding.logoutBtn.setOnClickListener {
             viewModel.logout()
             navToLogin()
         }
         binding.logoutTxt.setOnClickListener {
+            Log.e("navToLogin","profile")
             viewModel.logout()
             navToLogin()
         }
@@ -62,6 +65,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun navToLogin() {
+    //    Log.e("navToLogin","profile")
         val action = ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
         findNavController().navigate(action)
     }
