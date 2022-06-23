@@ -34,7 +34,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun init() {
-        binding.logoutCard.setOnClickListener {
+
+        binding.logoutBtn.setOnClickListener {
+            viewModel.logout()
+            navToLogin()
+        }
+        binding.logoutTxt.setOnClickListener {
             Log.e("navToLogin","profile")
             viewModel.logout()
             navToLogin()

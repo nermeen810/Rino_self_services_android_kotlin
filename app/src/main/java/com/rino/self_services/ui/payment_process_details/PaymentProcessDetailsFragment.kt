@@ -1,6 +1,5 @@
 package com.rino.self_services.ui.payment_process_details
 
-
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import com.rino.self_services.databinding.FragmentPaymentProcessDetailsBinding
 import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -33,10 +33,12 @@ class PaymentProcessDetailsFragment : Fragment() {
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
     private  lateinit var navToDetails: NavToDetails
+    private  lateinit var seeAll:NavSeeAll
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             navToDetails = arguments?.get("nav_to_pp_details") as NavToDetails
+            seeAll = arguments?.get("nav_to_see_all_payment") as NavSeeAll
             shouldShowActions = navToDetails.isActionBefore
 
         }
@@ -63,7 +65,7 @@ class PaymentProcessDetailsFragment : Fragment() {
 
         binding.viewPpAttachments.setOnClickListener {
 
-            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions))
+            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions),seeAll)
             findNavController().navigate(action)
         }
         viewModel.setToTrue.observe(viewLifecycleOwner){
@@ -125,9 +127,17 @@ class PaymentProcessDetailsFragment : Fragment() {
     }
     private fun handleBackBotton() {
         binding.backbtn.setOnClickListener {
-            val action =
-                PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToPaymentHome()
-            findNavController().navigate(action)
+            if(seeAll.me_or_others == ""&&seeAll.startPeriod ==""&&seeAll.endPeriod=="") {
+                val action =
+                    PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToHomePayment()
+                findNavController().navigate(action)
+            }
+            else{
+         //       Log.e("seeAll",seeAll.me_or_others+" , "+seeAll.startPeriod+" , "+seeAll.endPeriod)
+                val action =
+                PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToSeeAllPayment(seeAll)
+                findNavController().navigate(action)
+            }
         }
     }
     private fun observeLoading() {

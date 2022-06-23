@@ -74,9 +74,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:padding="@dimen/paddingLayout"
+                    android:layout_height="match_parent"
 
-                    android:layout_height="match_parent">
+                    android:padding="@dimen/paddingLayout">
 
                     <TextView
                         android:id="@+id/textView9"
@@ -137,23 +137,25 @@
                         android:id="@+id/textView24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginRight="10dp"
                         android:text="حالة الاجراء"
                         android:textColor="@color/black"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/hr_d_status"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider8" />
+                        app:layout_constraintTop_toTopOf="@+id/hr_d_status" />
 
                     <TextView
                         android:id="@+id/hr_d_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="28dp"
                         android:background="@drawable/orange_rect"
                         android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:layout_margin="@dimen/marginTxt"
                         app:layout_constraintRight_toLeftOf="@+id/textView24"
-                        app:layout_constraintTop_toTopOf="@+id/textView24" />
+                        app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
                     <TextView
                         android:id="@+id/textView27"
@@ -171,11 +173,11 @@
                     <TextView
                         android:id="@+id/clearance_description"
                         android:layout_width="wrap_content"
-                        android:maxLines="2"
-                        android:maxWidth="250dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
+                        android:maxWidth="250dp"
+                        android:maxLines="2"
 
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView27" />
@@ -281,11 +283,11 @@
                         android:id="@+id/hr_fowrwerd_to"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/paddingText"
                         android:background="@drawable/orange_rect"
-                        android:padding="5dp"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/textView39"
-                        app:layout_constraintEnd_toStartOf="@+id/textView39"
+                        app:layout_constraintEnd_toEndOf="@+id/hr_d_status"
                         app:layout_constraintTop_toTopOf="@+id/textView39" />
 
                     <View
@@ -381,7 +383,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/hr_end" />
 
 
-
                     <TextView
                         android:id="@+id/attachment_txt"
                         android:layout_width="wrap_content"
@@ -400,8 +401,8 @@
                         android:layout_width="1dp"
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
-                        app:guidelineUseRtl="true"
                         android:background="?android:attr/listDivider"
+                        app:guidelineUseRtl="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

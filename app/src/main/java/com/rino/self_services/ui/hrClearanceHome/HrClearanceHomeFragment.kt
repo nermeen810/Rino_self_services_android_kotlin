@@ -166,7 +166,7 @@ class HrClearanceHomeFragment : Fragment() {
     }
 
     private fun navToServiceDetails(request: HRClearanceDetailsRequest) {
-        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToHRClearanceDetailsFragment(request)
+        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToHRClearanceDetailsFragment(request,NavSeeAll("","",""))
         findNavController().navigate(action)
     }
 

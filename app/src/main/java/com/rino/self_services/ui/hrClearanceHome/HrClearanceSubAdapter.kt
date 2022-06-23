@@ -36,7 +36,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
     override fun onBindViewHolder(holder: SubHrClearanceItemViewHolder, position: Int) {
         holder.binding.serviceNumValue.text = Constants.convertNumsToArabic(clearanceSubList[position].id.toString())
         val dateRes = clearanceSubList[position].date.split("T")
-        holder.binding.dateFromTxt.text     = Constants.convertNumsToArabic(dateRes[0])
+        holder.binding.dateFromTxt.text     = dateRes[0]
         holder.binding.empNumValue.text     = Constants.convertNumsToArabic(clearanceSubList[position].code.toString())
         holder.binding.empNameValue.text     = clearanceSubList[position].employee
         holder.binding.departmentValue.text     = clearanceSubList[position].department

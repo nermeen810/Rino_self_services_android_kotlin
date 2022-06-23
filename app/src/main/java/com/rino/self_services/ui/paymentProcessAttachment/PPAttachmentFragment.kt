@@ -16,6 +16,7 @@ import com.rino.self_services.databinding.FragmentPPAttachmentBinding
 import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.NavToAttachment
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 //import com.rino.self_services.model.pojo.AttachmentPayment
 import com.rino.self_services.ui.payment_process_details.PPAttachmentViewAdapter
@@ -28,11 +29,12 @@ class PPAttachmentFragment : Fragment() {
 private lateinit var binding:FragmentPPAttachmentBinding
 private lateinit var data: NavToAttachment
 private lateinit var adapter:PPAttachmentViewAdapter
+private  lateinit var seeAll:NavSeeAll
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             data = arguments?.get("attachments") as NavToAttachment
-
+            seeAll = arguments?.get("nav_to_see_all") as NavSeeAll
 
             adapter = PPAttachmentViewAdapter(data.attachments){
                 val openURL = Intent(Intent.ACTION_VIEW)
@@ -56,12 +58,13 @@ private lateinit var adapter:PPAttachmentViewAdapter
         }
         binding.backbtn.setOnClickListener {
             if (data.isPaymentProcess){
-                var action = PPAttachmentFragmentDirections.actionPPAttachmentFragmentToPaymentProcessDetailsFragment(NavToDetails(data.meOrOther,data.id,data.isActionBefore))
+                var action = PPAttachmentFragmentDirections.actionPPAttachmentFragmentToPaymentProcessDetailsFragment(NavToDetails(data.meOrOther,data.id,data.isActionBefore)
+                    , seeAll )
                 findNavController().navigate(action)
             }else{
                 var action =  PPAttachmentFragmentDirections.actionPPAttachmentFragmentToHRClearanceDetailsFragment(
                     HRClearanceDetailsRequest(data.enity!!,data.id,data.isActionBefore,data.meOrOther)
-                )
+                    ,seeAll)
                 findNavController().navigate(action)
             }
         }

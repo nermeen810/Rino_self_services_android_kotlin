@@ -38,9 +38,16 @@ class ForgetPasswordFragment : Fragment() {
 
     private fun init() {
         requestOTPButtonOnClick()
+        backBtnOnClick()
         saveNewPassOnClick()
         observeData()
       //  registerConnectivityNetworkMonitor()
+    }
+
+    private fun backBtnOnClick() {
+        binding.backbtn.setOnClickListener {
+            navigateToLogin()
+        }
     }
 
     private fun requestOTPButtonOnClick() {

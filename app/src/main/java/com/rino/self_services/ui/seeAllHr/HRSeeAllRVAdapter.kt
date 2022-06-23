@@ -50,7 +50,7 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemList[position]
         holder.clearanceNumber.text = Constants.convertNumsToArabic(item.id.toString())
-        holder.clearanceDate.text = Constants.convertNumsToArabic(item.date!!.split("T")[0])
+        holder.clearanceDate.text = item.date!!.split("T")[0]
         holder.employeeNumber.text = Constants.convertNumsToArabic(item.code?:"")
         holder.employeeName.text = item.employee
         holder.office.text = item.department
@@ -64,8 +64,8 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
             holder.endLabel.visibility = View.VISIBLE
             holder.start.visibility = View.VISIBLE
             holder.end.visibility = View.VISIBLE
-            holder.start.text = Constants.convertNumsToArabic(item.start!!.split("T")[0])
-            holder.end.text = Constants.convertNumsToArabic(item.end!!.split("T")[0])
+            holder.start.text = item.start!!.split("T")[0]
+            holder.end.text = item.end!!.split("T")[0]
         }else{
             holder.startLabel.visibility = View.GONE
             holder.endLabel.visibility = View.GONE

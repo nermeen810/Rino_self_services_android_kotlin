@@ -35,5 +35,11 @@ open class PreferenceDataSource(private val sharedPreference: MySharedPreference
     override fun getRefreshToken(): String {
         return sharedPreference.getString(REFRESH_TOKEN_KEY)
     }
+   override  fun logout() {
+      setLogin(false)
+      setToken("")
+      setRefreshToken("")
+
+    }
 
 }
