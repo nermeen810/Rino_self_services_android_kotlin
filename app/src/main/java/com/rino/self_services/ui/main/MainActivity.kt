@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -18,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
+import com.rino.self_services.ui.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +34,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    val viewModel: MainActivityViewModel by viewModels()
     var _paymentProcessFiles = MutableLiveData<ArrayList<File>>()
     val paymentProcessFiles: LiveData<ArrayList<File>>
         get() = _paymentProcessFiles
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-     //  splashSetup(navController)
+       splashSetup(navController)
 
     }
 
@@ -69,16 +72,23 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    private fun splashSetup(navController: NavController){
-//
-//        CoroutineScope(Dispatchers.Default).launch{
-//            delay(3000)
-//            CoroutineScope(Dispatchers.Main).launch{
-//                navController.popBackStack()
-//                navController.navigate(R.id.loginFragment)
-//            }
-//        }
-//    }
+    private fun splashSetup(navController: NavController){
+
+        CoroutineScope(Dispatchers.Default).launch{
+            delay(3000)
+            CoroutineScope(Dispatchers.Main).launch{
+                if(viewModel.isLogin())
+                {
+                    navController.popBackStack()
+                    navController.navigate(R.id.homeFragment)
+                }
+                else {
+                    navController.popBackStack()
+                    navController.navigate(R.id.loginFragment)
+                }
+            }
+        }
+    }
     private fun getImageFromUri(imageUri: Uri?) : File? {
         imageUri?.let { uri ->
             val mimeType = getMimeType(this@MainActivity, uri)

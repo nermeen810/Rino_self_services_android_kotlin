@@ -9,4 +9,5 @@ interface Preference {
     fun getToken():String
     fun setRefreshToken(refreshToken:String)
     fun getRefreshToken():String
+    fun logout()
 }

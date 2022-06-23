@@ -51,7 +51,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Login Required"))
+                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
                         logout()
                         Log.i("refreshToken refresh token:", "Result $result")
 
@@ -84,10 +84,10 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
     }
 
     fun logout() {
-        sharedPreference.setLogin(false)
-        sharedPreference.setToken("")
-        sharedPreference.setRefreshToken("")
-
+        sharedPreference.logout()
+    }
+    fun isLogin():Boolean{
+        return sharedPreference.isLogin()
     }
     suspend fun getPaymentHomeList(me_or_other: String,
                               period_value: String): Result<PaymentHomeResponse?> {
@@ -110,13 +110,24 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
-                        result = Result.Error(Exception("Not Auth please, logout and login again"))
                         if (sharedPreference.isLogin()) {
                             Log.i(
                                 "Model Repo:",
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
-                            refreshToken()
+                         val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
@@ -126,7 +137,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
                         Log.e("Error", response.code().toString())
@@ -157,7 +168,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
@@ -165,13 +176,24 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
-                        result = Result.Error(Exception("Not Auth please, logout and login again"))
                         if (sharedPreference.isLogin()) {
                             Log.i(
                                 "Model Repo:",
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
-                            refreshToken()
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
@@ -181,7 +203,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
                         Log.e("Error", response.code().toString())
@@ -214,17 +236,28 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
-                        result = Result.Error(Exception("Not Auth please, logout and login again"))
                         if (sharedPreference.isLogin()) {
                             Log.i(
                                 "Model Repo:",
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
-                            refreshToken()
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                 }
@@ -248,17 +281,28 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
-                        result = Result.Error(Exception("Not Auth please, logout and login again"))
                         if (sharedPreference.isLogin()) {
                             Log.i(
                                 "Model Repo:",
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
-                            refreshToken()
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                 }
@@ -294,13 +338,24 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         }
                         401 ->{
                             Log.e("Error 401", "Not Auth please, logout and login again")
-                            result = Result.Error(Exception("Not Auth please, logout and login again"))
                             if (sharedPreference.isLogin()) {
                                 Log.i(
                                     "Model Repo:",
                                     "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                                 )
-                                refreshToken()
+                                val res = refreshToken()
+                                when(res) {
+                                    is Result.Success -> {
+                                        result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    }
+                                    is Result.Error -> {
+                                        result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    }
+                                }
+                            }
+                            else {
+                                result =
+                                    Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                             }
                         }
                         500 -> {
@@ -310,7 +365,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         502 -> {
                             Log.e("Error 502", "Time out")
                             result =
-                                Result.Error(Exception("time out"))
+                                Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                         }
                         else -> {
                             Log.e("Error", response.code().toString())
@@ -342,7 +397,29 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
                     }
                 }
             }

@@ -38,7 +38,7 @@ class PPAttachmentViewAdapter(private var itemList: Array<Attachment>, private v
         holder.clearanceNumber.text = itemList[position].name
         holder.attachmentCreatorName.text = itemList[position].userName
         holder.attachmentCreatorTitle.text = itemList[position].jobTitle
-        holder.attachmentCreatedDate.text = itemList[position].date
+        holder.attachmentCreatedDate.text = itemList[position].date!!.split("T")[0]
     }
 
     override fun getItemCount(): Int {

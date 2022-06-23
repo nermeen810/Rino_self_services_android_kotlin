@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingLayout"
+        app:cardElevation="8dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle"
+            android:padding="@dimen/paddingLayout"
+            >
+
+            <TextView
+                android:id="@+id/date_from_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/paddingLayout"
+                android:padding="@dimen/paddingText"
+                android:text="15/3/2022"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/moveNumTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/paddingText"
+                android:padding="4dp"
+                android:text="@string/move_num"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/moveNumValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/paddingLayout"
+                android:padding="4dp"
+                android:text="25"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/moveNumTxt"
+                app:layout_constraintRight_toLeftOf="@+id/moveNumTxt"
+                app:layout_constraintTop_toTopOf="@+id/moveNumTxt" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_marginTop="@dimen/paddingLayout"
+                app:layout_constraintTop_toBottomOf="@id/moveNumTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/empNumTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingLayout"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/emp_num"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+            <TextView
+                android:id="@+id/empNumValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+                android:layout_marginRight="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="2554"
+                android:textColor="@color/dark_gray"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/empNumTxt"
+                app:layout_constraintEnd_toStartOf="@+id/moveNumTxt"
+                app:layout_constraintRight_toLeftOf="@+id/empNumTxt"
+                app:layout_constraintTop_toTopOf="@+id/empNumTxt" />
+
+            <TextView
+                android:id="@+id/empNameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/emp_name"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/empNumTxt" />
+
+            <TextView
+                android:id="@+id/empNameValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+                android:padding="@dimen/marginTxt"
+                android:text="وليد محمد عبدالقادر "
+                android:textColor="@color/dark_gray"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/empNameTxt"
+                app:layout_constraintEnd_toEndOf="@+id/empNumValue"
+                app:layout_constraintRight_toLeftOf="@+id/empNameTxt"
+                app:layout_constraintTop_toBottomOf="@+id/empNumValue" />
+
+            <TextView
+                android:id="@+id/departmentTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/department"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/empNameTxt" />
+
+            <TextView
+                android:id="@+id/departmentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+                android:padding="@dimen/marginTxt"
+                android:text="اداره المدفوعات المالية"
+                android:textColor="@color/dark_gray"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/departmentTxt"
+                app:layout_constraintEnd_toEndOf="@+id/empNameValue"
+                app:layout_constraintRight_toLeftOf="@+id/departmentTxt"
+                app:layout_constraintTop_toBottomOf="@+id/empNameValue" />
+
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/paddingLayout"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/departmentValue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/realAmountTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingLayout"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/realAmount"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+            <TextView
+                android:id="@+id/realAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+                android:padding="@dimen/marginTxt"
+                android:background="@drawable/brown_border_rect"
+                android:text="5000 ر.س"
+                android:textColor="@color/dark_gray"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/realAmountTxt"
+                app:layout_constraintEnd_toEndOf="@+id/departmentValue"
+                app:layout_constraintRight_toLeftOf="@+id/realAmountTxt"
+                app:layout_constraintRight_toRightOf="@+id/realAmountTxt"
+                app:layout_constraintTop_toTopOf="@+id/realAmountTxt" />
+
+            <TextView
+                android:id="@+id/updateAmountTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/updateAmount"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/differanceAmountTxt" />
+
+            <TextView
+                android:id="@+id/updateAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+              android:background="@drawable/orange_rect"
+                android:padding="@dimen/marginTxt"
+                android:text="5500 ر.س"
+                android:textColor="@color/white"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/updateAmountTxt"
+                app:layout_constraintEnd_toEndOf="@+id/realAmountValue"
+                app:layout_constraintRight_toLeftOf="@+id/updateAmountTxt"
+                app:layout_constraintTop_toTopOf="@+id/updateAmountTxt" />
+
+            <TextView
+                android:id="@+id/differanceAmountTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/paddingLayout"
+                android:padding="@dimen/marginTxt"
+                android:text="@string/differance"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/realAmountTxt" />
+
+            <TextView
+                android:id="@+id/differanceAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paddingText"
+                android:padding="@dimen/marginTxt"
+                android:text="+500 ر.س"
+                android:background="@drawable/brown_border_rect"
+                android:textColor="@color/dark_gray"
+                android:textDirection="rtl"
+                android:textSize="@dimen/normalTextSize"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/differanceAmountTxt"
+                app:layout_constraintEnd_toEndOf="@+id/updateAmountValue"
+                app:layout_constraintRight_toLeftOf="@+id/differanceAmountTxt"
+                app:layout_constraintTop_toTopOf="@+id/differanceAmountTxt" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>
