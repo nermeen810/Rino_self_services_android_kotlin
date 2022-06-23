@@ -44,7 +44,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         holder.binding.requestTypeValue.text    = clearanceSubList[position].type
         if(clearanceSubList[position].start!=null) {
             val startDateRes = clearanceSubList[position].start!!.split("T")
-            holder.binding.vacationStartValue.text = Constants.convertNumsToArabic(startDateRes[0])
+            holder.binding.vacationStartValue.text = startDateRes[0]
         }
         else{
             holder.binding.vacationStartValue.visibility = View.GONE
@@ -52,7 +52,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         }
         if(clearanceSubList[position].end!=null) {
             val endDateRes = clearanceSubList[position].end!!.split("T")
-            holder.binding.vacationEndValue.text = Constants.convertNumsToArabic(endDateRes[0])
+            holder.binding.vacationEndValue.text = endDateRes[0]
         }
         else{
             holder.binding.vacationEndValue.visibility = View.GONE

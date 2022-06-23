@@ -17,6 +17,7 @@ import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -173,11 +174,11 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
-            binding.clearanceId.text = details?.id.toString()
+            binding.clearanceId.text = Constants.convertNumsToArabic(details?.id.toString())
             binding.clearanceDetailsDate.text = details?.date?.split("T")?.get(0)
             binding.clearanceDescription.text = details?.current?.name
             binding.hrDEmpName.text = details?.employee
-            binding.hrDEmpId.text = details?.employeeID?.toString()
+            binding.hrDEmpId.text = Constants.convertNumsToArabic(details?.employeeID.toString())
             binding.hrDDepartment.text = details?.department
             binding.hrFowrwerdTo.text = details?.current?.users?.get(0) ?: ""
             binding.hrType.text = details?.type

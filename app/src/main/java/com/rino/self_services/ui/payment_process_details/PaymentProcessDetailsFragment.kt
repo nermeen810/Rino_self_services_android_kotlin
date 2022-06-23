@@ -1,5 +1,6 @@
 package com.rino.self_services.ui.payment_process_details
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
+import com.rino.self_services.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -192,17 +194,18 @@ class PaymentProcessDetailsFragment : Fragment() {
                 }.show()
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
-            binding.orderNumberDetails.text = details?.id.toString()
+            binding.orderNumberDetails.text = Constants.convertNumsToArabic(details?.id.toString())
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
             binding.orderDescriptionPayment.text = details?.desc
             binding.beneficiaryPayment.text = details?.beneficiary
             binding.provisionPaymentDetails.text = details?.provision
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
-            binding.paymentProcessDetailsAmount.text = details?.amount.toString()
+            binding.paymentProcessDetailsAmount.text = Constants.convertNumsToArabic(details?.amount.toString())+" ر.س "
             binding.orderSidePayment.text = details?.department
             binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
             binding.approve.text = details?.current?.name
