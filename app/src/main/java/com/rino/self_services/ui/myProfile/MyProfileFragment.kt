@@ -5,14 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.rino.self_services.R
+import com.rino.self_services.databinding.FragmentComplaintsBinding
+import com.rino.self_services.databinding.FragmentMyProfileBinding
+import com.rino.self_services.ui.complaints.ComplaintsFragmentDirections
+import com.rino.self_services.ui.complaints.ComplaintsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MyProfileFragment : Fragment() {
+    val viewModel: MyProfileViewModel by viewModels()
+    private lateinit var binding: FragmentMyProfileBinding
+    private var from_where = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            from_where =  arguments?.get("from_where").toString()
 
         }
     }
@@ -22,8 +33,31 @@ class MyProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile, container, false)
+
+        binding = FragmentMyProfileBinding.inflate(inflater, container, false)
+        init()
+        return binding.root
     }
 
+
+    private fun init() {
+        handleBack()
+
+    }
+
+    private fun handleBack() {
+        binding.backbtn.setOnClickListener {
+
+            if (from_where == "hr") {
+                val action =
+                    MyProfileFragmentDirections.actionMyProfileFragmentToProfileFragment("hr")
+                findNavController().navigate(action)
+            } else if (from_where == "payment") {
+                val action =
+                    MyProfileFragmentDirections.actionMyProfileFragmentToProfileFragment("payment")
+                findNavController().navigate(action)
+            }
+        }
+    }
 
 }

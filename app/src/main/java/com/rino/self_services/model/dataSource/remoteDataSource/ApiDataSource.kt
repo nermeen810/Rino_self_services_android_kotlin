@@ -7,11 +7,14 @@ import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
+import com.rino.self_services.model.pojo.login.PermissionResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Response
 import retrofit2.http.Field
+import retrofit2.http.Header
 
 import javax.inject.Inject
 
@@ -28,6 +31,8 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         grant_type:String,
         refresh_token:String,
         client_id:String) = apiService.refreshToken(grant_type,refresh_token,client_id)
+
+    suspend fun getPermissions(token:String) = apiService.getPermissions(token)
 
 
     suspend fun getAllRecords(token:String,future:String,me:String,from:String,to:String,page:Long) = apiService.getAllRecords(token, future,me,from, to, page)

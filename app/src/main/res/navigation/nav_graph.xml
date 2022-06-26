@@ -226,12 +226,31 @@
         <action
             android:id="@+id/action_profileFragment_to_hrClearanceHomeFragment"
             app:destination="@id/hrClearanceHomeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_complaintsFragment"
+            app:destination="@id/complaintsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_viewComplaintsFragment"
+            app:destination="@id/viewComplaintsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/complaintsFragment"
         android:name="com.rino.self_services.ui.complaints.ComplaintsFragment"
         android:label="fragment_complaints"
-        tools:layout="@layout/fragment_complaints" />
+        tools:layout="@layout/fragment_complaints" >
+        <argument
+            android:name="from_where"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_complaintsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_complaintsFragment_to_viewComplaintsFragment"
+            app:destination="@id/viewComplaintsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentArchiveFragment"
         android:name="com.rino.self_services.ui.paymrntArchive.PaymentArchiveFragment"
@@ -241,6 +260,26 @@
         android:id="@+id/myProfileFragment"
         android:name="com.rino.self_services.ui.myProfile.MyProfileFragment"
         android:label="fragment_my_profile"
-        tools:layout="@layout/fragment_my_profile" />
+        tools:layout="@layout/fragment_my_profile" >
+        <action
+            android:id="@+id/action_myProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument android:name="from_where" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewComplaintsFragment"
+        android:name="com.rino.self_services.ui.viewComplints.ViewComplaintsFragment"
+        android:label="fragment_view_complaints"
+        tools:layout="@layout/fragment_view_complaints" >
+        <action
+            android:id="@+id/action_viewComplaintsFragment_to_complaintsFragment"
+            app:destination="@id/complaintsFragment" />
+        <action
+            android:id="@+id/action_viewComplaintsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="from_where"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

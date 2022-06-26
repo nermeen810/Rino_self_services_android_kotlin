@@ -34,7 +34,62 @@ class ProfileFragment : Fragment() {
     }
 
     private fun init() {
+        navToMyProfile()
+        navToComplaints()
+        logout()
+        handleBack()
+        observePermission()
+    }
 
+    private  fun navToMyProfile(){
+         binding.editProfileBtn.setOnClickListener {
+             val action =
+                 ProfileFragmentDirections.actionProfileFragmentToMyProfileFragment(from_where)
+             findNavController().navigate(action)
+        }
+        binding.editProfileTxt.setOnClickListener {
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToMyProfileFragment(from_where)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun navToComplaints() {
+        binding.complaintsBtn.setOnClickListener {
+            viewModel.getPermissions()
+        }
+        binding.complaintsTxt.setOnClickListener {
+            viewModel.getPermissions()
+        }
+    }
+
+    private fun observePermission() {
+        viewModel.getPermission.observe(viewLifecycleOwner){
+            it.let {
+                if(it?.isDepartmentHead==true||it?.isGM==true)
+                {
+                    navToViewComplaints()
+                }
+                else{
+                    navToCreateComplaints()
+                }
+            }
+        }
+    }
+
+    private fun navToCreateComplaints() {
+        val action =
+            ProfileFragmentDirections.actionProfileFragmentToComplaintsFragment(from_where+"_profile")
+        findNavController().navigate(action)
+    }
+
+    private fun navToViewComplaints() {
+        val action =
+            ProfileFragmentDirections.actionProfileFragmentToViewComplaintsFragment(from_where+"_profile")
+        findNavController().navigate(action)
+    }
+
+    private fun logout() {
         binding.logoutBtn.setOnClickListener {
             viewModel.logout()
             navToLogin()
@@ -44,13 +99,10 @@ class ProfileFragment : Fragment() {
             viewModel.logout()
             navToLogin()
         }
-        binding.backbtn.setOnClickListener {
-
-            handleBack()
-        }
     }
 
     private fun handleBack() {
+        binding.backbtn.setOnClickListener {
 
             if (from_where == "hr") {
                 val action =
@@ -62,6 +114,7 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
+        }
     }
 
     private fun navToLogin() {
