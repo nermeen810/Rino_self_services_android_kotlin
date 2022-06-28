@@ -280,6 +280,9 @@
         <argument
             android:name="from_where"
             app:argType="string" />
+        <action
+            android:id="@+id/action_viewComplaintsFragment_to_PPAttachmentFragment"
+            app:destination="@id/PPAttachmentFragment" />
     </fragment>
 
 </navigation>

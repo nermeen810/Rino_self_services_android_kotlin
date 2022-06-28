@@ -9,6 +9,7 @@ import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSou
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
 import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.model.pojo.CreateAttachmentRequest
+import com.rino.self_services.model.pojo.complaints.ComplaintItemResponse
 import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.complaints.CreateComplaintRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
@@ -205,8 +206,8 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
         return result
     }
 
-    suspend fun getComplaintsList(): Result<ArrayList<ComplaintResponse>?> {
-        var result: Result<ArrayList<ComplaintResponse>?> = Result.Loading
+    suspend fun getComplaintsList(): Result<ArrayList<ComplaintItemResponse>?> {
+        var result: Result<ArrayList<ComplaintItemResponse>?> = Result.Loading
         try {
             val response = apiDataSource.getComplaintsList("Bearer "+sharedPreference.getToken())
             if (response.isSuccessful) {

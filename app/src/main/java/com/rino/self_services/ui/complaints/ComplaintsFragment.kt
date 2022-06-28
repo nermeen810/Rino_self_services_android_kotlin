@@ -1,5 +1,6 @@
 package com.rino.self_services.ui.complaints
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentComplaintsBinding
 import com.rino.self_services.ui.main.FileCaller
+import com.rino.self_services.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -59,9 +62,20 @@ class ComplaintsFragment : Fragment() {
     private fun init() {
         viewModel.getDepartment()
         observeData()
+        setBodyLength()
         addAttachments()
         addComplaint()
         handleBack()
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setBodyLength() {
+        binding.notesEditTxt.addTextChangedListener {
+            val notesLength =  binding.notesEditTxt.text.toString().length
+            binding.notesLength.text =
+                "${Constants.convertNumsToArabic(notesLength.toString())} ${getString(R.string.chars)} "
+        }
 
     }
 
@@ -70,8 +84,41 @@ class ComplaintsFragment : Fragment() {
             Log.e("attachment",parts.toString())
             val body =   binding.notesEditTxt.text.toString()
             val officer = binding.administratorEditTxt.text.toString()
-            viewModel.createComplaint(department, officer  ,body,parts)
+            if(validateData(officer,body)) {
+                viewModel.createComplaint(department, officer, body, parts)
+            }
+            else{
+                showMessage("برجاء اضافه البيانات المطلوبة")
+            }
         }
+    }
+
+    private fun validateData(officer:String,body:String) :Boolean{
+        var officerFlag = false
+        var bodyFlag    = false
+         if (officer.isEmpty()) {
+            binding.textInputAdministrator.error = getString(R.string.required_field)
+            officerFlag = false
+        } else {
+            binding.textInputAdministrator.error = null
+            binding.textInputAdministrator.isErrorEnabled = false
+             officerFlag =  true
+        }
+        if (body.isEmpty()) {
+            binding.textInputNotes.error = getString(R.string.required_field)
+            bodyFlag = false
+        } else {
+            binding.textInputNotes.error = null
+            binding.textInputNotes.isErrorEnabled = false
+            bodyFlag =  true
+        }
+        if (!isDepartmentSelected) {
+            binding.departmentTextInputLayout.error = getString(R.string.required_field)
+        } else {
+            binding.departmentTextInputLayout.error = null
+            binding.departmentTextInputLayout.isErrorEnabled = false
+        }
+        return (officerFlag && bodyFlag && isDepartmentSelected)
     }
 
     private fun addAttachments() {
@@ -208,6 +255,7 @@ class ComplaintsFragment : Fragment() {
         viewModel.createComplaintResponse.observe(viewLifecycleOwner){
             it?.let {
                showMessage("تم ارسال الشكوى بنحاح")
+                goBack()
             }
         }
     }
@@ -250,24 +298,27 @@ class ComplaintsFragment : Fragment() {
 
     private fun handleBack() {
         binding.backbtn.setOnClickListener {
+            goBack()
+        }
+    }
 
-            if (from_where == "hr_profile") {
-                val action =
-                    ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("hr")
-                findNavController().navigate(action)
-            } else if (from_where == "payment_profile") {
-                val action =
-                    ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("payment")
-                findNavController().navigate(action)
-            } else if (from_where == "hr_view_complaints") {
-                val action =
-                    ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("hr_profile")
-                findNavController().navigate(action)
-            } else if (from_where == "payment_view_complaints") {
-                val action =
-                    ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("payment_profile")
-                findNavController().navigate(action)
-            }
+    private fun goBack() {
+        if (from_where == "hr_profile") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("hr")
+            findNavController().navigate(action)
+        } else if (from_where == "payment_profile") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("payment")
+            findNavController().navigate(action)
+        } else if (from_where == "hr_view_complaints") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("hr_profile")
+            findNavController().navigate(action)
+        } else if (from_where == "payment_view_complaints") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("payment_profile")
+            findNavController().navigate(action)
 
         }
     }

@@ -5,10 +5,19 @@ import okhttp3.MultipartBody
 
 
 data class ComplaintResponse(
-    @SerializedName("department"  ) var department  : String?                = null,
+    @SerializedName("department"  ) var department  : String?               = null,
     @SerializedName("officer"     ) var officer     : String?                = null,
     @SerializedName("body"        ) var body        : String?                = null,
-    @SerializedName("date"   ) var createdAt   : String?                = null,
+    @SerializedName("date"        ) var createdAt   : String?                = null,
+    @SerializedName("attachments" ) var attchements : ArrayList<Attchements> = arrayListOf()
+)
+
+data class ComplaintItemResponse(
+    @SerializedName("id"          ) var id :Int ,
+    @SerializedName("department"  ) var department  : String                ,
+    @SerializedName("officer"     ) var officer     : String                ,
+    @SerializedName("body"        ) var body        : String                ,
+    @SerializedName("createdAt"   ) var createdAt   : String               ,
     @SerializedName("attachments" ) var attchements : ArrayList<Attchements> = arrayListOf()
 )
 

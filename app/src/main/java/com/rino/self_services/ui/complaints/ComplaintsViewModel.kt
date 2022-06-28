@@ -25,11 +25,7 @@ class ComplaintsViewModel @Inject constructor( private val complaintsRepo: Compl
     private  var _departmentsList = MutableLiveData<ArrayList<String>>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
-    private var _isTrue = MutableLiveData<Boolean>()
 
-
-    val isTrue: LiveData<Boolean>
-        get() = _isTrue
     val loading: LiveData<Int>
         get() = _loading
     val setError: LiveData<String>
@@ -76,14 +72,12 @@ class ComplaintsViewModel @Inject constructor( private val complaintsRepo: Compl
                             Log.d("atchments","done")
                             if (it != null) {
                                _createComplaintResponse.postValue(it)
-                                _isTrue.postValue(true)
                             }
                         }
                         Log.i("see All network:", "done")
                     }
                 is Result.Error -> {
                     Log.e(" error:", "${result.exception.message}")
-                    _isTrue.postValue(false)
                     _loading.postValue(View.GONE)
                     _setError.postValue(result.exception.message)
                 }
