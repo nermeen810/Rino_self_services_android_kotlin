@@ -9,6 +9,7 @@ import com.rino.self_services.model.pojo.login.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
@@ -107,6 +108,20 @@ interface ApiService {
         ,@Path("id") id:Int
         ,@Path("action") action: String
     ):Response<ActionResponse>
+
+    @GET("api/complains/departments")
+    suspend fun getDepartmentList(@Header("Authorization"   ) auth: String):Response<ArrayList<String>>
+
+    @Multipart
+    @POST("api/complains")
+    suspend fun createComplaints(@Header("Authorization") auth: String
+                                 ,@Part("Department") department:RequestBody
+                                 ,@Part("Officer") officer:RequestBody
+                                 ,@Part("Body") body:RequestBody
+                                 ,@Part Attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>
+
+    @GET("api/complains")
+    suspend fun getComplaintsList(@Header("Authorization"   ) auth: String):Response<ArrayList<ComplaintResponse>>
 }
 
 

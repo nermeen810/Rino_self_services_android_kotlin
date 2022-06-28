@@ -7,6 +7,10 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
+import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.CreateAttachmentRequest
+import com.rino.self_services.model.pojo.complaints.ComplaintResponse
+import com.rino.self_services.model.pojo.complaints.CreateComplaintRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.utils.Constants
@@ -124,6 +128,206 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                     else -> {
                         Log.e("Error", "Generic Error")
                         result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+
+    suspend fun getDepartmentList(): Result<ArrayList<String>?> {
+        var result: Result<ArrayList<String>?> = Result.Loading
+        try {
+            val response = apiDataSource.getDepartmentList("Bearer "+sharedPreference.getToken())
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("getDepartmentList", "Result $result")
+            } else {
+                Log.i("getDepartmentList", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        //  result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+
+    suspend fun getComplaintsList(): Result<ArrayList<ComplaintResponse>?> {
+        var result: Result<ArrayList<ComplaintResponse>?> = Result.Loading
+        try {
+            val response = apiDataSource.getComplaintsList("Bearer "+sharedPreference.getToken())
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("getComplaintsList", "Result $result")
+            } else {
+                Log.i("getComplaintsList", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        //  result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+
+    suspend fun createComplaint(createComplaintRequest: CreateComplaintRequest):Result<ComplaintResponse?>{
+        var result: Result<ComplaintResponse?> = Result.Loading
+
+        try {
+            val response = createComplaintRequest.parts?.let {
+                apiDataSource.createComplaints("Bearer "+sharedPreference.getToken(),createComplaintRequest.department,createComplaintRequest.officer,
+                   createComplaintRequest.body, it
+                )
+            }
+            if (response != null) {
+                if (response.isSuccessful) {
+                    result = Result.Success(response.body())
+                    Log.i("createComplaint", "Result $result")
+                } else {
+                    Log.i("createComplaint", "Error${response.errorBody()}")
+                    when (response.code()) {
+                        400 -> {
+                            Log.e("Error 400", "Bad Request")
+                            result = Result.Error(Exception("Bad Reques "))
+                        }
+                        404 -> {
+                            Log.e("Error 404", "Not Found")
+                            result = Result.Error(Exception("Not Found"))
+                        }
+                        401 ->{
+                            Log.e("Error 401", "Not Auth please, logout and login again")
+                            if (sharedPreference.isLogin()) {
+                                Log.i(
+                                    "Model Repo:",
+                                    "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                                )
+                                val res = refreshToken()
+                                when(res) {
+                                    is Result.Success -> {
+                                        result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    }
+                                    is Result.Error -> {
+                                        result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    }
+                                }
+                            }
+                            else {
+                                result =
+                                    Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                            }
+                        }
+                        500 -> {
+                            Log.e("Error 500", "Server Error")
+                            result = Result.Error(Exception("server is down"))
+                        }
+                        502 -> {
+                            Log.e("Error 502", "Time out")
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                        }
+                        else -> {
+                            Log.e("Error", response.code().toString())
+                            result = Result.Error(Exception("Error"))
+                        }
                     }
                 }
             }

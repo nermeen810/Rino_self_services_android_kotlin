@@ -5,6 +5,7 @@ package com.rino.self_services.model.dataSource.remoteDataSource
 import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.PaymentProcessDetails
+import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
@@ -13,8 +14,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.Header
+import retrofit2.http.*
 
 import javax.inject.Inject
 
@@ -44,7 +44,7 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         page: Int
     ) = apiService.getAllHRRecords(token,meOrOthers,from,to,page)
 
-    suspend fun createAttachment(token:String,id:Int,requestType:Int,parts:List<MultipartBody.Part>?): retrofit2.Response<ArrayList<Attachment>> {
+    suspend fun createAttachment(token:String,id:Int,requestType:Int,parts:List<MultipartBody.Part>?): Response<ArrayList<Attachment>> {
         val idBody: RequestBody = id.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val requestType: RequestBody = requestType.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         return  apiService.createAttachments(token,idBody,requestType,parts)
@@ -73,12 +73,29 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
     ) = apiService.getHrClearanceHomeList(auth,me_or_other,period_value)
 
     suspend fun requestOTP(requestOTP: RequestOTP) =apiService.requestOTP(requestOTP)
-
     suspend fun resetPassword(resetPasswrdRequest: ResetPasswordRequest)= apiService.resetPassword(resetPasswrdRequest)
+
     suspend fun getNotificationsCount(auth: String) = apiService.getNotificationsCount(auth)
-
     suspend fun getAllNotifications(auth: String) = apiService.getAllNotifications(auth)
-
     suspend fun setNotificationAsRead(auth: String,notification_id :Int)  = apiService.setNotificationAsRead(auth,notification_id)
+
+
+    suspend fun getDepartmentList(auth: String) = apiService.getDepartmentList(auth)
+
+
+    suspend fun createComplaints( auth: String
+                                 , department:String
+                                 , officer:String
+                                 , body:String
+                                 , attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>{
+        val departmentBody: RequestBody = department.toRequestBody("text/plain".toMediaTypeOrNull())
+        val officerBody: RequestBody = officer.toRequestBody("text/plain".toMediaTypeOrNull())
+        val bodyBody: RequestBody = body.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        return apiService.createComplaints(auth,departmentBody,officerBody,bodyBody,attachments)
+
+    }
+
+    suspend fun getComplaintsList(auth: String) = apiService.getComplaintsList(auth)
 
 }
