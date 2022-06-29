@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentComplaintsBinding
 import com.rino.self_services.databinding.FragmentMyProfileBinding
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import com.rino.self_services.ui.complaints.ComplaintsFragmentDirections
 import com.rino.self_services.ui.complaints.ComplaintsViewModel
+import com.rino.self_services.utils.dateToArabic
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +34,7 @@ class MyProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         binding = FragmentMyProfileBinding.inflate(inflater, container, false)
@@ -41,8 +44,59 @@ class MyProfileFragment : Fragment() {
 
 
     private fun init() {
+        viewModel.getProfileData()
+        observeData()
         handleBack()
 
+    }
+
+    private fun observeData() {
+        observeProfileData()
+        observeLoading()
+        observeShowError()
+    }
+
+    private fun observeProfileData() {
+        viewModel.profileData.observe(viewLifecycleOwner){
+            setupUI(it)
+        }
+    }
+
+    private fun setupUI(profileData: ProfileResponse?) {
+        binding.departmentValue.text =profileData?.departmentArabic
+        binding.phoneNumValue.text = profileData?.phoneNumber.toString().dateToArabic()
+        binding.emailValue.text = profileData?.email
+        binding.nameTxt.text = profileData?.arabicName
+
+    }
+
+    private fun observeLoading() {
+        viewModel.loading.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.progress.visibility = it
+            }
+        }
+    }
+
+    private fun observeShowError() {
+        viewModel.setError.observe(viewLifecycleOwner) {
+            it?.let {
+                showMessage(it)
+            }
+        }
+    }
+
+
+    private fun showMessage(msg: String) {
+        Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                resources.getColor(
+                    R.color.color_orange
+                )
+            )
+            .setActionTextColor(resources.getColor(R.color.white)).setAction("Ok")
+            {
+            }.show()
     }
 
     private fun handleBack() {

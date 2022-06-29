@@ -9,6 +9,8 @@ import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
+import com.rino.self_services.model.pojo.payment.EditAmountRequest
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -97,5 +99,14 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
     }
 
     suspend fun getComplaintsList(auth: String) = apiService.getComplaintsList(auth)
+
+
+
+    suspend fun getProfileData( auth: String) = apiService.getProfileData(auth)
+
+
+    suspend fun editAmount(auth: String,
+                           id :Int,
+                          editAmountRequest: EditAmountRequest) = apiService.editAmount(auth,id,editAmountRequest)
 
 }

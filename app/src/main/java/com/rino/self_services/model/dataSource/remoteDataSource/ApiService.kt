@@ -20,10 +20,12 @@ import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
+import com.rino.self_services.model.pojo.payment.EditAmountRequest
 
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -121,8 +123,18 @@ interface ApiService {
                                  ,@Part("Body") body:RequestBody
                                  ,@Part Attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>
 
-    @GET("api/complains")
+    @POST("api/complains")
     suspend fun getComplaintsList(@Header("Authorization"   ) auth: String):Response<ArrayList<ComplaintItemResponse>>
+
+    @GET("api/identity/profile/")
+    suspend fun getProfileData(@Header("Authorization"   ) auth: String):Response<ProfileResponse>
+
+    @POST("api/requests/{id}}/edit-amount")
+    suspend fun editAmount(@Header("Authorization"   ) auth: String,
+                           @Path("id" ) id :Int,
+                           @Body editAmountRequest: EditAmountRequest
+    ):Response<Void>
+
 }
 
 

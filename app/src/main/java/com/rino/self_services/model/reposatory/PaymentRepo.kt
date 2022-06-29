@@ -7,6 +7,7 @@ import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
 
 import android.app.Application
 import android.content.Context
+import com.google.gson.Gson
 import com.rino.self_services.model.dataSource.localDataSource.MySharedPreference
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
@@ -16,9 +17,12 @@ import com.rino.self_services.model.pojo.*
 
 import com.rino.self_services.model.pojo.CreateAttachmentForPaymentRequest
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
+import com.rino.self_services.model.pojo.payment.EditAmountErrorResponse
+import com.rino.self_services.model.pojo.payment.EditAmountRequest
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
@@ -425,6 +429,79 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             }
         }catch(e: IOException) {
             result = Result.Error(e)}
+        return result
+    }
+
+    suspend fun editAmount(id:Int,newAmount:Int): Result<Void?> {
+        var result: Result<Void?> = Result.Loading
+        try {
+            val response = apiDataSource.editAmount("Bearer "+sharedPreference.getToken(),
+            id, EditAmountRequest(newAmount))
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("editAmount", "Result $result")
+            } else {
+                Log.i("editAmount", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        val gson = Gson()
+                        val errorBody = gson.fromJson(response.errorBody()!!.string(),EditAmountErrorResponse::class.java)
+                        if(errorBody.message=="Request has been approved by all management") {
+                            result = Result.Error(Exception("لا يمكن التعديل هذا الطلب تم اعتماده من الادارة"))
+                        }
+                        else if(errorBody.message=="User does not have privilages"){
+                            result = Result.Error(Exception("هذة الخاصية ليست من صلاحياتك"))
+                        }
+                        Log.e("Error 400", "Bad Request")
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                     //    result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
         return result
     }
 }
