@@ -7,21 +7,26 @@ import com.rino.self_services.model.dataSource.localDataSource.MySharedPreferenc
 import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
-import com.rino.self_services.model.pojo.*
-import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.CreateAttachmentRequest
+import com.rino.self_services.model.pojo.complaints.ComplaintItemResponse
+import com.rino.self_services.model.pojo.complaints.ComplaintResponse
+import com.rino.self_services.model.pojo.complaints.CreateComplaintRequest
+import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
-import com.rino.self_services.ui.seeAllHr.HRClearanceRequest
 import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException
 import javax.inject.Inject
 
-class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSource, private val context: Application){
+class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSource, private val context: Application)
+{
     private val preference = MySharedPreference(
         context.getSharedPreferences(
             PREF_FILE_NAME,
             Context.MODE_PRIVATE))
+
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
     private suspend fun refreshToken(): Result<RefreshTokenResponse?> {
@@ -48,6 +53,7 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                     404 -> {
                         Log.e("Error 404", "Not Found")
                     }
+
                     500 -> {
                         Log.e("Error 500", "Server Error")
                         result = Result.Error(Exception("server is down"))
@@ -72,29 +78,22 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         return result
     }
 
-
-    suspend fun getHrClearanceHomeList(me_or_other: String,
-                                   period_value: String): Result<HrClearanceResponse?> {
-        var result: Result<HrClearanceResponse?> = Result.Loading
+    suspend fun getPermission(): Result<PermissionResponse?> {
+        var result: Result<PermissionResponse?> = Result.Loading
         try {
-            val response = apiDataSource.getHrClearanceHomeList("Bearer "+sharedPreference.getToken(), me_or_other, period_value)
+            val response = apiDataSource.getPermissions("Bearer "+sharedPreference.getToken())
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
+                Log.i("getPermission", "Result $result")
             } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                Log.i("getPermission", "Error${response.errorBody()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        //  result = Result.Error(Exception("Not Found"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -118,13 +117,17 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                                 Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأاثناء الاتصال برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
-                        Log.e("Error", response.code().toString())
+                        Log.e("Error", "Generic Error")
                         result = Result.Error(Exception("Error"))
                     }
                 }
@@ -139,27 +142,22 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         return result
     }
 
-    suspend fun getHRDetails(hrClearanceDetailsRequest: HRClearanceDetailsRequest):Result<HRClearanceDetails?>{
-        var result: Result<HRClearanceDetails?> = Result.Loading
+    suspend fun getDepartmentList(): Result<ArrayList<String>?> {
+        var result: Result<ArrayList<String>?> = Result.Loading
         try {
-            val response = apiDataSource.getHRDetails("Bearer "+sharedPreference.getToken(),hrClearanceDetailsRequest.entity,hrClearanceDetailsRequest.requestID)
+            val response = apiDataSource.getDepartmentList("Bearer "+sharedPreference.getToken())
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-                Log.i("getHRDetails", "Result $result")
+                Log.i("getDepartmentList", "Result $result")
             } else {
-                Log.i("getHRDetails", "Error${response.errorBody()}")
+                Log.i("getDepartmentList", "Error${response.errorBody()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        //  result = Result.Error(Exception("Not Found"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -183,13 +181,17 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                                 Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأأثناء الاتصال  برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
-                        Log.e("Error", response.code().toString())
+                        Log.e("Error", "Generic Error")
                         result = Result.Error(Exception("Error"))
                     }
                 }
@@ -203,27 +205,23 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         }
         return result
     }
-    suspend fun getHRClearanceAllRecords(hrClearanceRequest: HRClearanceRequest):Result<HRSeeAllData?>{
-        var result: Result<HRSeeAllData?> = Result.Loading
+
+    suspend fun getComplaintsList(): Result<ArrayList<ComplaintItemResponse>?> {
+        var result: Result<ArrayList<ComplaintItemResponse>?> = Result.Loading
         try {
-            val response = apiDataSource.getAllHRRecords("Bearer "+sharedPreference.getToken(),hrClearanceRequest.meOrOthers,hrClearanceRequest.from,hrClearanceRequest.to,hrClearanceRequest.pageNumber)
+            val response = apiDataSource.getComplaintsList("Bearer "+sharedPreference.getToken())
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
+                Log.i("getComplaintsList", "Result $result")
             } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                Log.i("getComplaintsList", "Error${response.errorBody()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        //  result = Result.Error(Exception("Not Found"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -247,13 +245,17 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                                 Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال برجاء المحاوله مره اخري "))
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
-                        Log.e("Error", response.code().toString())
+                        Log.e("Error", "Generic Error")
                         result = Result.Error(Exception("Error"))
                     }
                 }
@@ -268,21 +270,21 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         return result
     }
 
-    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<ArrayList<Attachment>?>{
-        var result: Result<ArrayList<Attachment>?> = Result.Loading
+    suspend fun createComplaint(createComplaintRequest: CreateComplaintRequest):Result<ComplaintResponse?>{
+        var result: Result<ComplaintResponse?> = Result.Loading
 
         try {
-            val response = attachments.parts?.let {
-                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.attachmentType,
-                    it
+            val response = createComplaintRequest.parts?.let {
+                apiDataSource.createComplaints("Bearer "+sharedPreference.getToken(),createComplaintRequest.department,createComplaintRequest.officer,
+                   createComplaintRequest.body, it
                 )
             }
             if (response != null) {
                 if (response.isSuccessful) {
                     result = Result.Success(response.body())
-                    Log.i("getHrClearanceHomeList", "Result $result")
+                    Log.i("createComplaint", "Result $result")
                 } else {
-                    Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                    Log.i("createComplaint", "Error${response.errorBody()}")
                     when (response.code()) {
                         400 -> {
                             Log.e("Error 400", "Bad Request")
@@ -339,49 +341,5 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         }
         return result
     }
-    suspend fun clearanceAction(id:Int,action:String,entity:Int): Result<ActionResponse?> {
-        var result: Result<ActionResponse?> = Result.Loading
-        try {
-            val response = apiDataSource.clearanceAction("Bearer "+sharedPreference.getToken(), action = action, id = id, enity = entity)
-            if (response.isSuccessful) {
-                result = Result.Success(response.body())
 
-            } else {
-                when (response.code()) {
-                    401 ->{
-                        Log.e("Error 401", "Not Auth please, logout and login again")
-                        if (sharedPreference.isLogin()) {
-                            Log.i(
-                                "Model Repo:",
-                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
-                            )
-                            val res = refreshToken()
-                            when(res) {
-                                is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
-                                }
-                                is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                                }
-                            }
-                        }
-                        else {
-                            result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                        }
-                    }
-                    500 -> {
-                        result = Result.Error(Exception("server is down"))
-                    }
-                    502 -> {
-                        result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
-                    }
-
-                }
-            }
-        }catch(e: IOException) {
-            result = Result.Error(e)}
-        return result
-    }
 }

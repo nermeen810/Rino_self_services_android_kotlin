@@ -116,5 +116,8 @@
     <string name="email">البريد الالكتروني</string>
     <string name="last_login">تاريخ اخر تسجيل دخول</string>
     <string name="phone_num">رقم الهاتف</string>
+    <string name="details_request">تفاصيل الطلب</string>
+    <string name="request_details">تفاصيل الطلب</string>
+    <string name="chars">حرف</string>
 
 </resources>

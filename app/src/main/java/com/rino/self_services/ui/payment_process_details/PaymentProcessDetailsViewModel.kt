@@ -38,7 +38,7 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
 
     private var _setError = MutableLiveData<String>()
     private var _setToTrue = MutableLiveData<Boolean>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
     val setToTrue: LiveData<Boolean>
     get() = _setToTrue
     val loading: LiveData<Int>

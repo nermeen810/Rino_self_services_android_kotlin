@@ -3,6 +3,7 @@ package com.rino.self_services.ui.paymentProcessAttachment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,9 +51,12 @@ private  lateinit var seeAll:NavSeeAll
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPPAttachmentBinding.inflate(inflater, container, false)
+        startShimmer()
+
         binding.ppAttachmentRv.layoutManager = LinearLayoutManager(requireContext())
         binding.ppAttachmentRv.adapter = adapter
         adapter.notifyDataSetChanged()
+        stopShimmer()
         if (data.attachments.isEmpty()){
             showMessage("لم يتم اضافه مرفقات لهذا الطلب")
         }
@@ -70,6 +74,21 @@ private  lateinit var seeAll:NavSeeAll
         }
         return binding.root
     }
+
+    private fun stopShimmer() {
+        Log.e("shimmer","stop")
+        binding.shimmer.stopShimmer()
+        binding.ppAttachmentRv.visibility = View.VISIBLE
+        binding.shimmer.visibility = View.GONE
+    }
+
+    private fun startShimmer() {
+        Log.e("shimmer","start")
+        binding.shimmer.visibility = View.VISIBLE
+        binding.ppAttachmentRv.visibility = View.GONE
+        binding.shimmer.startShimmer()
+    }
+
     private fun showMessage(msg: String) {
         lifecycleScope.launchWhenResumed {
             Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)

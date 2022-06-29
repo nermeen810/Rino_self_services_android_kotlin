@@ -23,7 +23,7 @@ import javax.inject.Inject
 class HRClearanceDetailsViewModel@Inject constructor(private  val repo: HrClearanceRepo):ViewModel(){
     private  var _detailsData = MutableLiveData<HRClearanceDetails>()
     private var _setError = MutableLiveData<String>()
-    private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _loading = MutableLiveData<Int>()
     val loading: LiveData<Int>
         get() = _loading
     val setError: LiveData<String>
