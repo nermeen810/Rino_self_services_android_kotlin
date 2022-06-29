@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.hrClearanceDetails
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.rino.self_services.model.pojo.NavToAttachment
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -130,7 +132,22 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                binding.clearanceDetailsProgress.visibility = it
+            //    binding.clearanceDetailsProgress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    Log.e("shimmer","start")
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.detailsLayout.visibility = View.GONE
+                    binding.shimmer.startShimmer()
+
+                }
+                else{
+                    Log.e("shimmer","stop")
+                    binding.shimmer.stopShimmer()
+                    binding.detailsLayout.visibility = View.VISIBLE
+                    binding.shimmer.visibility = View.GONE
+
+                }
             }
         }
     }
@@ -157,11 +174,11 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
-            binding.clearanceId.text = details?.id.toString()
+            binding.clearanceId.text = Constants.convertNumsToArabic(details?.id.toString())
             binding.clearanceDetailsDate.text = details?.date?.split("T")?.get(0)
             binding.clearanceDescription.text = details?.current?.name
             binding.hrDEmpName.text = details?.employee
-            binding.hrDEmpId.text = details?.employeeID?.toString()
+            binding.hrDEmpId.text = Constants.convertNumsToArabic(details?.employeeID.toString())
             binding.hrDDepartment.text = details?.department
             binding.hrFowrwerdTo.text = details?.current?.users?.get(0) ?: ""
             binding.hrType.text = details?.type

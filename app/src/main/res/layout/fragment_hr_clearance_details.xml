@@ -11,8 +11,11 @@
         android:layout_height="match_parent" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
             <TextView
                 android:id="@+id/serviceTitle"
                 android:layout_width="wrap_content"
@@ -27,7 +30,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/backbtn"
@@ -35,8 +38,8 @@
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/ic_baseline_arrow_forward_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
             <ImageView
 
                 android:id="@+id/clearance_stepper"
@@ -463,5 +466,15 @@
                 app:layout_constraintWidth_percent="0.4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/details_shimmer" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>
