@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.payment_process_details
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,11 +21,14 @@ import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
+import com.rino.self_services.utils.numToEnglish
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.lang.Exception
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -32,6 +36,7 @@ class PaymentProcessDetailsFragment : Fragment() {
     var shouldShowActions = true
     private  var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
+    private var oldAmount = 0.0
     val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
     private  lateinit var navToDetails: NavToDetails
@@ -54,6 +59,7 @@ class PaymentProcessDetailsFragment : Fragment() {
         observeLoading()
         oberveData()
         obseveError()
+        observeEditAmonnt()
         handleBackBotton()
         viewModel.getData(navToDetails.id)
         if(navToDetails.me_or_others == "others"){
@@ -63,7 +69,9 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.approve.visibility = View.GONE
             binding.deny.visibility = View.GONE
         }
-
+        binding.updateAmountBtn.setOnClickListener {
+            viewDailoge()
+        }
 
         binding.viewPpAttachments.setOnClickListener {
 
@@ -127,6 +135,56 @@ class PaymentProcessDetailsFragment : Fragment() {
         }
         return binding.root
     }
+
+    private fun observeEditAmonnt() {
+        viewModel.editAmount.observe(viewLifecycleOwner){
+            if(it) {
+                showMessage("تم تعديل المبلغ بنجاح")
+            }
+        }
+    }
+
+    private fun viewDailoge() {
+        try {
+            val id = binding.orderNumberDetails.text.toString().toInt()
+            val newAmount = binding.paymentProcessDetailsAmount.text.toString().replace(" ر.س ","").numToEnglish().toDouble()
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(R.string.app_name)
+
+            if (newAmount-oldAmount>=0){
+                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic() )
+            }
+            else if(newAmount-oldAmount<0){
+                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic() )
+
+            }
+            else{
+
+            }
+            builder.setIcon(android.R.drawable.ic_dialog_info)
+
+            builder.setNegativeButton(R.string.NoMessage) { dialogInterface, which ->
+
+            }
+
+            builder.setPositiveButton(R.string.yesMessage) { dialogInterface, which ->
+
+                viewModel.editAmount(id, newAmount)
+            }
+
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+        catch (e:Exception){
+            showMessage("برجاء ادخال رقم عشري")
+        }
+    }
+
     private fun handleBackBotton() {
         binding.backbtn.setOnClickListener {
             if(seeAll.me_or_others == ""&&seeAll.startPeriod ==""&&seeAll.endPeriod=="") {
@@ -198,6 +256,7 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
+            oldAmount = details?.amount?: 0.0
             binding.orderNumberDetails.text = Constants.convertNumsToArabic(details?.id.toString())
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
             binding.orderState.text = details?.status
@@ -205,7 +264,7 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.beneficiaryPayment.text = details?.beneficiary
             binding.provisionPaymentDetails.text = details?.provision
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
-            binding.paymentProcessDetailsAmount.text = Constants.convertNumsToArabic(details?.amount.toString())+" ر.س "
+            binding.paymentProcessDetailsAmount.setText(Constants.convertNumsToArabic(details?.amount.toString())+" ر.س ")
             binding.orderSidePayment.text = details?.department
             binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
             binding.approve.text = details?.current?.name

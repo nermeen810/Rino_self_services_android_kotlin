@@ -119,5 +119,9 @@
     <string name="details_request">تفاصيل الطلب</string>
     <string name="request_details">تفاصيل الطلب</string>
     <string name="chars">حرف</string>
+    <string name="update_amount">تعديل المبلغ</string>
+    <string name="NoMessage">الغاء</string>
+    <string name="yesMessage">تأكيد</string>
+    <string name="increase_amount">"هل تريد زيادة قيمة المبلغ من "</string>
 
 </resources>

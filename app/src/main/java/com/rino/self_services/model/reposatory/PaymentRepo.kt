@@ -432,7 +432,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
         return result
     }
 
-    suspend fun editAmount(id:Int,newAmount:Int): Result<Void?> {
+    suspend fun editAmount(id:Int,newAmount:Double): Result<Void?> {
         var result: Result<Void?> = Result.Loading
         try {
             val response = apiDataSource.editAmount("Bearer "+sharedPreference.getToken(),
@@ -444,14 +444,10 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 Log.i("editAmount", "Error${response.errorBody()}")
                 when (response.code()) {
                     400 -> {
-                        val gson = Gson()
-                        val errorBody = gson.fromJson(response.errorBody()!!.string(),EditAmountErrorResponse::class.java)
-                        if(errorBody.message=="Request has been approved by all management") {
+//                        val gson = Gson()
+//                        val errorBody = gson.fromJson(response.errorBody()!!.string(),EditAmountErrorResponse::class.java)
+//                        if(errorBody.message=="Request has been approved by all management") {
                             result = Result.Error(Exception("لا يمكن التعديل هذا الطلب تم اعتماده من الادارة"))
-                        }
-                        else if(errorBody.message=="User does not have privilages"){
-                            result = Result.Error(Exception("هذة الخاصية ليست من صلاحياتك"))
-                        }
                         Log.e("Error 400", "Bad Request")
                     }
                     404 -> {

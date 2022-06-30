@@ -34,11 +34,14 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
 
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
+    private  var _editAmount = MutableLiveData<Boolean>()
     private  var _detailsData = MutableLiveData<PaymentProcessDetails>()
-
     private var _setError = MutableLiveData<String>()
     private var _setToTrue = MutableLiveData<Boolean>()
     private var _loading = MutableLiveData<Int>()
+
+    val editAmount: LiveData<Boolean>
+        get() = _editAmount
     val setToTrue: LiveData<Boolean>
     get() = _setToTrue
     val loading: LiveData<Int>
@@ -47,11 +50,11 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
         get() = _setError
     val detailsData: LiveData<PaymentProcessDetails>
         get() = _detailsData
-
     val action: LiveData<ActionResponse>
         get() = _actionData
     var _actionData = MutableLiveData<ActionResponse>()
     var attachments = ArrayList<Attachment>()
+
     fun getData(id:Int){
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
@@ -130,4 +133,33 @@ class PaymentProcessDetailsViewModel@Inject constructor(private  val repo: Payme
             }
         }
     }
+
+    fun editAmount(id:Int, newAmount:Double) {
+        Log.d("getProfileData", "call")
+        _loading.postValue(View.VISIBLE)
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repo.editAmount(id, newAmount)) {
+                is Result.Success -> {
+                    _loading.postValue(View.GONE)
+                    result.data.let {
+                        Log.d("atchments", "done")
+                        if (it != null) {
+                            _editAmount.postValue(true)
+                        }
+                    }
+                    Log.i("see All network:", "done")
+                }
+                is Result.Error -> {
+                    Log.e(" error:", "${result.exception.message}")
+                    _loading.postValue(View.GONE)
+                    _setError.postValue(result.exception.message)
+                }
+                is Result.Loading -> {
+                    Log.i("login", "Loading")
+                    _loading.postValue(View.VISIBLE)
+                }
+            }
+        }
+    }
+
 }
