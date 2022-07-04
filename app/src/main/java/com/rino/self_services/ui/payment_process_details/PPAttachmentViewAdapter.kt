@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.R
 import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.utils.dateToArabic
 
 class PPAttachmentViewAdapter(private var itemList: Array<Attachment>, private val onItemClicked: (position: Int) -> Unit): RecyclerView.Adapter<PPAttachmentViewAdapter.MyViewHolder>()  {
 
@@ -38,7 +39,7 @@ class PPAttachmentViewAdapter(private var itemList: Array<Attachment>, private v
         holder.clearanceNumber.text = itemList[position].name
         holder.attachmentCreatorName.text = itemList[position].userName
         holder.attachmentCreatorTitle.text = itemList[position].jobTitle
-        holder.attachmentCreatedDate.text = itemList[position].date!!.split("T")[0]
+        holder.attachmentCreatedDate.text = itemList[position].date!!.split("T")[0].dateToArabic()
     }
 
     override fun getItemCount(): Int {

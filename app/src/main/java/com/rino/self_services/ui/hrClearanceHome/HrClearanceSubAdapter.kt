@@ -10,6 +10,7 @@ import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.PaymentHomeViewModel
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
 
 class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
                              private val hrClearanceViewModel: HrClearanceViewModel, private val context: Context
@@ -35,8 +36,8 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
 
     override fun onBindViewHolder(holder: SubHrClearanceItemViewHolder, position: Int) {
         holder.binding.serviceNumValue.text = Constants.convertNumsToArabic(clearanceSubList[position].id.toString())
-        val dateRes = clearanceSubList[position].date.split("T")
-        holder.binding.dateFromTxt.text     = dateRes[0]
+        val dateRes = clearanceSubList[position].date!!.split("T")
+        holder.binding.dateFromTxt.text     = dateRes[0].dateToArabic()
         holder.binding.empNumValue.text     = Constants.convertNumsToArabic(clearanceSubList[position].code.toString())
         holder.binding.empNameValue.text     = clearanceSubList[position].employee
         holder.binding.departmentValue.text     = clearanceSubList[position].department
@@ -44,7 +45,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         holder.binding.requestTypeValue.text    = clearanceSubList[position].type
         if(clearanceSubList[position].start!=null) {
             val startDateRes = clearanceSubList[position].start!!.split("T")
-            holder.binding.vacationStartValue.text = startDateRes[0]
+            holder.binding.vacationStartValue.text = startDateRes[0].dateToArabic()
         }
         else{
             holder.binding.vacationStartValue.visibility = View.GONE
@@ -52,7 +53,7 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
         }
         if(clearanceSubList[position].end!=null) {
             val endDateRes = clearanceSubList[position].end!!.split("T")
-            holder.binding.vacationEndValue.text = endDateRes[0]
+            holder.binding.vacationEndValue.text = endDateRes[0].dateToArabic()
         }
         else{
             holder.binding.vacationEndValue.visibility = View.GONE

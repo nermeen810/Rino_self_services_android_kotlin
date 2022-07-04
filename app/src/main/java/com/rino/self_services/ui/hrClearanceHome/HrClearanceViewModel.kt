@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.hrClearance.SearchHrResponse
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
 import com.rino.self_services.model.reposatory.HrClearanceRepo
@@ -27,7 +28,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
     private var _loading = MutableLiveData<Int>()
     private var _getPaymentData = MutableLiveData<HrClearanceResponse?>()
     private var _getNotificationCount = MutableLiveData<NotificationCountResponse?>()
-    private var _getSearchHistoryData = MutableLiveData<SearchResponse?>()
+    private var _getSearchHistoryData = MutableLiveData<SearchHrResponse?>()
     private var _navToSeeAll: MutableLiveData<NavSeeAll> = MutableLiveData()
     private var _navToTaskDetails: MutableLiveData<HRClearanceDetailsRequest> = MutableLiveData()
     var me_or_others = "me"
@@ -41,7 +42,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
         val navToTaskDetails: LiveData<HRClearanceDetailsRequest>
         get() = _navToTaskDetails
 
-    val getSearchHistoryData: LiveData<SearchResponse?>
+    val getSearchHistoryData: LiveData<SearchHrResponse?>
         get() = _getSearchHistoryData
 
     val navToSeeAll: LiveData<NavSeeAll>
@@ -71,7 +72,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             _navToTaskDetails.value = item
         }
 
-    fun getPaymentData(me_or_other :String) {
+    fun getHrData(me_or_other :String) {
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             Log.i("me_or_others:",me_or_others)
@@ -101,6 +102,31 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             }
         }
     }
+    fun searchHrRequest(searchTxt:String) {
+        _loading.postValue(View.VISIBLE)
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = modelRepository.searchRequest(searchTxt)) {
+                is Result.Success -> {
+                    // _loading.postValue(View.GONE)
+                    Log.i("searchHistoryDataByService:", "${result.data}")
+                    _getSearchHistoryData.postValue(result.data)
+                    _loading.postValue(View.GONE)
+
+                }
+                is Result.Error -> {
+                    Log.e("searchHistoryDataByService:", "${result.exception.message}")
+                    _noData.postValue(true)
+                    _loading.postValue(View.GONE)
+
+                }
+                is Result.Loading -> {
+                    Log.i("searchHistoryDataByService", "Loading")
+                    _loading.postValue(View.VISIBLE)
+                }
+            }
+        }
+
+    }
 
     fun getNotificationCount(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -121,31 +147,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             }
         }
     }
-//    fun searchHistoryDataByService(searchTxt:String) {
-//        _loading.postValue(View.VISIBLE)
-//        viewModelScope.launch(Dispatchers.IO) {
-//            when (val result = modelRepository.searchRequest(searchTxt)) {
-//                is Result.Success -> {
-//                    // _loading.postValue(View.GONE)
-//                    Log.i("searchHistoryDataByService:", "${result.data}")
-//                    _getSearchHistoryData.postValue(result.data)
-//                    _loading.postValue(View.GONE)
-//
-//                }
-//                is Result.Error -> {
-//                    Log.e("searchHistoryDataByService:", "${result.exception.message}")
-//                    _noData.postValue(true)
-//                    _loading.postValue(View.GONE)
-//
-//                }
-//                is Result.Loading -> {
-//                    Log.i("searchHistoryDataByService", "Loading")
-//                    _loading.postValue(View.VISIBLE)
-//                }
-//            }
-//        }
-//
-//    }
+
 
     fun viewLoading(loading:Int){
         _loading.value = loading

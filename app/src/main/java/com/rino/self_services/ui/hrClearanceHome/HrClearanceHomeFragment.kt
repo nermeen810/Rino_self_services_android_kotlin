@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.rino.self_services.databinding.FragmentHrClearanceHomeBinding
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.model.pojo.hrClearance.Data
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.*
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,10 +26,10 @@ class HrClearanceHomeFragment : Fragment() {
     private lateinit var binding: FragmentHrClearanceHomeBinding
     private lateinit var hrClearanceMainAdapter: HrClearanceMainAdapter
     private lateinit var hrClearanceList: ArrayList<Data>
-//    private lateinit var searchHistoryAdapter: HrClearanceSubAdapter
+    private lateinit var searchHistoryAdapter: HrClearanceSubAdapter
     private lateinit var periodAdapter: HrPeriodAdapter
 
-//    private lateinit var searchHistoryList: ArrayList<Items>
+    private lateinit var searchHistoryList: ArrayList<Items>
     private lateinit var periodTimeList_ar: ArrayList<String>
     private lateinit var periodTimeList_en: ArrayList<String>
     private lateinit var hrClearanceHomeResponse: HrClearanceResponse
@@ -54,12 +56,12 @@ class HrClearanceHomeFragment : Fragment() {
         binding.historyRecycle.visibility = View.GONE
         viewModel.me_or_others = me_or_others
         hrClearanceList = arrayListOf()
-//        searchHistoryList = arrayListOf()
+        searchHistoryList = arrayListOf()
         periodAdapter = HrPeriodAdapter(periodTimeList_ar,viewModel)
         hrClearanceMainAdapter = HrClearanceMainAdapter(hrClearanceList,viewModel,requireContext())
         hrClearanceMainAdapter.updateItems(hrClearanceList)
-//        searchHistoryAdapter = HrClearanceSubAdapter(searchHistoryList, viewModel,requireContext())
-//        searchHistoryAdapter.updateItems(searchHistoryList)
+        searchHistoryAdapter = HrClearanceSubAdapter(searchHistoryList, viewModel,requireContext())
+        searchHistoryAdapter.updateItems(searchHistoryList)
         setUpUI()
         handleBackButton()
 //        checkNetwork(serviceId)
@@ -76,7 +78,7 @@ class HrClearanceHomeFragment : Fragment() {
     private fun observeData() {
         observeHistoryData()
         observeNoData()
-  //      observeSearchHistoryData()
+        observeSearchHistoryData()
         observeNavigationCount()
         observeNavToSeeAll()
         observeNavToServiceDetails()
@@ -94,7 +96,7 @@ class HrClearanceHomeFragment : Fragment() {
     private fun observeNoData() {
         viewModel.noData.observe(viewLifecycleOwner) {
             binding.historyRecycle.visibility = View.GONE
-      //      binding.searchHistoryRecycle.visibility = View.GONE
+            binding.searchHistoryRecycle.visibility = View.GONE
             binding.noDataAnim.visibility = View.VISIBLE
             binding.textNoData.visibility = View.VISIBLE
         }
@@ -102,32 +104,32 @@ class HrClearanceHomeFragment : Fragment() {
 
 
     private fun observeHistoryData() {
-        viewModel.getPaymentData("me")
+        viewModel.getHrData("me")
         viewModel.getPaymentData.observe(viewLifecycleOwner) {
             it?.let {
                 hrClearanceHomeResponse = it
                 hrClearanceMainAdapter.updateItems(it.data)
                 hrClearanceList = it.data
             }
-//            binding.searchHistoryRecycle.visibility = View.GONE
+            binding.searchHistoryRecycle.visibility = View.GONE
             binding.historyRecycle.visibility = View.VISIBLE
             binding.noDataAnim.visibility = View.GONE
             binding.textNoData.visibility = View.GONE
         }
     }
 
-//    private fun observeSearchHistoryData() {
-//        viewModel.getSearchHistoryData.observe(viewLifecycleOwner) {
-//            it?.let {
-//                binding.historyRecycle.visibility = View.GONE
-//                binding.searchHistoryRecycle.visibility = View.VISIBLE
-//                searchHistoryAdapter.updateItems(it.data)
-//                viewModel.viewLoading(View.GONE)
-//                binding.noDataAnim.visibility = View.GONE
-//                binding.textNoData.visibility = View.GONE
-//            }
-//        }
-//    }
+    private fun observeSearchHistoryData() {
+        viewModel.getSearchHistoryData.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.historyRecycle.visibility = View.GONE
+                binding.searchHistoryRecycle.visibility = View.VISIBLE
+                searchHistoryAdapter.updateItems(it.data)
+                viewModel.viewLoading(View.GONE)
+                binding.noDataAnim.visibility = View.GONE
+                binding.textNoData.visibility = View.GONE
+            }
+        }
+    }
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
@@ -220,7 +222,7 @@ class HrClearanceHomeFragment : Fragment() {
         binding.profileBtn.setOnClickListener {
             navToProfile()
         }
-//        binding.mSearch.setQueryHint(getString(R.string.search_hint));
+        binding.mSearch.setQueryHint(getString(R.string.search_hint));
         binding.historyRecycle.visibility = View.VISIBLE
         binding.historyRecycle.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -233,24 +235,24 @@ class HrClearanceHomeFragment : Fragment() {
             layoutManager = linearLayoutManager
             adapter = periodAdapter
         }
-//        binding.searchHistoryRecycle.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = searchHistoryAdapter
-//        }
+        binding.searchHistoryRecycle.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = searchHistoryAdapter
+        }
 
-//        binding.mSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                if (query != null) {
-//                    viewModel.searchHistoryDataByService(query)
-//                }
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(query: String?): Boolean {
-//
-//                return false
-//            }
-//        })
+        binding.mSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    viewModel.searchHrRequest(query)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+
+                return false
+            }
+        })
 
     }
 
@@ -270,12 +272,12 @@ class HrClearanceHomeFragment : Fragment() {
             when (item.itemId) {
                 R.id.me_item -> {
                     viewModel.me_or_others = "me"
-                    viewModel.getPaymentData("me")
+                    viewModel.getHrData("me")
                     true
                 }
                 R.id.others_item -> {
                     viewModel.me_or_others = "others"
-                    viewModel.getPaymentData("others")
+                    viewModel.getHrData("others")
                     true
                 }
                 else-> false

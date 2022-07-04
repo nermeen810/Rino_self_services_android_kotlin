@@ -1,4 +1,4 @@
-package com.rino.self_services.ui.viewComplints
+package com.rino.self_services.ui.paymrntArchive
 
 import android.util.Log
 import android.view.View
@@ -6,10 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rino.self_services.model.pojo.Attachment
-import com.rino.self_services.model.pojo.complaints.Attchements
-import com.rino.self_services.model.pojo.complaints.ComplaintItemResponse
-import com.rino.self_services.model.reposatory.ComplaintsRepo
+import com.rino.self_services.model.pojo.amountChangelog.AmountChangelogResponse
+import com.rino.self_services.model.reposatory.PaymentRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,9 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewComplaintsViewModel  @Inject constructor(private val complaintsRepo: ComplaintsRepo) : ViewModel() {
-    private var _complaintResponse = MutableLiveData<ArrayList<ComplaintItemResponse>>()
-    private var _navToViewAttachments = MutableLiveData<ArrayList<Attchements>>()
+class PaymentArchiveViewModel @Inject constructor(private val modelRepository: PaymentRepo) : ViewModel(){
+    private var _amountChangelogResponse = MutableLiveData<AmountChangelogResponse>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
 
@@ -27,27 +24,21 @@ class ViewComplaintsViewModel  @Inject constructor(private val complaintsRepo: C
         get() = _loading
     val setError: LiveData<String>
         get() = _setError
-    val complaintResponse: LiveData<ArrayList<ComplaintItemResponse>>
-        get() = _complaintResponse
-    val navToViewAttachments: LiveData<ArrayList<Attchements>>
-        get() = _navToViewAttachments
+    val amountChangelogResponse: LiveData<AmountChangelogResponse>
+        get() = _amountChangelogResponse
 
-    fun navToAttachments(attachments: ArrayList<Attchements>)
-    {
-        _navToViewAttachments.value = attachments
-    }
 
-    fun getComplaintsList(){
-        Log.d("getComplaintsList","call")
+    fun getAmountChangelog(id:Int){
+        Log.d("getAmountChangelog","call")
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = complaintsRepo.getComplaintsList()) {
+            when (val result = modelRepository.getAmountChangelog(id)) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     result.data.let {
-                        Log.d("getComplaintsList","done")
+                        Log.d("getAmountChangelog","done")
                         if (it != null) {
-                            _complaintResponse.postValue(it)
+                            _amountChangelogResponse.postValue(it)
                         }
                     }
                     Log.i("see All network:", "done")

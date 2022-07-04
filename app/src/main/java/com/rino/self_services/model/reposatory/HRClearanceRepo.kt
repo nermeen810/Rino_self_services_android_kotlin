@@ -9,7 +9,10 @@ import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSou
 import com.rino.self_services.model.dataSource.remoteDataSource.ApiDataSource
 import com.rino.self_services.model.pojo.*
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.hrClearance.SearchHrResponse
+import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
+import com.rino.self_services.model.pojo.payment.SearchResponse
 import com.rino.self_services.ui.seeAllHr.HRClearanceRequest
 import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
@@ -138,7 +141,72 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
         }
         return result
     }
+    suspend fun searchRequest(searchTxt:String): Result<SearchHrResponse?> {
+        var result: Result<SearchHrResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.searchHrRequest("Bearer "+sharedPreference.getToken(),
+                SearchRequest(searchTxt))
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("searchHrRequest", "Result $result")
+            } else {
+                Log.i("searchHrRequest", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request "))
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    else -> {
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
 
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+
+        }
+        return result
+    }
     suspend fun getHRDetails(hrClearanceDetailsRequest: HRClearanceDetailsRequest):Result<HRClearanceDetails?>{
         var result: Result<HRClearanceDetails?> = Result.Loading
         try {

@@ -37,7 +37,7 @@ class PaymentProcessDetailsFragment : Fragment() {
     private  var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
     private var oldAmount = 0.0
-    val viewModel: PaymentProcessDetailsViewModel by viewModels()
+    private val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
     private  lateinit var navToDetails: NavToDetails
     private  lateinit var seeAll:NavSeeAll
@@ -56,11 +56,13 @@ class PaymentProcessDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPaymentProcessDetailsBinding.inflate(inflater, container, false)
+        observePermission()
         observeLoading()
         oberveData()
         obseveError()
-        observeEditAmonnt()
+        observeEditAmount()
         handleBackBotton()
+        viewModel.getPermissions()
         viewModel.getData(navToDetails.id)
         if(navToDetails.me_or_others == "others"){
             binding.approve.visibility = View.GONE
@@ -72,7 +74,9 @@ class PaymentProcessDetailsFragment : Fragment() {
         binding.updateAmountBtn.setOnClickListener {
             viewDailoge()
         }
-
+        binding.amountChangelogBtn.setOnClickListener {
+            navToPaymentArchive()
+        }
         binding.viewPpAttachments.setOnClickListener {
 
             var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions),seeAll)
@@ -136,7 +140,22 @@ class PaymentProcessDetailsFragment : Fragment() {
         return binding.root
     }
 
-    private fun observeEditAmonnt() {
+    private fun navToPaymentArchive() {
+        val action =
+            PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentPaymentArchiveFragment(navToDetails,seeAll)
+        findNavController().navigate(action)
+    }
+    private fun observePermission() {
+        viewModel.getPermission.observe(viewLifecycleOwner){
+            it.let{
+                if(!it!!.isGM) {
+                    binding.amountChangelogBtn.visibility = View.GONE
+                }
+            }
+
+        }
+    }
+    private fun observeEditAmount() {
         viewModel.editAmount.observe(viewLifecycleOwner){
             if(it) {
                 showMessage("تم تعديل المبلغ بنجاح")
@@ -258,7 +277,7 @@ class PaymentProcessDetailsFragment : Fragment() {
             var details = it.data
             oldAmount = details?.amount?: 0.0
             binding.orderNumberDetails.text = Constants.convertNumsToArabic(details?.id.toString())
-            binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
+            binding.orderDateDetails.text = details?.date?.split("T")?.get(0)?.dateToArabic()
             binding.orderState.text = details?.status
             binding.orderDescriptionPayment.text = details?.desc
             binding.beneficiaryPayment.text = details?.beneficiary
