@@ -184,6 +184,12 @@ class HRClearanceDetailsFragment : Fragment() {
             binding.hrFowrwerdTo.text = details?.current?.users?.get(0) ?: ""
             binding.hrType.text = details?.type
             binding.hrDStatus.text = details.status
+            if(details.status=="جديد"){
+                binding.hrDenay.visibility =View.VISIBLE
+            }
+            else{
+                binding.hrDenay.visibility =View.GONE
+            }
 
             when(details?.step){
                 1 ->{ binding.clearanceStepper.setImageResource(R.drawable.second_stepper) }

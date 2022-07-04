@@ -289,6 +289,13 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.approve.text = details?.current?.name
             binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
 
+            if(details?.status=="جديد"){
+                binding.deny.visibility =View.VISIBLE
+            }
+            else{
+                binding.deny.visibility =View.GONE
+            }
+
             when(details?.step){
                 1 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
                 2 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
