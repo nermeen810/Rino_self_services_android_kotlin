@@ -62,7 +62,9 @@ class ViewComplaintsFragment : Fragment() {
 
     private fun observeNavToAttachments() {
         viewModel.navToViewAttachments.observe(viewLifecycleOwner){
-
+            val action =
+                ViewComplaintsFragmentDirections.actionViewComplaintsFragmentToViewAttatchmentsFragment(from_where,it.toTypedArray())
+            findNavController().navigate(action)
 
         }
     }

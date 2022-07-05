@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.payment_process_details
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,11 +21,14 @@ import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
+import com.rino.self_services.utils.numToEnglish
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.lang.Exception
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -32,7 +36,8 @@ class PaymentProcessDetailsFragment : Fragment() {
     var shouldShowActions = true
     private  var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
-    val viewModel: PaymentProcessDetailsViewModel by viewModels()
+    private var oldAmount = 0.0
+    private val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
     private  lateinit var navToDetails: NavToDetails
     private  lateinit var seeAll:NavSeeAll
@@ -51,10 +56,13 @@ class PaymentProcessDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPaymentProcessDetailsBinding.inflate(inflater, container, false)
+        observePermission()
         observeLoading()
         oberveData()
         obseveError()
+        observeEditAmount()
         handleBackBotton()
+        viewModel.getPermissions()
         viewModel.getData(navToDetails.id)
         if(navToDetails.me_or_others == "others"){
             binding.approve.visibility = View.GONE
@@ -63,8 +71,12 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.approve.visibility = View.GONE
             binding.deny.visibility = View.GONE
         }
-
-
+        binding.updateAmountBtn.setOnClickListener {
+            viewDailoge()
+        }
+        binding.amountChangelogBtn.setOnClickListener {
+            navToPaymentArchive()
+        }
         binding.viewPpAttachments.setOnClickListener {
 
             var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions),seeAll)
@@ -127,6 +139,71 @@ class PaymentProcessDetailsFragment : Fragment() {
         }
         return binding.root
     }
+
+    private fun navToPaymentArchive() {
+        val action =
+            PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentPaymentArchiveFragment(navToDetails,seeAll)
+        findNavController().navigate(action)
+    }
+    private fun observePermission() {
+        viewModel.getPermission.observe(viewLifecycleOwner){
+            it.let{
+                if(!it!!.isGM) {
+                    binding.amountChangelogBtn.visibility = View.GONE
+                }
+            }
+
+        }
+    }
+    private fun observeEditAmount() {
+        viewModel.editAmount.observe(viewLifecycleOwner){
+            if(it) {
+                showMessage("تم تعديل المبلغ بنجاح")
+            }
+        }
+    }
+
+    private fun viewDailoge() {
+        try {
+            val id = binding.orderNumberDetails.text.toString().toInt()
+            val newAmount = binding.paymentProcessDetailsAmount.text.toString().replace(" ر.س ","").numToEnglish().toDouble()
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(R.string.app_name)
+
+            if (newAmount-oldAmount>=0){
+                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic() )
+            }
+            else if(newAmount-oldAmount<0){
+                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic() )
+
+            }
+            else{
+
+            }
+            builder.setIcon(android.R.drawable.ic_dialog_info)
+
+            builder.setNegativeButton(R.string.NoMessage) { dialogInterface, which ->
+
+            }
+
+            builder.setPositiveButton(R.string.yesMessage) { dialogInterface, which ->
+
+                viewModel.editAmount(id, newAmount)
+            }
+
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+        catch (e:Exception){
+            showMessage("برجاء ادخال رقم عشري")
+        }
+    }
+
     private fun handleBackBotton() {
         binding.backbtn.setOnClickListener {
             if(seeAll.me_or_others == ""&&seeAll.startPeriod ==""&&seeAll.endPeriod=="") {
@@ -198,18 +275,26 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
+            oldAmount = details?.amount?: 0.0
             binding.orderNumberDetails.text = Constants.convertNumsToArabic(details?.id.toString())
-            binding.orderDateDetails.text = details?.date?.split("T")?.get(0)
+            binding.orderDateDetails.text = details?.date?.split("T")?.get(0)?.dateToArabic()
             binding.orderState.text = details?.status
             binding.orderDescriptionPayment.text = details?.desc
             binding.beneficiaryPayment.text = details?.beneficiary
             binding.provisionPaymentDetails.text = details?.provision
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
-            binding.paymentProcessDetailsAmount.text = Constants.convertNumsToArabic(details?.amount.toString())+" ر.س "
+            binding.paymentProcessDetailsAmount.setText(Constants.convertNumsToArabic(details?.amount.toString())+" ر.س ")
             binding.orderSidePayment.text = details?.department
             binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
             binding.approve.text = details?.current?.name
             binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
+
+            if(details?.status=="جديد"){
+                binding.deny.visibility =View.VISIBLE
+            }
+            else{
+                binding.deny.visibility =View.GONE
+            }
 
             when(details?.step){
                 1 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }

@@ -36,7 +36,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
+            <ImageView
+                android:id="@+id/amountChangelogBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/paddingLayout"
+                android:src="@drawable/ic_baseline_assignment_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/serviceTitle"
@@ -55,14 +62,14 @@
               app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+
                 android:id="@+id/stepper_view"
-                android:layout_width="0dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="14dp"
+                app:layout_constraintBottom_toBottomOf="@id/cardView"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/serviceTitle"
-                app:layout_constraintBottom_toBottomOf="@id/cardView"
                 tools:src="@tools:sample/avatars" />
 
             <androidx.cardview.widget.CardView
@@ -70,11 +77,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-
                 app:layout_constraintBottom_toTopOf="@+id/approve"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/serviceTitle"
-                app:layout_constraintWidth_percent="0.85">
+                app:layout_constraintStart_toEndOf="@id/stepper_view">
                 <!-- start scroll view -->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -292,22 +298,31 @@
                         android:id="@+id/textView23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_margin="@dimen/marginTxt"
                         android:text="@string/amount"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/updateAmount_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/marginTxt"
+                        android:background="@drawable/orange_rect"
+                        android:text="@string/update_amount"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+                    <EditText
                         android:id="@+id/payment_process_details_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-
+                        app:layout_constraintBottom_toBottomOf="@+id/updateAmount_btn"
                         app:layout_constraintEnd_toEndOf="@+id/textView23"
-                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                        app:layout_constraintTop_toTopOf="@+id/updateAmount_btn" />
 
                     <ProgressBar
                         android:id="@+id/pp_details_progress"
@@ -388,16 +403,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="@dimen/marginTxt"
                 android:background="@drawable/orange_rect"
                 android:text="@string/approve_head_department"
                 android:textColor="@color/white"
                 app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stepper_view"
-                app:layout_constraintWidth_percent="0.95" />
+                app:layout_constraintTop_toBottomOf="@+id/stepper_view" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:visibility="gone"

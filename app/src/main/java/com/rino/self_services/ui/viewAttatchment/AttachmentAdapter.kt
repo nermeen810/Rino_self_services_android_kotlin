@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.databinding.AttatchmentItemBinding
 import com.rino.self_services.model.pojo.Attachment
+import com.rino.self_services.model.pojo.complaints.Attachments
 
 
-class AttachmentAdapter (private var attachmentList: ArrayList<Attachment>, private var context: Context) : RecyclerView.Adapter<AttachmentAdapter.AttatchmentViewHolder>() {
+class AttachmentAdapter (private var attachmentList: ArrayList<Attachments>, private var context: Context) : RecyclerView.Adapter<AttachmentAdapter.AttatchmentViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -45,7 +46,7 @@ class AttachmentAdapter (private var attachmentList: ArrayList<Attachment>, priv
         context.startActivity(browserIntent)
     }
 
-    fun updateItems(newList: List<Attachment>) {
+    fun updateItems(newList: List<Attachments>) {
         attachmentList.clear()
         attachmentList.addAll(newList)
         notifyDataSetChanged()

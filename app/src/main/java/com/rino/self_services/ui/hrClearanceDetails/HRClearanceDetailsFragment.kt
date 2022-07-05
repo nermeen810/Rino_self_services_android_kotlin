@@ -18,6 +18,7 @@ import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.ui.main.MainActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -175,7 +176,7 @@ class HRClearanceDetailsFragment : Fragment() {
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
             binding.clearanceId.text = Constants.convertNumsToArabic(details?.id.toString())
-            binding.clearanceDetailsDate.text = details?.date?.split("T")?.get(0)
+            binding.clearanceDetailsDate.text = details?.date?.split("T")?.get(0)?.dateToArabic()
             binding.clearanceDescription.text = details?.current?.name
             binding.hrDEmpName.text = details?.employee
             binding.hrDEmpId.text = Constants.convertNumsToArabic(details?.employeeID.toString())
@@ -183,6 +184,12 @@ class HRClearanceDetailsFragment : Fragment() {
             binding.hrFowrwerdTo.text = details?.current?.users?.get(0) ?: ""
             binding.hrType.text = details?.type
             binding.hrDStatus.text = details.status
+            if(details.status=="جديد"){
+                binding.hrDenay.visibility =View.VISIBLE
+            }
+            else{
+                binding.hrDenay.visibility =View.GONE
+            }
 
             when(details?.step){
                 1 ->{ binding.clearanceStepper.setImageResource(R.drawable.second_stepper) }

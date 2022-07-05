@@ -9,21 +9,26 @@ import com.rino.self_services.model.pojo.login.LoginResponse
 
 import com.rino.self_services.model.pojo.PaymentProcessDetails
 import com.rino.self_services.model.pojo.SeeAllPaymentProcessResponse
+import com.rino.self_services.model.pojo.amountChangelog.AmountChangelogResponse
 import com.rino.self_services.model.pojo.complaints.ComplaintItemResponse
 import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
+import com.rino.self_services.model.pojo.hrClearance.SearchHrResponse
+import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
+import com.rino.self_services.model.pojo.payment.EditAmountRequest
 
 
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.model.pojo.payment.SearchResponse
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -71,7 +76,7 @@ interface ApiService {
                                    @Path("me_or_others")me_or_other :String,
                                    @Path("period_value")period_value :String):Response<PaymentHomeResponse>
 
-    @GET("/api/requests/search/{search_txt}")
+    @GET("api/requests/search/{search_txt}")
     suspend fun searchRequest(@Header("Authorization"   ) auth: String,
                                    @Path("search_txt")  search_txt :String):Response<SearchResponse>
 
@@ -80,6 +85,9 @@ interface ApiService {
                                    @Path("me_or_others")me_or_other :String,
                                    @Path("period_value")period_value :String):Response<HrClearanceResponse>
 
+    @POST("api/clearancerequests/search")
+    suspend fun searchHrRequest(@Header("Authorization"   ) auth: String,
+                              @Body search_txt : SearchRequest):Response<SearchHrResponse>
 
     @Multipart
     @POST("api/Attachments/")
@@ -121,8 +129,22 @@ interface ApiService {
                                  ,@Part("Body") body:RequestBody
                                  ,@Part Attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>
 
+
     @GET("api/complains")
     suspend fun getComplaintsList(@Header("Authorization"   ) auth: String):Response<ArrayList<ComplaintItemResponse>>
+
+    @GET("api/identity/profile/")
+    suspend fun getProfileData(@Header("Authorization"   ) auth: String):Response<ProfileResponse>
+
+    @POST("api/requests/{id}/edit-amount")
+    suspend fun editAmount(@Header("Authorization"   ) auth: String,
+                           @Path("id" ) id :Int,
+                           @Body editAmountRequest: EditAmountRequest
+    ):Response<Void>
+
+    @GET("api/requests/{id}/amount-changelog")
+    suspend fun getAmountChangelog(@Header("Authorization"   ) auth: String,  @Path("id" ) id :Int):Response<AmountChangelogResponse>
+
 }
 
 

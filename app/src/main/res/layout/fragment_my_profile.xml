@@ -17,8 +17,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_margin="30dp"
         android:src="@drawable/ic_baseline_account_circle_24"
         app:civ_border_color="#FF000000"
@@ -31,7 +31,6 @@
         android:id="@+id/nameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="عبدالهادي محمد احمد "
         android:layout_margin="@dimen/marginTxt"
         android:textColor="@color/black"
         android:textSize="@dimen/subHeaderTextSize"
@@ -86,7 +85,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/paddingLayout"
                     android:padding="@dimen/marginTxt"
-                    android:text="asd123@gmail.com"
                     android:textColor="@color/dark_gray"
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
@@ -131,7 +129,6 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/marginTxt"
                     android:layout_margin="@dimen/paddingLayout"
-                    android:text="+92354485522"
                     android:textColor="@color/dark_gray"
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
@@ -176,7 +173,6 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/marginTxt"
                     android:layout_margin="@dimen/paddingLayout"
-                    android:text="+اداره الحسابات"
                     android:textColor="@color/dark_gray"
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
@@ -187,51 +183,61 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/lastLoginTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/paddingLayout"
-            android:padding="@dimen/marginTxt"
-            android:text="@string/last_login"
-            android:textColor="@color/black"
-            android:textSize="@dimen/normal_text"
-            android:textStyle="bold"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/departmentCard" />
-        <androidx.cardview.widget.CardView
-            android:id="@+id/lastLoginCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="@dimen/paddingLayout"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lastLoginTxt"  >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <TextView-->
+<!--            android:id="@+id/lastLoginTxt"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/paddingLayout"-->
+<!--            android:padding="@dimen/marginTxt"-->
+<!--            android:text="@string/last_login"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/normal_text"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/departmentCard" />-->
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/lastLoginCard"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:padding="@dimen/paddingLayout"-->
+<!--            app:cardCornerRadius="14dp"-->
+<!--            app:cardElevation="8dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/lastLoginTxt"  >-->
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
 
 
-            <TextView
-                android:id="@+id/lastLoginValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/marginTxt"
-                android:layout_margin="@dimen/paddingLayout"
-                android:text="12/12/2020"
-                android:textColor="@color/dark_gray"
-                android:textDirection="rtl"
-                android:textSize="@dimen/normalTextSize"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+<!--            <TextView-->
+<!--                android:id="@+id/lastLoginValue"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="@dimen/marginTxt"-->
+<!--                android:layout_margin="@dimen/paddingLayout"-->
+<!--                android:text="12/12/2020"-->
+<!--                android:textColor="@color/dark_gray"-->
+<!--                android:textDirection="rtl"-->
+<!--                android:textSize="@dimen/normalTextSize"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

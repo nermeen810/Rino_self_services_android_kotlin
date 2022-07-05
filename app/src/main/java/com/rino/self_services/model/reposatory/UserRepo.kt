@@ -13,6 +13,9 @@ import com.rino.self_services.model.pojo.login.LoginResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
+import com.rino.self_services.model.pojo.login.PermissionResponse
+import com.rino.self_services.model.pojo.login.RefreshTokenResponse
+import com.rino.self_services.model.pojo.profile.ProfileResponse
 import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import java.io.IOException
@@ -29,6 +32,119 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
 
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
+    private suspend fun refreshToken(): Result<RefreshTokenResponse?> {
+        var result: Result<RefreshTokenResponse?> = Result.Loading
+
+        try {
+            val response = apiDataSource.refreshToken("refresh_token",sharedPreference.getRefreshToken(),
+                Constants.client_id)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("refreshToken", "Result $result")
+                sharedPreference.setToken(response.body()?.accessToken!!)
+                sharedPreference.setRefreshToken(response.body()?.refreshToken!!)
+            } else {
+                Log.i("refreshToken", "Error${response.message()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
+                        sharedPreference.logout()
+                        Log.i("refreshToken refresh token:", "Result $result")
+
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                    }
+
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+
+    suspend fun getProfileData(): Result<ProfileResponse?> {
+        var result: Result<ProfileResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.getProfileData("Bearer "+sharedPreference.getToken())
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+                Log.i("getProfileData", "Result $result")
+            } else {
+                Log.i("getProfileData", "Error${response.errorBody()}")
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                    }
+                    404 -> {
+                        Log.e("Error 404", "Not Found")
+                        //  result = Result.Error(Exception("Not Found"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
+                    }
+                    502 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                    }
+                    else -> {
+                        Log.e("Error", "Generic Error")
+                        result = Result.Error(Exception("Error"))
+                    }
+                }
+            }
+
+        } catch (e: IOException) {
+            result = Result.Error(e)
+            Log.e("ModelRepository", "IOException ${e.message}")
+            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+
+        }
+        return result
+    }
+    
     suspend fun login(loginRequest: LoginRequest): Result<LoginResponse?> {
         var result: Result<LoginResponse?> = Result.Loading
         try {

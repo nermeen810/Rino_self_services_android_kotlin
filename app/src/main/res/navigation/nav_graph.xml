@@ -113,6 +113,9 @@
         <action
             android:id="@+id/paymentProcessDetailsFragment_toHomePayment"
             app:destination="@id/paymentProcessesFragment" />
+        <action
+            android:id="@+id/paymentProcessDetailsFragment_paymentArchiveFragment"
+            app:destination="@id/paymentArchiveFragment" />
         <argument
             android:name="nav_to_pp_details"
             app:argType="com.rino.self_services.ui.paymentProcessHome.NavToDetails" />
@@ -163,9 +166,15 @@
         android:name="com.rino.self_services.ui.viewAttatchment.ViewAttatchmentsFragment"
         android:label="fragment_view_attatchments"
         tools:layout="@layout/fragment_view_attatchments" >
+        <action
+            android:id="@+id/action_viewAttatchmentsFragment_to_viewComplaintsFragment"
+            app:destination="@id/viewComplaintsFragment" />
         <argument
-            android:name="back_to_hr_details"
-            app:argType="com.rino.self_services.model.pojo.HRClearanceDetailsRequest" />
+            android:name="from_where"
+            app:argType="string" />
+        <argument
+            android:name="attachments"
+            app:argType="com.rino.self_services.model.pojo.complaints.Attachments[]" />
     </fragment>
     <fragment
         android:id="@+id/PPAttachmentFragment"
@@ -255,7 +264,17 @@
         android:id="@+id/paymentArchiveFragment"
         android:name="com.rino.self_services.ui.paymrntArchive.PaymentArchiveFragment"
         android:label="fragment_payment_archive"
-        tools:layout="@layout/fragment_payment_archive" />
+        tools:layout="@layout/fragment_payment_archive" >
+        <argument
+            android:name="nav_to_pp_details"
+            app:argType="com.rino.self_services.ui.paymentProcessHome.NavToDetails" />
+        <argument
+            android:name="nav_to_see_all_payment"
+            app:argType="com.rino.self_services.ui.paymentProcessHome.NavSeeAll" />
+        <action
+            android:id="@+id/action_paymentArchiveFragment_to_paymentProcessDetailsFragment"
+            app:destination="@id/paymentProcessDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.rino.self_services.ui.myProfile.MyProfileFragment"
@@ -283,6 +302,9 @@
         <action
             android:id="@+id/action_viewComplaintsFragment_to_PPAttachmentFragment"
             app:destination="@id/PPAttachmentFragment" />
+        <action
+            android:id="@+id/action_viewComplaintsFragment_to_viewAttatchmentsFragment"
+            app:destination="@id/viewAttatchmentsFragment" />
     </fragment>
 
 </navigation>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.R
 import com.rino.self_services.model.pojo.HRSeeAllItem
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
 
 class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList: ArrayList<HRSeeAllItem>, private val onItemClicked: (position: Int) -> Unit): RecyclerView.Adapter<HRSeeAllRVAdapter.MyViewHolder>()  {
     fun updateItems(itemList: List<HRSeeAllItem>){
@@ -50,7 +51,7 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemList[position]
         holder.clearanceNumber.text = Constants.convertNumsToArabic(item.id.toString())
-        holder.clearanceDate.text = item.date!!.split("T")[0]
+        holder.clearanceDate.text = item.date!!.split("T")[0].dateToArabic()
         holder.employeeNumber.text = Constants.convertNumsToArabic(item.code?:"")
         holder.employeeName.text = item.employee
         holder.office.text = item.department
@@ -64,8 +65,8 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
             holder.endLabel.visibility = View.VISIBLE
             holder.start.visibility = View.VISIBLE
             holder.end.visibility = View.VISIBLE
-            holder.start.text = item.start!!.split("T")[0]
-            holder.end.text = item.end!!.split("T")[0]
+            holder.start.text = item.start!!.split("T")[0].dateToArabic()
+            holder.end.text = item.end!!.split("T")[0].dateToArabic()
         }else{
             holder.startLabel.visibility = View.GONE
             holder.endLabel.visibility = View.GONE

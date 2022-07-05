@@ -10,22 +10,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rino.self_services.databinding.FragmentViewAttatchmentsBinding
 import com.rino.self_services.model.pojo.Attachment
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.model.pojo.complaints.Attachments
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewAttatchmentsFragment : Fragment() {
     private lateinit var binding: FragmentViewAttatchmentsBinding
     private lateinit var serviceAdapter: AttachmentAdapter
-    private lateinit var servicesList: ArrayList<Attachment>
-    private lateinit var hrClearanceDetailsRequest: HRClearanceDetailsRequest
-
+    private lateinit var servicesList: ArrayList<Attachments>
+    private var from_where = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             servicesList = arrayListOf()
-             val attachment =  arguments?.get("attachment") as Array<Attachment>
-            hrClearanceDetailsRequest =  arguments?.get("back_to_hr_details") as HRClearanceDetailsRequest
+             val attachment =  arguments?.get("attachments") as Array<Attachments>
+                 from_where =  arguments?.get("from_where").toString()
+
 
             for(item in attachment){
                 servicesList.add(item)
@@ -60,10 +61,10 @@ class ViewAttatchmentsFragment : Fragment() {
 
     }
     private fun handleBackButton() {
-//        binding.backbtn.setOnClickListener {
-//            val action =
-//                ViewAttatchmentsFragmentDirections.hrViewAttachmentsToHrClearanceDetails(hrClearanceDetailsRequest)
-//            findNavController().navigate(action)
-//        }
+        binding.backbtn.setOnClickListener {
+            val action =
+                ViewAttatchmentsFragmentDirections.actionViewAttatchmentsFragmentToViewComplaintsFragment(from_where)
+            findNavController().navigate(action)
+        }
     }
 }
