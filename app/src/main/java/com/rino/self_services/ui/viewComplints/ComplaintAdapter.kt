@@ -35,8 +35,14 @@ class ComplaintAdapter (private var complaintsList: ArrayList<ComplaintItemRespo
             holder.binding.departmentValue.text = temp.department
             holder.binding.descriptionValue.text = temp.body
             holder.binding.serviceNumValue.text = temp.id.toString().dateToArabic()
+
             holder.binding.viewAttachment.setOnClickListener{
-           //     viewModel.navToAttachments(temp.attchements)
+                if(temp.attchements.size == 0){
+                    viewModel.setError("لا توجد مرفقات في هذة الشكوى")
+                }
+                else {
+                    viewModel.navToAttachments(temp.attchements)
+                }
             }
         }
 

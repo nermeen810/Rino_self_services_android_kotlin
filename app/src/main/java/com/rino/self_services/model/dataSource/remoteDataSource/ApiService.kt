@@ -129,7 +129,8 @@ interface ApiService {
                                  ,@Part("Body") body:RequestBody
                                  ,@Part Attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>
 
-    @POST("api/complains")
+
+    @GET("api/complains")
     suspend fun getComplaintsList(@Header("Authorization"   ) auth: String):Response<ArrayList<ComplaintItemResponse>>
 
     @GET("api/identity/profile/")

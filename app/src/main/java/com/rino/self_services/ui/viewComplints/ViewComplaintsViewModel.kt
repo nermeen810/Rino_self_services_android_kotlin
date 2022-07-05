@@ -6,8 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rino.self_services.model.pojo.Attachment
-import com.rino.self_services.model.pojo.complaints.Attchements
+import com.rino.self_services.model.pojo.complaints.Attachments
 import com.rino.self_services.model.pojo.complaints.ComplaintItemResponse
 import com.rino.self_services.model.reposatory.ComplaintsRepo
 import com.rino.self_services.utils.Result
@@ -19,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewComplaintsViewModel  @Inject constructor(private val complaintsRepo: ComplaintsRepo) : ViewModel() {
     private var _complaintResponse = MutableLiveData<ArrayList<ComplaintItemResponse>>()
-    private var _navToViewAttachments = MutableLiveData<ArrayList<Attchements>>()
+    private var _navToViewAttachments = MutableLiveData<ArrayList<Attachments>>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
 
@@ -29,14 +28,17 @@ class ViewComplaintsViewModel  @Inject constructor(private val complaintsRepo: C
         get() = _setError
     val complaintResponse: LiveData<ArrayList<ComplaintItemResponse>>
         get() = _complaintResponse
-    val navToViewAttachments: LiveData<ArrayList<Attchements>>
+    val navToViewAttachments: LiveData<ArrayList<Attachments>>
         get() = _navToViewAttachments
 
-    fun navToAttachments(attachments: ArrayList<Attchements>)
+    fun navToAttachments(attachments: ArrayList<Attachments>)
     {
         _navToViewAttachments.value = attachments
     }
-
+    fun setError(error:String)
+    {
+        _setError.value = error
+    }
     fun getComplaintsList(){
         Log.d("getComplaintsList","call")
         _loading.postValue(View.VISIBLE)
