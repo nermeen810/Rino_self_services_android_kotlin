@@ -1,10 +1,12 @@
 package com.rino.self_services.ui.seeAllHr
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -60,6 +62,7 @@ class SeeAllHrClearanceFragment : Fragment() {
                 if (dy > 0) {
                     if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
                         viewModel.pageNumber += 1
+                        binding.clearanceSeeAllProgress.visibility = View.VISIBLE
                         viewModel.getData(period)
                     }
                 }
@@ -100,6 +103,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
 
+                binding.clearanceSeeAllProgress.visibility = View.GONE
 
                 it.let { it1 -> adapter.updateItems(viewModel.arrayList)
                 }

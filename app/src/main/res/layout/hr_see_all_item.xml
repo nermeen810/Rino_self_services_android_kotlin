@@ -265,7 +265,7 @@
                     android:layout_marginTop="@dimen/paddingText"
                     android:layout_marginRight="@dimen/paddingLayout"
 
-                    android:maxWidth="200dp"
+                    android:maxWidth="250dp"
                     android:maxLines="2"
                     android:padding="8dp"
                     android:text="25"
@@ -283,13 +283,12 @@
                     android:id="@+id/vacationStartTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
                     android:text="@string/vacation_start"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/request_typeTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/request_typeValue" />
 
                 <TextView
                     android:id="@+id/vacationStartValue"
