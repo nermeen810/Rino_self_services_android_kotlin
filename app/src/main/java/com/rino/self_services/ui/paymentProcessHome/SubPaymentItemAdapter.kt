@@ -51,10 +51,20 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
         }
+        var meOrOthers = ""
+
+        if(paymentSubList[position].me==true)
+        {
+            meOrOthers ="me"
+        }
+        else{
+            meOrOthers = "others"
+        }
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
+            Log.e("me",paymentSubList[position].me.toString())
             Log.i("id",paymentSubList[position].id.toString()?:"")
-            paymentHomeViewModel.navToServiceDetails(NavToDetails(paymentHomeViewModel.me_or_others,paymentSubList[position].id!!,true))
+            paymentHomeViewModel.navToServiceDetails(NavToDetails(meOrOthers,paymentSubList[position].id!!,true))
 //            paymentSubList[position].id?.let { it1 -> paymentHomeViewModel.navToServiceDetails(it1) }
         }
 

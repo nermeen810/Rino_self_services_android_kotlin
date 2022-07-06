@@ -27,8 +27,9 @@ data class Items (
     @SerializedName("status_by"   ) var statusBy    : String?  = null,
     @SerializedName("action"      ) var action      : Action?  = Action(),
     @SerializedName("current"     ) var current     : Current? = Current(),
-    @SerializedName("amount"      ) var amount      : Double?     = null,
-    @SerializedName("beneficiary" ) var beneficiary : String?  = null
+    @SerializedName("amount"      ) var amount      : Double?  = null,
+    @SerializedName("beneficiary" ) var beneficiary : String?  = null,
+    @SerializedName("me"                ) var me          : Boolean?  = null
 
 )
 

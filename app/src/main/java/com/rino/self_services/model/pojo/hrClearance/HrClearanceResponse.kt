@@ -37,7 +37,8 @@ data class Items (
     @SerializedName("code"        ) var code       : String?  = null,
     @SerializedName("reason"      ) var reason     : String?  = null,
     @SerializedName("entity"      ) var entity     : Int?     = null,
-    @SerializedName("type"        ) var type       : String?  = null
+    @SerializedName("type"        ) var type       : String?  = null,
+    @SerializedName("me"          ) var me           : Boolean?  = null
 
 )
 

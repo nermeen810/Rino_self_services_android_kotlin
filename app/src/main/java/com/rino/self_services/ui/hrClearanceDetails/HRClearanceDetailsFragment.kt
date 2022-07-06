@@ -220,11 +220,6 @@ class HRClearanceDetailsFragment : Fragment() {
                 binding.hrDenay.alpha = 0f
                 binding.hrApprove.alpha = 0f
             }
-
-            if(details.attachment.size==0){
-                binding.viewAttachment.visibility = View.GONE
-            }
-            else {
                 binding.viewAttachment.setOnClickListener {
                     if(viewModel.attachments.size != 0) {
                         val action =
@@ -244,7 +239,7 @@ class HRClearanceDetailsFragment : Fragment() {
                         showMessage("لا توجد مرفقات لهذا الطلب")
                     }
                 }
-            }
+
             if (shouldShowActions){
                 binding.hrApprove.visibility = View.VISIBLE
             }else{

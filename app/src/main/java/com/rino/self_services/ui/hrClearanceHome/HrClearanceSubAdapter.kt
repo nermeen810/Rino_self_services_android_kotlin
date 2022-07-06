@@ -1,6 +1,7 @@
 package com.rino.self_services.ui.hrClearanceHome
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,10 +68,20 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
         }
+        var meOrOthers = ""
+        if(clearanceSubList[position].me == true)
+        {
+            meOrOthers ="me"
+        }
+        else{
+            meOrOthers = "others"
+        }
         //      holder.binding.timeTxt.text         = historyList[position].createdDate?: "00/00/00 00:00".split(" ").toList()[1]
         holder.binding.card.setOnClickListener {
+            Log.e("me",clearanceSubList[position].me.toString())
+
             hrClearanceViewModel.navToServiceDetails(
-                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0,true,hrClearanceViewModel.me_or_others)
+                HRClearanceDetailsRequest(clearanceSubList[position].entity?:-1,clearanceSubList[position].id?:0,true,meOrOthers)
                 )
         }
 
