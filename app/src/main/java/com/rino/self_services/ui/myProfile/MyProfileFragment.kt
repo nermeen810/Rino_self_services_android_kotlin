@@ -64,7 +64,7 @@ class MyProfileFragment : Fragment() {
 
     private fun setupUI(profileData: ProfileResponse?) {
         binding.departmentValue.text =profileData?.departmentArabic
-        binding.phoneNumValue.text = profileData?.phoneNumber.toString().dateToArabic()
+        binding.phoneNumValue.text = profileData?.phoneNumber?:" لا يوجد ".dateToArabic()
         binding.emailValue.text = profileData?.email
         binding.nameTxt.text = profileData?.arabicName
 
