@@ -226,10 +226,23 @@ class HRClearanceDetailsFragment : Fragment() {
             }
             else {
                 binding.viewAttachment.setOnClickListener {
-                    val action =
-                        HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(
-                            NavToAttachment(hrClearanceDetailsRequest.entity,viewModel.attachments.toList().toTypedArray(),false,hrClearanceDetailsRequest.meOrOthers,hrClearanceDetailsRequest.requestID,shouldShowActions),seeAll)
-                    findNavController().navigate(action)
+                    if(viewModel.attachments.size != 0) {
+                        val action =
+                            HRClearanceDetailsFragmentDirections.actionHRClearanceDetailsFragmentToPPAttachmentFragment(
+                                NavToAttachment(
+                                    hrClearanceDetailsRequest.entity,
+                                    viewModel.attachments.toList().toTypedArray(),
+                                    false,
+                                    hrClearanceDetailsRequest.meOrOthers,
+                                    hrClearanceDetailsRequest.requestID,
+                                    shouldShowActions
+                                ), seeAll
+                            )
+                        findNavController().navigate(action)
+                    }
+                    else{
+                        showMessage("لا توجد مرفقات لهذا الطلب")
+                    }
                 }
             }
             if (shouldShowActions){

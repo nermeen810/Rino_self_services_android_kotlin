@@ -34,6 +34,7 @@ class HrClearanceHomeFragment : Fragment() {
     private lateinit var periodTimeList_en: ArrayList<String>
     private lateinit var hrClearanceHomeResponse: HrClearanceResponse
     private var me_or_others = "me"
+    private  var notificationCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +91,7 @@ class HrClearanceHomeFragment : Fragment() {
         viewModel.getNotificationCount.observe(viewLifecycleOwner) {
             it?.let {
                 binding.countTxt.text = it.data.toString()
+                notificationCount = it .data
             }
         }
     }
@@ -181,24 +183,7 @@ class HrClearanceHomeFragment : Fragment() {
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
-//                if(it.equals("No content")||it.equals("Bad Request")) {
-////                    binding.shimmer.stopShimmer()
-////                    binding.shimmer.visibility = View.GONE
-//                    binding.historyRecycle.visibility = View.GONE
-////                    binding.searchHistoryRecycle.visibility = View.GONE
-//                    binding.noDataAnim.visibility = View.VISIBLE
-//                    binding.textNoData.visibility = View.VISIBLE
-//                }
-//                else{
-                Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                        resources.getColor(
-                            R.color.color_orange
-                        )
-                    )
-                    .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
-                    {
-                    }.show()
+                showMessage(it)
             }
         }
     }
@@ -214,10 +199,10 @@ class HrClearanceHomeFragment : Fragment() {
     private fun setUpUI() {
         bottomNavigationSetup()
         binding.notificationBtn.setOnClickListener {
-            navToNotification()
+                navToNotification()
         }
         binding.countTxt.setOnClickListener {
-            navToNotification()
+                navToNotification()
         }
         binding.profileBtn.setOnClickListener {
             navToProfile()
@@ -256,14 +241,34 @@ class HrClearanceHomeFragment : Fragment() {
 
     }
 
+    private fun showMessage(it:String) {
+        Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                resources.getColor(
+                    R.color.color_orange
+                )
+            )
+            .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
+            {
+            }.show()
+    }
+
     private fun navToProfile() {
         val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToProfileFragment("hr")
         findNavController().navigate(action)
     }
 
     private fun navToNotification() {
-        val action = HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToNotificationsFragment("hr")
-        findNavController().navigate(action)
+        if(notificationCount == 0){
+            showMessage("لا توجد اشعارات حتي الان")
+        }
+        else {
+            val action =
+                HrClearanceHomeFragmentDirections.actionHrClearanceHomeFragmentToNotificationsFragment(
+                    "hr"
+                )
+            findNavController().navigate(action)
+        }
     }
 
     private fun bottomNavigationSetup() {
