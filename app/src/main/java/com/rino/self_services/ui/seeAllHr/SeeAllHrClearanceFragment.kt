@@ -29,7 +29,7 @@ class SeeAllHrClearanceFragment : Fragment() {
     private lateinit var period: HRClearanceRequest
     private lateinit var binding: FragmentSeeAllHrClearanceBinding
     private lateinit var v:NavSeeAll
-    private var totalPages = 1
+    private lateinit var layoutManager: LinearLayoutManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,26 +45,29 @@ class SeeAllHrClearanceFragment : Fragment() {
     ): View? {
 
         binding = FragmentSeeAllHrClearanceBinding.inflate(inflater, container, false)
+        layoutManager = LinearLayoutManager(requireContext())
         observeLoading()
         oserveData()
         overseError()
         handleBack()
         adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
-//            Toast.makeText(requireContext(),"index"+it+"size"+viewModel.arrayList.size,Toast.LENGTH_LONG).show()
-            getPressesdItemIndex(it)
+            if (it != null) {
+                getPressesdItemIndex(it)
+            }
         }
 
         binding.hrClearanceSeeAllRv.adapter = adapter
-        binding.hrClearanceSeeAllRv.layoutManager = LinearLayoutManager(this.context)
+        binding.hrClearanceSeeAllRv.layoutManager = layoutManager
         viewModel.getData(period)
         binding.hrClearanceSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
-                        viewModel.pageNumber += 1
-                        binding.clearanceSeeAllProgress.visibility = View.VISIBLE
-                        viewModel.getData(period)
-                    }
+                val  visibleItemCount = layoutManager.childCount
+                val  totalItemCount = layoutManager.itemCount
+                val  pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount && viewModel.loading.value == View.GONE && viewModel.pageNumber < viewModel.totalPages) {
+                    viewModel.pageNumber += 1
+                    viewModel.getData(period)
                 }
             }
         })
@@ -82,19 +85,13 @@ class SeeAllHrClearanceFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-            //       binding.clearanceSeeAllProgress.visibility = it
-                if(it == View.VISIBLE)
-                {
-                    binding.shimmer.startShimmer()
-                    binding.shimmer.visibility = View.VISIBLE
-                    binding.hrClearanceSeeAllRv.visibility = View.GONE
 
+                if(it == View.VISIBLE){
+                    adapter.updateItems(listOf(null))
+                    adapter.notifyItemInserted(viewModel.arrayList.size-1)
                 }
                 else if(it == View.GONE){
-                    binding.shimmer.stopShimmer()
-                    binding.hrClearanceSeeAllRv.visibility = View.VISIBLE
-                    binding.shimmer.visibility = View.GONE
-
+                    viewModel.arrayList.removeIf{ it == null }
                 }
             }
         }
@@ -102,13 +99,16 @@ class SeeAllHrClearanceFragment : Fragment() {
     fun oserveData(){
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
-
-                binding.clearanceSeeAllProgress.visibility = View.GONE
-
-                it.let { it1 -> adapter.updateItems(viewModel.arrayList)
+                it.data.let { it1 -> adapter.updateItems(viewModel.arrayList)
                 }
+
             }
-        }
+            if (it == null){
+                adapter.updateItems(listOf(null))
+                adapter.notifyItemInserted(viewModel.arrayList.size-1)
+            }
+            }
+
     }
     private fun overseError(){
         viewModel.setError.observe(viewLifecycleOwner){

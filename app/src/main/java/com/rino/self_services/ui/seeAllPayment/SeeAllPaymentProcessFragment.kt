@@ -27,8 +27,8 @@ class SeeAllPaymentProcessFragment : Fragment() {
     val viewModel: SeeAllPaymentProcessViewModel by viewModels()
     private lateinit var binding: FragmentSeeAllPaymentProcessBinding
     private lateinit var period:SeeAllRequest
-    private var totalPages = 1
     private lateinit var navSeeAll: NavSeeAll
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,28 +39,34 @@ class SeeAllPaymentProcessFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSeeAllPaymentProcessBinding.inflate(inflater, container, false)
+        layoutManager = LinearLayoutManager(requireContext())
 
         observeLoading()
         obverseError()
         handleBackBotton()
         adapter = SeeAllPaymentProcessRVAdapter(period.currentFutuer,ArrayList()){
-            getPressesdItemIndex(it)
+            if (it != null) {
+                getPressesdItemIndex(it)
+            }
+
         }
 
         binding.paymentProcessSeeAllRv.adapter = adapter
-        binding.paymentProcessSeeAllRv.layoutManager = LinearLayoutManager(this.context)
-
+        binding.paymentProcessSeeAllRv.layoutManager = layoutManager
+        adapter.updateItems(listOf(null))
+        adapter.notifyItemInserted(1)
         viewModel.getData(period)
         observeData()
         binding.paymentProcessSeeAllRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) { //check for scroll down
-                    if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
-                        binding.progressBar.visibility =View.VISIBLE
-                        viewModel.pageNumber += 1
-                        viewModel.getData(period)
-                    }
-                }
+                    val  visibleItemCount = layoutManager.childCount
+                    val  totalItemCount = layoutManager.itemCount
+                    val  pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount && viewModel.loading.value == View.GONE && viewModel.pageNumber < viewModel.totalPages) {
+                            viewModel.pageNumber += 1
+                            viewModel.getData(period)
+                        }
             }
         })
         return binding.root
@@ -75,29 +81,26 @@ class SeeAllPaymentProcessFragment : Fragment() {
     fun observeData(){
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
-                totalPages = it.totalPages
-                binding.progressBar.visibility =View.GONE
                 it.data.let { it1 -> adapter.updateItems(viewModel.seeAllarray)
                 }
+
+            }
+            if (it == null){
+                adapter.updateItems(listOf(null))
+                adapter.notifyItemInserted(viewModel.seeAllarray.size-1)
             }
         }
     }
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-             //   binding.progressBar.visibility = it
-                if(it == View.VISIBLE)
-                {
-                    binding.shimmer.visibility = View.VISIBLE
-                    binding.shimmer.startShimmer()
-                    binding.paymentProcessSeeAllRv.visibility = View.GONE
 
+                if(it == View.VISIBLE){
+                    adapter.updateItems(listOf(null))
+                    adapter.notifyItemInserted(viewModel.seeAllarray.size-1)
                 }
                 else if(it == View.GONE){
-                    binding.shimmer.stopShimmer()
-                    binding.paymentProcessSeeAllRv.visibility = View.VISIBLE
-                    binding.shimmer.visibility = View.GONE
-
+                    viewModel.seeAllarray.removeIf{ it == null }
                 }
             }
         }
@@ -117,7 +120,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
     }
     private fun getPressesdItemIndex(index:Int){
 
-            val id = viewModel.seeAllarray[index].id
+            val id = viewModel.seeAllarray[index]?.id
             var action = SeeAllPaymentProcessFragmentDirections.actionSeeAllPaymentProcessFragmentToPaymentProcessDetailsFragment(
                 NavToDetails(navSeeAll.me_or_others,id!!,true),navSeeAll)
                 findNavController().navigate(action)

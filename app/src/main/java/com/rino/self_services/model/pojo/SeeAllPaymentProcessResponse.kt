@@ -1,7 +1,7 @@
 package com.rino.self_services.model.pojo
 import com.google.gson.annotations.SerializedName
 
-data class SeeAllPaymentProcessResponse(@SerializedName("data") var data:List<Item> ,@SerializedName("total") var totalPages:Int)
+data class SeeAllPaymentProcessResponse(@SerializedName("data") var data:List<Item> ,@SerializedName("total") var totalItems:Int)
 data class Item(@SerializedName("id")var id:Int?,
                 @SerializedName("amount") var amount:Double?
                 , @SerializedName("beneficiary") var beneficiary:String?

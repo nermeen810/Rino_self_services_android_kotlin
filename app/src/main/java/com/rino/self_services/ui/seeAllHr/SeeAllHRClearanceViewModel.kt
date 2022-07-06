@@ -23,7 +23,7 @@ class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearan
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>()
     var pageNumber:Int = 1
-
+    var totalPages = 1
     val loading: LiveData<Int>
         get() = _loading
     val setError: LiveData<String>
@@ -39,6 +39,9 @@ class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearan
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data?.let {
+                            if (arrayList.isEmpty()){
+                                it.total?.let { it1 -> calculatePagesNumber(it1) }
+                            }
                             arrayList.addAll(it.data)
                             _seeAllData.postValue(it)
                         }
@@ -58,6 +61,25 @@ class SeeAllHRClearanceViewModel@Inject constructor(private  val repo: HrClearan
                 }
             }
         }
+    }
+    fun calculatePagesNumber(total:Int){
+        val temp:Float = total.toFloat() / 20
+        val reminder = (temp - temp.toInt())
+        val wholeNumber = temp.toInt()
+        if(wholeNumber < 1 && wholeNumber > 0){
+
+            totalPages = 1
+            Log.d("totalPages",totalPages.toString())
+        }
+        else if (reminder > 0 ){
+
+            totalPages = (total.toDouble() /20.0).toInt()+1
+            Log.d("totalPages",totalPages.toString())
+        }else{
+            Log.d("totalPages",totalPages.toString())
+            totalPages = (total.toDouble() /20.0).toInt()
+        }
+
     }
 
 }

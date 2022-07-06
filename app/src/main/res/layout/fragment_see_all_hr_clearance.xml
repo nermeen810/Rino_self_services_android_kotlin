@@ -34,28 +34,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backbtn"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include layout="@layout/see_all_shimmer_item" />
-                <include layout="@layout/see_all_shimmer_item" />
-
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hr_clearance_see_all_rv"
             android:layout_width="match_parent"
