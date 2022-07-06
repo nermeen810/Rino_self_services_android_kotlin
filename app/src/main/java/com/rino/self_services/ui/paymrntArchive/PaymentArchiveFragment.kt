@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class PaymentArchiveFragment : Fragment() {
     val viewModel: PaymentArchiveViewModel by viewModels()
     private lateinit var binding: FragmentPaymentArchiveBinding
-    private lateinit var paymentMainItemAdapter: AmountChangelogAdapter
+    private lateinit var amountChangelogAdapter: AmountChangelogAdapter
     private  lateinit var navToDetails: NavToDetails
     private  lateinit var seeAll:NavSeeAll
 
@@ -58,9 +58,18 @@ class PaymentArchiveFragment : Fragment() {
         viewModel.getAmountChangelog(navToDetails.id)
         viewModel.amountChangelogResponse.observe(viewLifecycleOwner) {
             it?.let {
-                paymentMainItemAdapter.updateItems(it.data)
+                if(it.data.size == 0)
+                {
+                    binding.noDataLayout.visibility = View.VISIBLE
+                    binding.paymentArchiveRecycle.visibility = View.GONE
+
+                }else {
+                    binding.noDataLayout.visibility = View.GONE
+                    binding.paymentArchiveRecycle.visibility = View.VISIBLE
+                    amountChangelogAdapter.updateItems(it.data)
+
+                }
             }
-            binding.paymentArchiveRecycle.visibility = View.VISIBLE
         }
     }
 
@@ -89,11 +98,11 @@ class PaymentArchiveFragment : Fragment() {
     }
     private fun setupUI() {
         binding.paymentArchiveRecycle.visibility = View.GONE
-        paymentMainItemAdapter = AmountChangelogAdapter(arrayListOf())
+        amountChangelogAdapter = AmountChangelogAdapter(arrayListOf())
         binding.paymentArchiveRecycle.visibility = View.VISIBLE
         binding.paymentArchiveRecycle.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = paymentMainItemAdapter
+            adapter = amountChangelogAdapter
         }
     }
     private fun handleBack() {

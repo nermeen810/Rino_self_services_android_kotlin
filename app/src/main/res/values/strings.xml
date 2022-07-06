@@ -123,5 +123,6 @@
     <string name="NoMessage">الغاء</string>
     <string name="yesMessage">تأكيد</string>
     <string name="increase_amount">"هل تريد زيادة قيمة المبلغ من "</string>
+    <string name="empty_data">لا توجد بيانات</string>
 
 </resources>
