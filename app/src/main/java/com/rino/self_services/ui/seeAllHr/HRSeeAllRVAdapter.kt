@@ -35,6 +35,7 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
         var office:TextView = view.findViewById(R.id.departmentValue)
         var action:TextView = view.findViewById(R.id.request_statusValue)
         var forward:TextView = view.findViewById(R.id.request_toValue)
+        var forwardTxt:TextView = view.findViewById(R.id.request_toTxt)
         var type:TextView = view.findViewById(R.id.request_typeValue)
         var startLabel:TextView = view.findViewById(R.id.vacationStartTxt)
         var endLabel:TextView = view.findViewById(R.id.vacationEndTxt)
@@ -64,10 +65,10 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
         }
     }
     override fun getItemViewType(position: Int): Int {
-        if (itemList[position] == null){
-            return  loadingType
+        return if(itemList[position] == null){
+            loadingType
         }else{
-            return  itemType
+            itemType
         }
     }
 
@@ -80,7 +81,13 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
             holder.employeeName.text = item.employee
             holder.office.text = item.department
             holder.action.text = item.current?.name
-            holder.forward.text = item.current?.users?.get(0)
+            if(item.current?.users?.size ==0){
+                holder.forward.visibility = View.GONE
+                holder.forwardTxt.visibility = View.GONE
+            }
+            else {
+                holder.forward.text = item.current?.users?.get(0)
+            }
             holder.type.text = item.type
 
             Log.e("startDate",(item.start != null).toString() +",,"+(currentFeatuer != "me").toString())

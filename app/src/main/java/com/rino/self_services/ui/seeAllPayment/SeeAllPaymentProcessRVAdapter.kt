@@ -34,6 +34,7 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
         var paymentMethod: TextView = view.findViewById(R.id.paymentMethodValue)
         var orderState: TextView = view.findViewById(R.id.request_statusValue)
         var forwerd: TextView = view.findViewById(R.id.request_toValue)
+
         var forwerdLabel:TextView = view.findViewById(R.id.request_toTxt)
         init {
             itemView.setOnClickListener(this)
@@ -75,7 +76,13 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
             holder.orderState.text = item.current.name
             holder.side.text = item.department
             holder.paymentMethod.text = "كاش"
-            holder.forwerd.text = item.current.users[0]
+            if(item.current?.users?.size ==0){
+                holder.forwerd.visibility = View.GONE
+                holder.forwerdLabel.visibility = View.GONE
+            }
+            else {
+                holder.forwerd.text = item.current?.users?.get(0)
+            }
             if (currentFeatuer == "me"){
                 holder.forwerdLabel.visibility = View.GONE
                 holder.forwerd.visibility = View.GONE

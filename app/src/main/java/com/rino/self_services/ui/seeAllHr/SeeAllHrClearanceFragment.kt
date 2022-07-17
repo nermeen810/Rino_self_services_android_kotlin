@@ -103,10 +103,10 @@ class SeeAllHrClearanceFragment : Fragment() {
                 }
 
             }
-            if (it == null){
-                adapter.updateItems(listOf(null))
-                adapter.notifyItemInserted(viewModel.arrayList.size-1)
-            }
+//            if (it == null){
+//                adapter.updateItems(listOf(null))
+//                adapter.notifyItemInserted(viewModel.arrayList.size-1)
+//            }
             }
 
     }

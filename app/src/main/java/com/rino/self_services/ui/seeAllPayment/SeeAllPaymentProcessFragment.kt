@@ -53,7 +53,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
 
         binding.paymentProcessSeeAllRv.adapter = adapter
         binding.paymentProcessSeeAllRv.layoutManager = layoutManager
-        adapter.updateItems(listOf(null))
+        //adapter.updateItems(listOf(null))
         adapter.notifyItemInserted(1)
         viewModel.getData(period)
         observeData()
@@ -85,10 +85,10 @@ class SeeAllPaymentProcessFragment : Fragment() {
                 }
 
             }
-            if (it == null){
-                adapter.updateItems(listOf(null))
-                adapter.notifyItemInserted(viewModel.seeAllarray.size-1)
-            }
+//            if (it == null){
+//                adapter.updateItems(listOf(null))
+//                adapter.notifyItemInserted(viewModel.seeAllarray.size-1)
+//            }
         }
     }
     private fun observeLoading() {

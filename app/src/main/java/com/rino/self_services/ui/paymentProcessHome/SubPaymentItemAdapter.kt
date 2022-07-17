@@ -51,6 +51,13 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
         }
+        if(paymentSubList[position].current?.users?.size ==0){
+            holder.binding.requestToValue.visibility = View.GONE
+            holder.binding.requestToTxt.visibility = View.GONE
+        }
+        else {
+            holder.binding.requestToValue.text = paymentSubList[position].current?.users?.get(0)
+        }
         var meOrOthers = ""
 
         if(paymentSubList[position].me==true)

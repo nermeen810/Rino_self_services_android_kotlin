@@ -68,7 +68,15 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
         }
+        if(clearanceSubList[position].current?.users?.size ==0){
+            holder.binding.requestToValue.visibility = View.GONE
+            holder.binding.requestToTxt.visibility = View.GONE
+        }
+        else {
+            holder.binding.requestToValue.text = clearanceSubList[position].current?.users?.get(0)
+        }
         var meOrOthers = ""
+
         if(clearanceSubList[position].me == true)
         {
             meOrOthers ="me"
