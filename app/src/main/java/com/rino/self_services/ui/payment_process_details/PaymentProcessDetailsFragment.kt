@@ -78,9 +78,24 @@ class PaymentProcessDetailsFragment : Fragment() {
             navToPaymentArchive()
         }
         binding.viewPpAttachments.setOnClickListener {
-
-            var action = PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(NavToAttachment(null,viewModel.attachments.toList().toTypedArray(),true,navToDetails.me_or_others,navToDetails.id,shouldShowActions),seeAll)
+        if(viewModel.attachments.size != 0) {
+            var action =
+                PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(
+                    NavToAttachment(
+                        null,
+                        viewModel.attachments.toList().toTypedArray(),
+                        true,
+                        navToDetails.me_or_others,
+                        navToDetails.id,
+                        shouldShowActions
+                    ),
+                    seeAll
+                )
             findNavController().navigate(action)
+        }
+        else{
+            showMessage("لا توجد مرفقات لهذا الطلب")
+        }
         }
         viewModel.setToTrue.observe(viewLifecycleOwner){
             if (it){

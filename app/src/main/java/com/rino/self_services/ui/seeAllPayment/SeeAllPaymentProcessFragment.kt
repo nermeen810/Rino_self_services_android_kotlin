@@ -56,6 +56,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) { //check for scroll down
                     if (viewModel.pageNumber < totalPages && viewModel.loading.value == View.GONE){
+                        binding.progressBar.visibility =View.VISIBLE
                         viewModel.pageNumber += 1
                         viewModel.getData(period)
                     }
@@ -75,6 +76,7 @@ class SeeAllPaymentProcessFragment : Fragment() {
         viewModel.seeAllPaymentProcessData.observe(viewLifecycleOwner){
             it?.let {
                 totalPages = it.totalPages
+                binding.progressBar.visibility =View.GONE
                 it.data.let { it1 -> adapter.updateItems(viewModel.seeAllarray)
                 }
             }

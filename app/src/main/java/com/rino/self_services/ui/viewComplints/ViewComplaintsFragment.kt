@@ -73,10 +73,19 @@ class ViewComplaintsFragment : Fragment() {
         viewModel.getComplaintsList()
         viewModel.complaintResponse.observe(viewLifecycleOwner) {
             it?.let {
-                paymentMainItemAdapter.updateItems(it)
-                paymentList = it
+                if(it.size == 0)
+                {
+                    binding.noDataLayout.visibility = View.VISIBLE
+                    binding.complaintsRecycle.visibility = View.GONE
+
+                }else {
+                    binding.noDataLayout.visibility = View.GONE
+                    binding.complaintsRecycle.visibility = View.VISIBLE
+                    paymentMainItemAdapter.updateItems(it)
+                    paymentList = it
+
+                }
             }
-            binding.complaintsRecycle.visibility = View.VISIBLE
         }
     }
 

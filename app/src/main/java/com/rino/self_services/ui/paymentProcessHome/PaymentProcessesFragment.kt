@@ -35,6 +35,7 @@ class PaymentProcessesFragment : Fragment() {
     private lateinit var periodTimeList_en: ArrayList<String>
     private lateinit var paymentHomeResponse: PaymentHomeResponse
     private var me_or_others = "me"
+    private var notificationCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,26 +194,21 @@ class PaymentProcessesFragment : Fragment() {
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
-//                if(it.equals("No content")||it.equals("Bad Request")) {
-////                    binding.shimmer.stopShimmer()
-////                    binding.shimmer.visibility = View.GONE
-//                    binding.historyRecycle.visibility = View.GONE
-////                    binding.searchHistoryRecycle.visibility = View.GONE
-//                    binding.noDataAnim.visibility = View.VISIBLE
-//                    binding.textNoData.visibility = View.VISIBLE
-//                }
-//                else{
-                    Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
-                        .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                            resources.getColor(
-                                R.color.color_orange
-                            )
-                        )
-                        .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
-                        {
-                        }.show()
+              showMessage(it)
             }
         }
+    }
+
+    private fun showMessage(it: String) {
+        Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                resources.getColor(
+                    R.color.color_orange
+                )
+            )
+            .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
+            {
+            }.show()
     }
 
     override fun onResume() {
@@ -226,10 +222,10 @@ class PaymentProcessesFragment : Fragment() {
     private fun setUpUI() {
         bottomNavigationSetup()
         binding.countTxt.setOnClickListener {
-            navToNotification()
+                navToNotification()
         }
         binding.notificationBtn.setOnClickListener {
-            navToNotification()
+                navToNotification()
         }
         binding.profileBtn.setOnClickListener {
             navToProfile()
@@ -274,8 +270,16 @@ class PaymentProcessesFragment : Fragment() {
     }
 
     private fun navToNotification() {
-        val action = PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToNotificationsFragment("payment")
-        findNavController().navigate(action)
+        if(notificationCount == 0){
+            showMessage("لا توجد اشعارات حتي الان")
+        }
+        else {
+            val action =
+                PaymentProcessesFragmentDirections.actionPaymentProcessesFragmentToNotificationsFragment(
+                    "payment"
+                )
+            findNavController().navigate(action)
+        }
     }
 
     private fun bottomNavigationSetup() {
