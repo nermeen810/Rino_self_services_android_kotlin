@@ -33,12 +33,12 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
     private val sharedPreference: Preference = PreferenceDataSource(preference)
 
     private  var _seeAllData = MutableLiveData<SeeAllPaymentProcessResponse>()
-//    private  var seeAllarray = MutableLiveData<Item>()
-    var seeAllarray = ArrayList<Item>()
+
+    var seeAllarray = ArrayList<Item?>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>()
      var pageNumber:Long = 1
-
+    var totalPages = 1
     val loading: LiveData<Int>
         get() = _loading
     val setError: LiveData<String>
@@ -55,6 +55,9 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
                     _loading.postValue(View.GONE)
                     withContext(Dispatchers.Main) {
                         result.data?.let {
+                            if (seeAllarray.isEmpty()){
+                                calculatePagesNumber(it.totalItems)
+                            }
                             _seeAllData.postValue(it)
                             seeAllarray.addAll(it.data)
                         }
@@ -74,5 +77,24 @@ class SeeAllPaymentProcessViewModel @Inject constructor(private  val repo: Payme
                 }
             }
         }
+    }
+    fun calculatePagesNumber(total:Int){
+        val temp:Float = total.toFloat() / 20
+        val reminder = (temp - temp.toInt())
+                val wholeNumber = temp.toInt()
+                if(wholeNumber < 1 && wholeNumber > 0){
+
+                    totalPages = 1
+                    Log.d("totalPages",totalPages.toString())
+                }
+                else if (reminder > 0 ){
+
+                    totalPages = (total.toDouble() /20.0).toInt()+1
+                    Log.d("totalPages",totalPages.toString())
+                }else{
+                    Log.d("totalPages",totalPages.toString())
+                    totalPages = (total.toDouble() /20.0).toInt()
+                }
+
     }
 }
