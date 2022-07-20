@@ -109,9 +109,15 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
                 is Result.Success -> {
                     // _loading.postValue(View.GONE)
                     Log.i("searchHistoryDataByService:", "${result.data}")
-                    _getSearchHistoryData.postValue(result.data)
                     _loading.postValue(View.GONE)
 
+                    if(result.data?.data?.size==0)
+                    {
+                        _noData.postValue(true)
+                    }
+                    else {
+                        _getSearchHistoryData.postValue(result.data)
+                    }
                 }
                 is Result.Error -> {
                     Log.e("searchHistoryDataByService:", "${result.exception.message}")

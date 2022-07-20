@@ -11,8 +11,8 @@ data class AmountChangelogResponse(
 data class Data (
     @SerializedName("id"             ) var id             : Int?    = null,
     @SerializedName("requestId"      ) var requestId      : Int?    = null,
-    @SerializedName("oldAmount"      ) var oldAmount      : Int?    = null,
-    @SerializedName("newAmount"      ) var newAmount      : Int?    = null,
+    @SerializedName("oldAmount"      ) var oldAmount      : Int,
+    @SerializedName("newAmount"      ) var newAmount      : Int,
     @SerializedName("createdAt"      ) var createdAt      : String? = null,
     @SerializedName("employeeEmail"  ) var employeeEmail  : String? = null,
     @SerializedName("employeeName"   ) var employeeName   : String? = null,

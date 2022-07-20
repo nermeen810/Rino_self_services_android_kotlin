@@ -28,6 +28,13 @@ fun String.dateToArabic(): String {
         .replace("9", "٩").replace("0", "٠").replace("-","/")
         .replace("AM", "ص").replace("PM", "م"))
 }
+fun String.numToArabic(): String {
+    return (this.replace("1", "١").replace("2", "٢")
+        .replace("3", "٣").replace("4", "٤")
+        .replace("5", "٥").replace("6", "٦")
+        .replace("7", "٧").replace("8", "٨")
+        .replace("9", "٩").replace("0", "٠"))
+}
 fun String.numToEnglish(): String {
     return (this.replace("١", "1").replace("٢", "2")
         .replace("٣", "3").replace("٤", "4")
