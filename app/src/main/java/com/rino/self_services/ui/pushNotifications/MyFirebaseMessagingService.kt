@@ -1,4 +1,4 @@
-package com.rino.self_services.ui.pushNotifaqction
+package com.rino.self_services.ui.pushNotifications
 
 import android.app.Notification
 import android.app.NotificationChannel
