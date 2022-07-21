@@ -28,6 +28,7 @@ import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 
@@ -103,7 +104,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 result = Result.Success(response.body())
                 Log.i("ModelRepository", "Result $result")
             } else {
-                Log.i("ModelRepository", "Error${response.errorBody()}")
+                Log.e("status code ", "Error${response.code()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
@@ -153,8 +154,8 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
 
         } catch (e: IOException) {
             result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            Log.e("ModelRepository", " ${e.message}")
+            Log.e("ModelRepository", " ${e.javaClass}")
 
         }
         return result
@@ -164,7 +165,8 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
     suspend fun searchRequest(searchTxt:String): Result<SearchResponse?> {
         var result: Result<SearchResponse?> = Result.Loading
         try {
-            val response = apiDataSource.searchRequest("Bearer "+sharedPreference.getToken(),searchTxt)
+            val response =
+                apiDataSource.searchRequest("Bearer " + sharedPreference.getToken(), searchTxt)
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
                 Log.i("searchRequest", "Result $result")
@@ -179,7 +181,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         Log.e("Error 404", "Not Found")
                         result = Result.Error(Exception("Not Found"))
                     }
-                    401 ->{
+                    401 -> {
                         Log.e("Error 401", "Not Auth please, logout and login again")
                         if (sharedPreference.isLogin()) {
                             Log.i(
@@ -187,16 +189,17 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
                             val res = refreshToken()
-                            when(res) {
+                            when (res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result =
+                                        Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result =
+                                        Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             result =
                                 Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
@@ -218,11 +221,15 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             }
 
         } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
-
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -268,7 +275,15 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 }
             }
         }catch(e: IOException) {
-            result = Result.Error(e)
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -313,7 +328,16 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 }
             }
         }catch(e: IOException) {
-            result = Result.Error(e)}
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
+        }
         return result
     }
 

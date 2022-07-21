@@ -92,7 +92,7 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
                                  , department:String
                                  , officer:String
                                  , body:String
-                                 , attachments: List<MultipartBody.Part>?):Response<ComplaintResponse>{
+                                 , attachments: List<MultipartBody.Part>?):Response<ComplaintResponse?>{
         val departmentBody: RequestBody = department.toRequestBody("text/plain".toMediaTypeOrNull())
         val officerBody: RequestBody = officer.toRequestBody("text/plain".toMediaTypeOrNull())
         val bodyBody: RequestBody = body.toRequestBody("text/plain".toMediaTypeOrNull())
