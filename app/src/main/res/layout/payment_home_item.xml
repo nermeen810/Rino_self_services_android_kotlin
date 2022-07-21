@@ -55,7 +55,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,8 +69,7 @@
                 android:textSize="@dimen/normal_text"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/periodTxt"
-                app:layout_constraintEnd_toStartOf="@+id/periodTxt"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/periodTxt"
                 app:layout_constraintTop_toTopOf="@+id/periodTxt" />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -80,13 +80,13 @@ class HRSeeAllRVAdapter(private var currentFeatuer:String, private var itemList:
             holder.employeeNumber.text = Constants.convertNumsToArabic(item.code?:"")
             holder.employeeName.text = item.employee
             holder.office.text = item.department
-            holder.action.text = item.current?.name
-            if(item.current?.users?.size ==0){
+            holder.action.text = item.current.name
+            if(item.current.users.isEmpty()){
                 holder.forward.visibility = View.GONE
                 holder.forwardTxt.visibility = View.GONE
             }
             else {
-                holder.forward.text = item.current?.users?.get(0)
+                holder.forward.text = item.current.users.get(0)
             }
             holder.type.text = item.type
 

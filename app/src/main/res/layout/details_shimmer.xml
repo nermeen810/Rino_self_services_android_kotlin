@@ -20,8 +20,8 @@
             android:textColor="@color/brown"
             android:textSize="@dimen/headerTextSize"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -41,8 +41,8 @@
             android:id="@+id/cardView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/clearance_stepper"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/clearance_stepper"
             app:layout_constraintTop_toBottomOf="@+id/serviceTitle"
             >
 
@@ -98,9 +98,8 @@
                     android:layout_marginTop="10dp"
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
-                    app:layout_constraintEnd_toEndOf="@+id/textView20"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView20"
+                    app:layout_constraintRight_toRightOf="@+id/textView20"
+                    app:layout_constraintLeft_toLeftOf="@+id/textView20"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
                 <View
@@ -109,8 +108,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clearance_details_date" />
 
                 <TextView
@@ -131,7 +130,7 @@
                     android:id="@+id/hr_d_status"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
+                    android:layout_marginRight="28dp"
                     android:background="@drawable/orange_rect"
                     android:padding="@dimen/paddingText"
 
@@ -161,7 +160,7 @@
                     android:maxWidth="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
 
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView27" />
@@ -172,8 +171,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clearance_description" />
 
                 <TextView
@@ -197,7 +196,7 @@
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
@@ -220,7 +219,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     app:layout_constraintRight_toRightOf="parent"
@@ -247,7 +246,7 @@
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -257,8 +256,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/hr_d_department" />
 
                 <TextView
@@ -278,11 +277,11 @@
                     android:id="@+id/hr_fowrwerd_to"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
+                    android:layout_marginRight="28dp"
                     android:background="@drawable/orange_rect"
                     android:padding="5dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView39"
-                    app:layout_constraintEnd_toStartOf="@+id/textView39"
+                    app:layout_constraintRight_toLeftOf="@+id/textView39"
                     app:layout_constraintTop_toTopOf="@+id/textView39" />
 
                 <View
@@ -291,8 +290,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
                 <TextView
@@ -316,7 +315,7 @@
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
@@ -327,7 +326,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/divider10"
-                    app:layout_constraintEnd_toStartOf="@+id/textView35"
+                    app:layout_constraintRight_toLeftOf="@+id/textView35"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider9" />
@@ -339,7 +338,7 @@
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -352,7 +351,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
-                    android:layout_marginEnd="28dp"
+                    android:layout_marginRight="28dp"
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -366,8 +365,8 @@
                     android:padding="@dimen/paddingText"
                     android:background="@color/shimmer_color"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/hr_l_start" />
 
                 <TextView

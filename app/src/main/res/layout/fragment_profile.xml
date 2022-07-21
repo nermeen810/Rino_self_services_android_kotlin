@@ -13,13 +13,13 @@
         android:layout_margin="@dimen/paddingLayout"
         android:src="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
@@ -57,7 +57,7 @@
             android:layout_margin="@dimen/paddingLayout"
             android:src="@drawable/account"
             app:layout_constraintBottom_toBottomOf="@+id/editProfile_txt"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editProfile_txt" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:textDirection="rtl"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/editProfile_btn"
+                app:layout_constraintRight_toLeftOf="@+id/editProfile_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -92,7 +92,7 @@
         android:id="@+id/complaintsCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
@@ -120,7 +120,7 @@
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/complaints_btn"
+                app:layout_constraintRight_toLeftOf="@+id/complaints_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -131,7 +131,7 @@
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/complaints"
                 app:layout_constraintBottom_toBottomOf="@+id/complaints_txt"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/complaints_txt" />
 
             <!--                    <View-->
@@ -175,7 +175,7 @@
                 android:textDirection="rtl"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/logout_btn"
+                app:layout_constraintRight_toLeftOf="@+id/logout_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -186,7 +186,7 @@
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/logout"
                 app:layout_constraintBottom_toBottomOf="@+id/logoutTxt"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/logoutTxt" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

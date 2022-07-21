@@ -38,7 +38,7 @@ class NotificationsFragment : Fragment() {
     private fun init() {
         viewModel.getAllNotification()
         servicesList = arrayListOf()
-        serviceAdapter = NotificationAdapter(arrayListOf(),viewModel)
+        serviceAdapter = NotificationAdapter(requireContext(),arrayListOf(),viewModel)
         setUpUI()
         observeAllNotification()
         observeSetNotificationAsRead()
@@ -48,9 +48,9 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun observeSetNotificationAsRead() {
-        viewModel.setNotificationASRead.observe(viewLifecycleOwner) {
+        viewModel.readNotificationPosition.observe(viewLifecycleOwner) {
             it?.let {
-
+                serviceAdapter.setNotificationAsRead(it)
             }
         }
     }

@@ -71,11 +71,18 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.approve.visibility = View.GONE
             binding.deny.visibility = View.GONE
         }
-        binding.updateAmountBtn.setOnClickListener {
-            viewDailoge()
+
+        if(navToDetails.me_or_others == "others") {
+            binding.amountChangelogBtn.visibility = View.GONE
+            binding.updateAmountBtn.visibility = View.GONE
         }
-        binding.amountChangelogBtn.setOnClickListener {
-            navToPaymentArchive()
+        else {
+            binding.amountChangelogBtn.setOnClickListener {
+                navToPaymentArchive()
+            }
+            binding.updateAmountBtn.setOnClickListener {
+                viewDailoge()
+            }
         }
         binding.viewPpAttachments.setOnClickListener {
         if(viewModel.attachments.size != 0) {
@@ -163,7 +170,7 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun observePermission() {
         viewModel.getPermission.observe(viewLifecycleOwner){
             it.let{
-                if(!it!!.isGM) {
+                if(!it?.isGM!!) {
                     binding.amountChangelogBtn.visibility = View.GONE
                 }
             }
@@ -184,14 +191,16 @@ class PaymentProcessDetailsFragment : Fragment() {
             val newAmount = binding.paymentProcessDetailsAmount.text.toString().replace(" ر.س ","").numToEnglish().toDouble()
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle(R.string.app_name)
-
-            if (newAmount-oldAmount>=0){
-                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic() )
+            if (newAmount-oldAmount==0.0){
+                builder.setMessage("لا يوجد تغيير فى المبلغ " )
+            }
+            else if (newAmount-oldAmount>=0){
+                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
             }
             else if(newAmount-oldAmount<0){
-                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic() )
+                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
+                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
 
             }
             else{
@@ -302,6 +311,14 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.orderSidePayment.text = details?.department
             binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
             binding.approve.text = details?.current?.name
+            if(details?.current?.users?.size !=0 && details?.current?.users!= null) {
+                binding.ppForwardToValue.text = details?.current?.users?.get(0)
+            }
+            else {
+                binding.ppForwardToValue.visibility = View.GONE
+                binding.ppForwardToTxt.visibility = View.GONE
+
+            }
             binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
 
             if(details?.status=="جديد"){

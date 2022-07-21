@@ -68,8 +68,8 @@
                     android:background="@color/gray"
                     android:layout_marginTop="@dimen/paddingLayout"
                     app:layout_constraintTop_toBottomOf="@id/serviceNumTxt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent" />
 
                 <TextView
                     android:id="@+id/departmentTxt"
@@ -89,7 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingText"
-                    android:layout_marginRight="@dimen/paddingLayout"
 
                     android:maxWidth="150dp"
                     android:maxLines="2"
@@ -100,8 +99,7 @@
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/departmentTxt"
-                    app:layout_constraintEnd_toStartOf="@+id/serviceNumTxt"
-                    app:layout_constraintRight_toLeftOf="@+id/departmentTxt"
+                    app:layout_constraintRight_toRightOf="@+id/serviceNumValue"
                     app:layout_constraintTop_toTopOf="@+id/departmentTxt" />
 
                 <TextView
@@ -129,8 +127,7 @@
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/adminTxt"
-                    app:layout_constraintEnd_toEndOf="@+id/departmentValue"
-                    app:layout_constraintRight_toLeftOf="@+id/adminTxt"
+                    app:layout_constraintRight_toRightOf="@+id/departmentValue"
                     app:layout_constraintTop_toTopOf="@+id/adminTxt" />
 
                 <TextView
@@ -158,8 +155,7 @@
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/descriptionTxt"
-                    app:layout_constraintEnd_toEndOf="@+id/adminValue"
-                    app:layout_constraintRight_toLeftOf="@+id/descriptionTxt"
+                    app:layout_constraintRight_toRightOf="@+id/adminValue"
                     app:layout_constraintTop_toTopOf="@+id/descriptionTxt" />
 
                 <View
@@ -169,8 +165,8 @@
                     android:layout_marginTop="@dimen/paddingLayout"
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@id/descriptionTxt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/view_attachment"
                     android:layout_width="match_parent"
@@ -181,8 +177,8 @@
                     android:background="@drawable/orange_rect"
                     android:text="@string/view_attachment"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

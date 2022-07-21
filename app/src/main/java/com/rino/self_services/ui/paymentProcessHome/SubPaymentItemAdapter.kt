@@ -44,8 +44,13 @@ class SubPaymentItemAdapter (private var paymentSubList: ArrayList<Items>,
         holder.binding.paymentMethodValue.text     = context.getText(R.string.cash)
         holder.binding.requestStatusValue.text     = paymentSubList[position].status?:""
         if(paymentHomeViewModel.me_or_others=="others") {
-            holder.binding.requestToValue.text = paymentSubList[position].current?.users?.get(0)
-        }
+            if (paymentSubList[position].current?.users?.size  == 0) {
+                holder.binding.requestToValue.visibility = View.GONE
+                holder.binding.requestToTxt.visibility = View.GONE
+            } else {
+                holder.binding.requestToValue.text = paymentSubList[position].current?.users?.get(0)
+            }
+                }
         else if(paymentHomeViewModel.me_or_others=="me")
         {
             holder.binding.requestToValue.visibility = View.GONE

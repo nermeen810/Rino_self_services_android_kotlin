@@ -1,6 +1,6 @@
 package com.rino.self_services.ui.notifications
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.rino.self_services.databinding.NotificationItemBinding
 import com.rino.self_services.model.pojo.notifications.Data
 
 
-class NotificationAdapter (private var notificationList: ArrayList<Data>,private  var viewModel: NotificationViewModel) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter (private var context: Context,private var notificationList: ArrayList<Data>,private  var viewModel: NotificationViewModel) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,15 +44,17 @@ class NotificationAdapter (private var notificationList: ArrayList<Data>,private
          holder.binding.card.setOnClickListener{
 
              if(notificationList[position].isread == false){
-                 holder.binding.notificationIsReadImg.setImageResource(read_msg)
-                 viewModel.setNotificationAsRead(notificationList[position].id?:-1)
+         //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
+                 viewModel.setNotificationAsRead(notificationList[position].id?:-1,position)
              }
 
           }
 
     }
-
-
+     fun setNotificationAsRead(position:Int) {
+        notificationList[position].isread = true
+        notifyDataSetChanged()
+    }
 
     fun updateItems(newList: List<Data>) {
         notificationList.clear()

@@ -35,7 +35,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,8 +49,8 @@
                 android:padding="@dimen/paddingLayout"
                 android:layout_margin="@dimen/paddingLayout"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/periodTxt">
 
 
@@ -96,8 +95,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/paddingLayout"
                         android:background="@color/gray"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/serviceNumTxt" />
 
                     <TextView
@@ -118,7 +117,6 @@
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/paddingText"
-                        android:layout_marginRight="@dimen/paddingLayout"
                         android:background="@color/shimmer_color"
                         android:maxWidth="150dp"
                         android:maxLines="2"
@@ -129,8 +127,7 @@
                         android:textSize="@dimen/normalTextSize"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/amountTxt"
-                        app:layout_constraintEnd_toStartOf="@+id/serviceNumTxt"
-                        app:layout_constraintRight_toLeftOf="@+id/amountTxt"
+                        app:layout_constraintRight_toRightOf="@+id/serviceNumValue"
                         app:layout_constraintTop_toTopOf="@+id/amountTxt" />
 
                     <TextView
@@ -158,8 +155,7 @@
                         android:textSize="@dimen/normalTextSize"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/agencyTxt"
-                        app:layout_constraintEnd_toEndOf="@+id/amountValue"
-                        app:layout_constraintRight_toLeftOf="@+id/agencyTxt"
+                        app:layout_constraintRight_toRightOf="@+id/amountValue"
                         app:layout_constraintTop_toTopOf="@+id/agencyTxt" />
 
                     <TextView
@@ -186,8 +182,7 @@
                         android:textSize="@dimen/normalTextSize"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/paymentMethodTxt"
-                        app:layout_constraintEnd_toEndOf="@+id/agencyValue"
-                        app:layout_constraintRight_toLeftOf="@+id/paymentMethodTxt"
+                        app:layout_constraintRight_toRightOf="@+id/agencyValue"
                         app:layout_constraintTop_toTopOf="@+id/paymentMethodTxt" />
 
                     <View
@@ -196,8 +191,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/paddingLayout"
                         android:background="@color/gray"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/paymentMethodTxt" />
 
                     <TextView
@@ -227,8 +222,7 @@
                         android:textSize="@dimen/normalTextSize"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/request_statusTxt"
-                        app:layout_constraintEnd_toEndOf="@+id/paymentMethodValue"
-                        app:layout_constraintRight_toLeftOf="@+id/request_statusTxt"
+                        app:layout_constraintRight_toRightOf="@+id/paymentMethodValue"
                         app:layout_constraintTop_toTopOf="@+id/request_statusTxt" />
 
                     <TextView
@@ -258,8 +252,7 @@
                         android:textSize="@dimen/normalTextSize"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/request_toTxt"
-                        app:layout_constraintEnd_toEndOf="@+id/request_statusValue"
-                        app:layout_constraintRight_toLeftOf="@+id/request_toTxt"
+                        app:layout_constraintRight_toRightOf="@+id/request_statusValue"
                         app:layout_constraintTop_toTopOf="@+id/request_toTxt" />
 
 

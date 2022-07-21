@@ -13,7 +13,7 @@
         android:layout_margin="@dimen/paddingLayout"
         android:src="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
 
@@ -50,8 +50,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingLayout"
-        android:layout_marginEnd="@dimen/paddingLayout"
+        android:layout_marginLeft="@dimen/paddingLayout"
+        android:layout_marginRight="@dimen/paddingLayout"
         android:layoutDirection="rtl"
         android:textDirection="rtl"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -90,13 +90,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/paddingLayout"
-        android:layout_marginEnd="@dimen/paddingLayout"
+        android:layout_marginLeft="@dimen/paddingLayout"
+        android:layout_marginRight="@dimen/paddingLayout"
         android:layoutDirection="rtl"
         android:textDirection="rtl"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/administrator_txt">
 
         <EditText
@@ -132,15 +132,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/paddingLayout"
+        android:layout_marginLeft="@dimen/paddingLayout"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="@dimen/paddingLayout"
+        android:layout_marginRight="@dimen/paddingLayout"
         android:layoutDirection="rtl"
         android:textDirection="rtl"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes_txt">
 
         <EditText
@@ -161,7 +161,7 @@
             android:padding="@dimen/paddingText"
             android:text="0 حرف "
             android:textColor="@color/dark_gray"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputNotes" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -176,8 +176,8 @@
         android:background="@drawable/brown_border_rect"
         android:text="@string/add_attachment"
         android:textColor="@color/dark_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputNotes"
         app:layout_constraintWidth_percent="0.4" />
 
@@ -191,8 +191,8 @@
         android:text="@string/send"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_attachment_btn"
         app:layout_constraintWidth_percent="0.4" />
 
@@ -201,8 +201,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toTopOf="@+id/add_complaints_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
