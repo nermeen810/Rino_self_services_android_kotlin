@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rectangle"
+    android:layout_margin="@dimen/paddingLayout"
     android:padding="@dimen/paddingText"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -22,8 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:maxWidth="150dp"
-        android:maxLines="2"
+        android:maxWidth="300dp"
         android:padding="@dimen/paddingLayout"
         android:text="25"
         android:textColor="@color/dark_gray"

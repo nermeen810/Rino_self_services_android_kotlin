@@ -9,6 +9,7 @@ import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.hrClearance.SearchRequest
+import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
 import com.rino.self_services.model.pojo.profile.ProfileResponse
@@ -34,11 +35,13 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         grant_type:String,
         refresh_token:String,
         client_id:String) = apiService.refreshToken(grant_type,refresh_token,client_id)
+    suspend fun changePassword( auth: String, changePasswordRequest: ChangePasswordRequest)  = apiService.changePassword(auth,changePasswordRequest)
 
     suspend fun getPermissions(token:String) = apiService.getPermissions(token)
 
 
-    suspend fun getAllRecords(token:String,future:String,me:String,from:String,to:String,page:Long) = apiService.getAllRecords(token, future,me,from, to, page)
+    suspend fun getAllRecords(token:String,future:String,me:String,from:String,to:String,page:Long)
+                             = apiService.getAllRecords(token, future,me,from, to, page)
     suspend fun getAllHRRecords(
         token: String,
         meOrOthers:String,

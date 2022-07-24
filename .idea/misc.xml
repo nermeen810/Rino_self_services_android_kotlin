@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/brown_border_rect.xml" value="0.2735" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/brown_rect.xml" value="0.2345" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/card.xml" value="0.1985" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/orange_rect.xml" value="0.2735" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/drawable/rectangle.xml" value="0.2695" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/complaints_shimmer_item.xml" value="0.29259259259259257" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/details_shimmer.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/dropdown_item.xml" value="0.3569230769230769" />
+        <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_change_password.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_complaints.xml" value="0.36666666666666664" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_forget_password.xml" value="0.25" />
         <entry key="..\:/Rino/Rino_self_services/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />

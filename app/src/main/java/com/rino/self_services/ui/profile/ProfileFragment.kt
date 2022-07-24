@@ -35,10 +35,24 @@ class ProfileFragment : Fragment() {
 
     private fun init() {
         navToMyProfile()
+        navToChangePassword()
         navToComplaints()
         logout()
         handleBack()
         observePermission()
+    }
+
+    private fun navToChangePassword() {
+        binding.changePasswordBtn.setOnClickListener {
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment(from_where)
+            findNavController().navigate(action)
+        }
+        binding.changePasswordTxt.setOnClickListener {
+            val action =
+                ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment(from_where)
+            findNavController().navigate(action)
+        }
     }
 
     private  fun navToMyProfile(){

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.complaints.ComplaintsFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/backbtn"
@@ -181,20 +184,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputNotes"
         app:layout_constraintWidth_percent="0.4" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_complaints_btn"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_margin="@dimen/paddingLayout"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/orange_rect"
-        android:text="@string/send"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_attachment_btn"
-        app:layout_constraintWidth_percent="0.4" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_complaints_btn"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_margin="@dimen/paddingLayout"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/orange_rect"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_attachment_btn"
+            app:layout_constraintWidth_percent="0.4" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -206,3 +210,4 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

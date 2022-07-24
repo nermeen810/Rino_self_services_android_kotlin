@@ -18,6 +18,7 @@ import com.rino.self_services.model.pojo.forgetPassword.ResponseOTP
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 import com.rino.self_services.model.pojo.hrClearance.SearchHrResponse
 import com.rino.self_services.model.pojo.hrClearance.SearchRequest
+import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
@@ -56,6 +57,10 @@ interface ApiService {
 
     @POST("api/identity/password/confirm-reset")
     suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Response<ResponseOTP?>
+
+    @POST("api/identity/password/change")
+    suspend fun changePassword(@Header("Authorization"   ) auth: String,
+                               @Body changePasswordRequest: ChangePasswordRequest): Response<Any?>
 
     @GET("api/identity/permissions")
     suspend fun getPermissions(@Header("Authorization") token:String):Response<PermissionResponse?>

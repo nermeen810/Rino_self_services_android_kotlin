@@ -107,7 +107,10 @@ class ComplaintsFragment : Fragment() {
         if (body.isEmpty()) {
             binding.textInputNotes.error = getString(R.string.required_field)
             bodyFlag = false
-        } else {
+        }
+
+
+        else {
             binding.textInputNotes.error = null
             binding.textInputNotes.isErrorEnabled = false
             bodyFlag =  true
