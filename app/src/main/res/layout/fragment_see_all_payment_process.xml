@@ -16,7 +16,7 @@
             android:layout_height="30dp"
             android:layout_margin="@dimen/paddingLayout"
             android:src="@drawable/ic_baseline_arrow_forward_24"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -31,8 +31,8 @@
             android:textColor="@color/brown"
             android:textSize="@dimen/headerTextSize"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -43,8 +43,8 @@
             android:layout_height="0dp"
             tools:listitem="@layout/see_all"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backbtn">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -55,9 +55,8 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/payment_process_see_all_rv"
-            app:layout_constraintEnd_toStartOf="@+id/payment_process_see_all_rv"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/payment_process_see_all_rv"
+            app:layout_constraintRight_toLeftOf="@+id/payment_process_see_all_rv"
+            app:layout_constraintLeft_toRightOf="@+id/payment_process_see_all_rv"
             app:layout_constraintTop_toBottomOf="@+id/payment_process_see_all_rv" />
         <ProgressBar
 
@@ -67,9 +66,8 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/payment_process_see_all_rv"
-            app:layout_constraintEnd_toStartOf="@+id/payment_process_see_all_rv"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/payment_process_see_all_rv"
+            app:layout_constraintRight_toLeftOf="@+id/payment_process_see_all_rv"
+            app:layout_constraintLeft_toRightOf="@+id/payment_process_see_all_rv"
             app:layout_constraintTop_toBottomOf="@+id/payment_process_see_all_rv" />
 
 

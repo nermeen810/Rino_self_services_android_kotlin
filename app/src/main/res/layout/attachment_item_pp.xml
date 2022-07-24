@@ -39,7 +39,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:text="@string/userName"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +78,7 @@
             android:textSize="@dimen/normal_text"
             android:textColor="@color/dark_gray"
             android:text=""
-            app:layout_constraintEnd_toEndOf="@+id/attachment_creator"
+            app:layout_constraintRight_toRightOf="@+id/attachment_creator"
             app:layout_constraintTop_toTopOf="@+id/attachment_name_label" />
 
         <TextView
@@ -86,13 +86,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:padding="@dimen/paddingText"
             android:textSize="@dimen/normal_text"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="@string/job_title"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attachment_creator" />
 
         <TextView
@@ -104,7 +104,7 @@
             android:textStyle="bold"
             android:textColor="@color/dark_gray"
             android:text=""
-            app:layout_constraintEnd_toEndOf="@+id/attachment_creator"
+            app:layout_constraintRight_toRightOf="@+id/attachment_creator"
             app:layout_constraintTop_toTopOf="@+id/textView33" />
 
         <TextView
@@ -113,13 +113,13 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/normal_text"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:padding="@dimen/paddingText"
             android:text="اسم المرفق"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/attachment_creation_date" />
 
         <TextView
@@ -127,12 +127,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/normal_text"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:padding="@dimen/paddingText"
             android:textStyle="bold"
             android:textColor="@color/dark_gray"
-            app:layout_constraintEnd_toEndOf="@+id/attachment_creator"
+            app:layout_constraintRight_toRightOf="@+id/attachment_creator"
             android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView22" />

@@ -35,7 +35,7 @@
                 android:layout_height="80dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/final_logo"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputEmail"

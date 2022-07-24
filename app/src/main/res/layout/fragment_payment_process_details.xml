@@ -14,8 +14,8 @@
             android:id="@+id/shimmer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <include layout="@layout/details_shimmer" />
@@ -33,7 +33,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/ic_baseline_arrow_forward_24"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -42,7 +42,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/ic_baseline_assignment_24"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -57,8 +57,8 @@
                 android:textColor="@color/brown"
                 android:textSize="@dimen/headerTextSize"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -76,16 +76,16 @@
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/approve"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/serviceTitle"
-                app:layout_constraintStart_toEndOf="@id/stepper_view">
+                app:layout_constraintLeft_toRightOf="@id/stepper_view">
                 <!-- start scroll view -->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/pp_error_message"
@@ -94,8 +94,8 @@
                         android:text="TextView"
                         android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/divider5"
-                        app:layout_constraintEnd_toStartOf="@+id/beneficiary_payment"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/beneficiary_payment"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
 
                     <TextView
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
                         android:text="@string/order_number"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
 
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -124,7 +124,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginTop="12dp"
                         android:text="@string/order_date"
                         android:textColor="@color/black"
@@ -136,7 +136,7 @@
                         android:id="@+id/order_date_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginTop="12dp"
 
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -144,24 +144,48 @@
 
                     <View
                         android:id="@+id/divider3"
-                        android:layout_width="265dp"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/order_date_details" />
+
+                    <TextView
+                        android:id="@+id/pp_forward_to_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/forword_to_me"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+
+                    <TextView
+                        android:id="@+id/pp_forward_to_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/orange_rect"
+                        android:gravity="center"
+                        android:padding="@dimen/marginTxt"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/pp_forward_to_txt"
+                        app:layout_constraintRight_toRightOf="@+id/order_state"
+                        app:layout_constraintTop_toTopOf="@+id/pp_forward_to_txt" />
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:text="@string/order_status"
                         android:textColor="@color/black"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/order_state"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+                        app:layout_constraintTop_toTopOf="@+id/order_state" />
 
 
                     <TextView
@@ -171,17 +195,16 @@
                         android:layout_margin="5dp"
                         android:background="@drawable/orange_rect"
                         android:gravity="center"
-                        android:padding="@dimen/paddingText"
+                        android:padding="@dimen/marginTxt"
                         android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                        app:layout_constraintEnd_toStartOf="@+id/textView6"
-                        app:layout_constraintTop_toTopOf="@+id/textView6" />
+                        app:layout_constraintRight_toLeftOf="@+id/textView6"
+                        app:layout_constraintTop_toBottomOf="@+id/pp_forward_to_value" />
 
                     <TextView
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginTop="12dp"
                         android:text="@string/description"
                         android:textColor="@color/black"
@@ -195,10 +218,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        android:maxWidth="300dp"
+                        app:layout_constraintRight_toRightOf="@+id/textView10"
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                     <TextView
@@ -206,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
                         android:text="@string/order_side"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -218,7 +239,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-
                         app:layout_constraintRight_toRightOf="@+id/textView15"
                         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -227,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
                         android:text="@string/beneficiary_clause"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -259,7 +279,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-
+                        android:maxWidth="300dp"
                         app:layout_constraintRight_toRightOf="@+id/textView19"
                         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -289,8 +309,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/payment_method_paymentprocess_details" />
 
                     <TextView
@@ -301,7 +321,7 @@
                         android:text="@string/amount"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -309,10 +329,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/marginTxt"
-                        android:background="@drawable/orange_rect"
+                        android:background="@drawable/brown_rect"
                         android:text="@string/update_amount"
                         android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/payment_process_details_amount"
                         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
                     <EditText
@@ -320,20 +340,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@+id/updateAmount_btn"
-                        app:layout_constraintEnd_toEndOf="@+id/textView23"
+                        app:layout_constraintRight_toRightOf="@+id/textView23"
                         app:layout_constraintTop_toTopOf="@+id/updateAmount_btn" />
 
                     <ProgressBar
                         android:id="@+id/pp_details_progress"
                         style="?android:attr/progressBarStyle"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@+id/divider5"
-                        app:layout_constraintEnd_toStartOf="@+id/textView17"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/order_description_payment" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -344,7 +363,7 @@
                         android:textColor="@color/black"
 
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/payment_process_details_amount"
+                        app:layout_constraintRight_toRightOf="@+id/payment_process_details_amount"
                         app:layout_constraintTop_toBottomOf="@+id/payment_process_details_amount" />
 
                     <TextView
@@ -353,7 +372,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
 
-                        app:layout_constraintEnd_toEndOf="@+id/textView2"
+                        app:layout_constraintRight_toRightOf="@+id/textView2"
                         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
                     <View
@@ -362,8 +381,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/payment_limit" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -371,13 +390,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/brown_border_rect"
                         android:text="@string/see_attachments"
                         app:cornerRadius="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider12"
                         app:layout_constraintWidth_percent="0.45" />
 
@@ -385,12 +404,12 @@
                         android:id="@+id/pp_add_attachment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/brown_border_rect"
                         android:text="@string/add_attachment"
                         app:cornerRadius="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider12"
                         app:layout_constraintWidth_percent="0.45" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -401,32 +420,28 @@
                 android:id="@+id/approve"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_margin="@dimen/marginTxt"
                 android:background="@drawable/orange_rect"
                 android:text="@string/approve_head_department"
                 android:textColor="@color/white"
                 app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stepper_view" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:visibility="gone"
                 android:id="@+id/deny"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/brown_border_rect"
                 android:text="@string/denay"
                 app:cornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/approve"
-               />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/approve" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </ScrollView>

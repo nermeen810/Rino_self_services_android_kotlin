@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentForgetPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.EarlyEntryPoint
 
 @AndroidEntryPoint
 class ForgetPasswordFragment : Fragment() {
@@ -20,7 +19,7 @@ class ForgetPasswordFragment : Fragment() {
     private lateinit var binding: FragmentForgetPasswordBinding
     private var email = ""
     private var newPass = ""
-    private var newPassCongirm = ""
+    private var newPassConfirm = ""
     private var otp = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +72,7 @@ class ForgetPasswordFragment : Fragment() {
     private fun getDataFromUI() {
         email = binding.editTextEmail.text.toString()
         newPass = binding.editTextPassword.text.toString()
-        newPassCongirm = binding.editTextConfirmPassword.text.toString()
+        newPassConfirm = binding.editTextConfirmPassword.text.toString()
         otp = binding.editTextOTPCode.text.toString()
     }
 
@@ -217,10 +216,10 @@ class ForgetPasswordFragment : Fragment() {
     }
 
     private fun validatConfirmPassword(): Boolean {
-        return  if (newPassCongirm.isEmpty()) {
+        return  if (newPassConfirm.isEmpty()) {
             binding.textInputConfirmPassword.error = getString(R.string.required_field)
             false
-        } else if (newPass != newPassCongirm) {
+        } else if (newPass != newPassConfirm) {
             //  Toast.makeText(requireActivity(), "newPass :" + newPass == newPassCongirm, Toast.LENGTH_SHORT).show()
             binding.textInputConfirmPassword.error = getString(R.string.pass_not_matched)
             false

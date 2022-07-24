@@ -28,8 +28,8 @@
                 android:textColor="@color/brown"
                 android:textSize="@dimen/headerTextSize"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -39,7 +39,7 @@
                 android:layout_margin="@dimen/paddingLayout"
                 android:src="@drawable/ic_baseline_arrow_forward_24"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintRight_toRightOf="parent" />
             <ImageView
 
                 android:id="@+id/clearance_stepper"
@@ -58,8 +58,8 @@
                 android:id="@+id/cardView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/clearance_stepper"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/clearance_stepper"
                 app:layout_constraintTop_toBottomOf="@+id/serviceTitle"
                >
 
@@ -108,7 +108,7 @@
                         android:id="@+id/clearance_details_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
 
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -120,8 +120,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/clearance_details_date" />
 
                     <TextView
@@ -165,9 +165,9 @@
                         android:id="@+id/clearance_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxWidth="300dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:maxWidth="250dp"
+                        android:layout_marginRight="10dp"
                         android:maxLines="2"
 
                         app:layout_constraintRight_toRightOf="parent"
@@ -179,8 +179,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/clearance_description" />
 
                     <TextView
@@ -200,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
 
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView31" />
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
 
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView35" />
@@ -244,7 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
 
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView37" />
@@ -255,8 +255,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_d_department" />
 
                     <TextView
@@ -278,7 +278,7 @@
                         android:padding="8dp"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/textView39"
-                        app:layout_constraintEnd_toEndOf="@+id/hr_d_status"
+                        app:layout_constraintRight_toRightOf="@+id/hr_d_status"
                         app:layout_constraintTop_toTopOf="@+id/textView39" />
 
                     <View
@@ -287,8 +287,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
                     <TextView
@@ -308,7 +308,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
@@ -319,8 +319,7 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/divider10"
-                        app:layout_constraintEnd_toStartOf="@+id/textView35"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
@@ -329,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:text="بداية الاجازة"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -340,7 +339,7 @@
                         android:id="@+id/hr_l_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="28dp"
+                        android:layout_marginRight="28dp"
                         android:text="نهاية الاجازة"
                         android:textColor="@color/black"
                         android:textStyle="bold"
@@ -352,8 +351,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginRight="10dp"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_l_start" />
 
                     <TextView
@@ -369,8 +368,8 @@
                         android:layout_height="1dp"
                         android:layout_margin="10dp"
                         android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_end" />
 
 
@@ -379,7 +378,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:text="@string/attachments"
                         android:textColor="@color/black"
 
@@ -395,15 +394,15 @@
                         android:background="?android:attr/listDivider"
                         app:guidelineUseRtl="true"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hr_end" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/view_attachment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/brown_border_rect"
@@ -411,7 +410,7 @@
                         android:textColor="@color/dark_gray"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
                         app:layout_constraintWidth_percent="0.45" />
 
@@ -420,12 +419,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/brown_border_rect"
                         android:text="@string/create_attachment"
                         android:textColor="@color/dark_gray"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/attachment_txt"
                         app:layout_constraintWidth_percent="0.45
 " />
@@ -442,8 +441,8 @@
                 android:background="@drawable/orange_rect"
                 android:text="اعتماد المدير المباشر"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2"
                 app:layout_constraintWidth_percent="0.4" />
 
@@ -460,7 +459,7 @@
                 android:text="رفض"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hr_approve"
                 app:layout_constraintWidth_percent="0.4" />
 
@@ -469,8 +468,8 @@
             android:id="@+id/shimmer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <include layout="@layout/details_shimmer" />

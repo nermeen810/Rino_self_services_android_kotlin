@@ -1,5 +1,6 @@
 package com.rino.self_services.ui.seeAllPayment
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
             return  itemType
         }
     }
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MyViewHolder){
             val item = itemList[position]
@@ -76,12 +78,12 @@ class SeeAllPaymentProcessRVAdapter(private var currentFeatuer:String,private va
             holder.orderState.text = item.current.name
             holder.side.text = item.department
             holder.paymentMethod.text = "كاش"
-            if(item.current?.users?.size ==0){
+            if(item.current.users.isEmpty()){
                 holder.forwerd.visibility = View.GONE
                 holder.forwerdLabel.visibility = View.GONE
             }
             else {
-                holder.forwerd.text = item.current?.users?.get(0)
+                holder.forwerd.text = item.current.users.get(0)
             }
             if (currentFeatuer == "me"){
                 holder.forwerdLabel.visibility = View.GONE

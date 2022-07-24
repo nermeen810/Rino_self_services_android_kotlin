@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.rino.self_services.R
@@ -24,26 +25,36 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
 
         Log.e("message","Message Received ...");
-
-        if (remoteMessage.data.size > 0) {
-            val title = remoteMessage.data["title"]
-            val body = remoteMessage.data["body"]
-            showNotification(applicationContext, title, body)
-        } else {
-            val title = remoteMessage.notification!!.title
-            val body = remoteMessage.notification!!.body
-            showNotification(applicationContext, title, body)
+        if (remoteMessage.notification != null) {
+            showNotification(applicationContext,remoteMessage.notification?.title, remoteMessage.notification?.body)
         }
+//        if (remoteMessage.data.size > 0) {
+//            val title = remoteMessage.data["title"]
+//            val body = remoteMessage.data["body"]
+//            showNotification(applicationContext, title, body)
+//        } else {
+//            val title = remoteMessage.notification!!.title
+//            val body = remoteMessage.notification!!.body
+//            showNotification(applicationContext, title, body)
+//        }
     }
 
 
-    override fun onNewToken(p0: String) {
-        super.onNewToken(p0)
-        Log.e("token","New Token :"+p0)
+
+
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+        sendRegistrationToServer(token);
+
+        Log.e("token","New Token :"+token)
     }
 
+    private fun sendRegistrationToServer(token: String) {
+           Log.d("ServiceFirebase", "Refreshed token: $token - send this to server?")
+            FirebaseMessaging.getInstance().subscribeToTopic("global")
 
-    fun showNotification(
+    }
+    private fun showNotification(
         context: Context,
         title: String?,
         message: String?

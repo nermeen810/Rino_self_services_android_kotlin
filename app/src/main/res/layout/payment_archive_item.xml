@@ -67,8 +67,8 @@
                 android:background="@color/gray"
                 android:layout_marginTop="@dimen/paddingLayout"
                 app:layout_constraintTop_toBottomOf="@id/moveNumTxt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/empNumTxt"
@@ -88,7 +88,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/paddingText"
-                android:layout_marginRight="@dimen/paddingLayout"
                 android:padding="@dimen/marginTxt"
                 android:text="2554"
                 android:textColor="@color/dark_gray"
@@ -96,7 +95,7 @@
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/empNumTxt"
-                app:layout_constraintEnd_toStartOf="@+id/moveNumTxt"
+                app:layout_constraintRight_toRightOf="@+id/moveNumValue"
                 app:layout_constraintRight_toLeftOf="@+id/empNumTxt"
                 app:layout_constraintTop_toTopOf="@+id/empNumTxt" />
 
@@ -124,7 +123,7 @@
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/empNameTxt"
-                app:layout_constraintEnd_toEndOf="@+id/empNumValue"
+                app:layout_constraintRight_toRightOf="@+id/empNumValue"
                 app:layout_constraintRight_toLeftOf="@+id/empNameTxt"
                 app:layout_constraintTop_toBottomOf="@+id/empNumValue" />
 
@@ -152,8 +151,7 @@
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/departmentTxt"
-                app:layout_constraintEnd_toEndOf="@+id/empNameValue"
-                app:layout_constraintRight_toLeftOf="@+id/departmentTxt"
+                app:layout_constraintRight_toRightOf="@+id/empNameValue"
                 app:layout_constraintTop_toBottomOf="@+id/empNameValue" />
 
 
@@ -164,8 +162,8 @@
                 android:layout_marginTop="@dimen/paddingLayout"
                 android:background="@color/gray"
                 app:layout_constraintTop_toBottomOf="@id/departmentValue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <TextView
                 android:id="@+id/realAmountTxt"
@@ -185,18 +183,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/paddingText"
-                android:padding="@dimen/marginTxt"
                 android:background="@drawable/brown_border_rect"
+                android:padding="@dimen/marginTxt"
                 android:text="5000 ر.س"
                 android:textColor="@color/dark_gray"
                 android:textDirection="rtl"
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/realAmountTxt"
-                app:layout_constraintEnd_toEndOf="@+id/departmentValue"
-                app:layout_constraintRight_toLeftOf="@+id/realAmountTxt"
-                app:layout_constraintRight_toRightOf="@+id/realAmountTxt"
-                app:layout_constraintTop_toTopOf="@+id/realAmountTxt" />
+                app:layout_constraintRight_toRightOf="@+id/departmentValue"
+                app:layout_constraintTop_toTopOf="@+id/realAmountTxt"
+              />
 
             <TextView
                 android:id="@+id/updateAmountTxt"
@@ -223,7 +220,7 @@
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/updateAmountTxt"
-                app:layout_constraintEnd_toEndOf="@+id/realAmountValue"
+                app:layout_constraintRight_toRightOf="@+id/realAmountValue"
                 app:layout_constraintRight_toLeftOf="@+id/updateAmountTxt"
                 app:layout_constraintTop_toTopOf="@+id/updateAmountTxt" />
 
@@ -252,8 +249,7 @@
                 android:textSize="@dimen/normalTextSize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/differanceAmountTxt"
-                app:layout_constraintEnd_toEndOf="@+id/updateAmountValue"
-                app:layout_constraintRight_toLeftOf="@+id/differanceAmountTxt"
+                app:layout_constraintRight_toRightOf="@+id/updateAmountValue"
                 app:layout_constraintTop_toTopOf="@+id/differanceAmountTxt" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

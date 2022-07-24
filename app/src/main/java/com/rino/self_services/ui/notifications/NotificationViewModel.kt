@@ -19,6 +19,7 @@ import javax.inject.Inject
 class NotificationViewModel @Inject constructor(private val modelRepository:NotificationRepo) : ViewModel(){
     private var _getAllNotification = MutableLiveData<AllNotificationResponse?>()
     private var _setNotificationASRead = MutableLiveData<SetNotificationAsRead?>()
+    private var _readNotificationPosition = MutableLiveData<Int>()
     private var _loading = MutableLiveData<Int>(View.GONE)
     private var _noData = MutableLiveData<Boolean>()
 
@@ -33,6 +34,9 @@ class NotificationViewModel @Inject constructor(private val modelRepository:Noti
 
     val setNotificationASRead: LiveData<SetNotificationAsRead?>
         get() = _setNotificationASRead
+
+    val readNotificationPosition: LiveData<Int>
+        get() = _readNotificationPosition
 
     fun getAllNotification(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -54,13 +58,14 @@ class NotificationViewModel @Inject constructor(private val modelRepository:Noti
         }
     }
 
-    fun setNotificationAsRead(id:Int){
+    fun setNotificationAsRead(pos:Int , id:Int){
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = modelRepository.setNotificationAsRead(id)) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     Log.i("setNotificationAsRead:", "${result.data}")
                     _setNotificationASRead.postValue(result.data)
+                    _readNotificationPosition.postValue(pos)
                 }
 
                 is Result.Error -> {

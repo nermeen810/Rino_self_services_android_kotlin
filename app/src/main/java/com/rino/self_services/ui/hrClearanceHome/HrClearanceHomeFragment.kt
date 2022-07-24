@@ -80,7 +80,7 @@ class HrClearanceHomeFragment : Fragment() {
         observeHistoryData()
         observeNoData()
         observeSearchHistoryData()
-        observeNavigationCount()
+    //    observeNavigationCount()
         observeNavToSeeAll()
         observeNavToServiceDetails()
         observeLoading()

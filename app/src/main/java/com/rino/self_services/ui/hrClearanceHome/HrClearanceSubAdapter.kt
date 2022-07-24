@@ -61,20 +61,21 @@ class HrClearanceSubAdapter (private var clearanceSubList: ArrayList<Items>,
             holder.binding.vacationEndTxt.visibility =View.GONE
         }
         if(hrClearanceViewModel.me_or_others=="others") {
-            holder.binding.requestToValue.text = clearanceSubList[position].current?.users?.get(0)
+            holder.binding.requestToValue.text = clearanceSubList[position].current.users.get(0)
+            if(clearanceSubList[position].current.users.size ==0){
+                holder.binding.requestToValue.visibility = View.GONE
+                holder.binding.requestToTxt.visibility = View.GONE
+            }
+            else {
+                holder.binding.requestToValue.text = clearanceSubList[position].current.users.get(0)
+            }
         }
         else if(hrClearanceViewModel.me_or_others=="me")
         {
             holder.binding.requestToValue.visibility = View.GONE
             holder.binding.requestToTxt.visibility = View.GONE
         }
-        if(clearanceSubList[position].current?.users?.size ==0){
-            holder.binding.requestToValue.visibility = View.GONE
-            holder.binding.requestToTxt.visibility = View.GONE
-        }
-        else {
-            holder.binding.requestToValue.text = clearanceSubList[position].current?.users?.get(0)
-        }
+
         var meOrOthers = ""
 
         if(clearanceSubList[position].me == true)

@@ -93,7 +93,19 @@ class ViewComplaintsFragment : Fragment() {
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-                  binding.progress.visibility = it
+          //        binding.progress.visibility = it
+                if(it == View.VISIBLE)
+                {
+                    binding.shimmer.visibility = View.VISIBLE
+                    binding.shimmer.startShimmer()
+                    binding.complaintsRecycle.visibility = View.GONE
+                }
+                else if(it == View.GONE){
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.visibility = View.GONE
+                    binding.complaintsRecycle.visibility = View.VISIBLE
+
+                }
             }
         }
     }

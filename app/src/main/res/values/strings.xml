@@ -99,7 +99,7 @@
     <string name="request_otp_Code">ارسال الكود التفعيلى</string>
     <string name="notifications">الاشعارات</string>
     <string name="logout">تسجيل خروج</string>
-    <string name="edit_profile">حسابى</string>
+    <string name="edit_profile">اعدادات الحساب</string>
     <string name="complaints">الشكاوى والمقترحات</string>
     <string name="setting">الحساب الشخصى</string>
     <string name="department_txt">الادارة المختصة</string>
@@ -124,5 +124,8 @@
     <string name="yesMessage">تأكيد</string>
     <string name="increase_amount">"هل تريد زيادة قيمة المبلغ من "</string>
     <string name="empty_data">لا توجد بيانات</string>
+    <string name="changePassword">تغيير كلمة المرور</string>
+    <string name="old_password_hint">كلمة المرور الحالية</string>
+    <string name="oldPassword_and_newPassword_are_the_same">كلمتا المرور متطابقتان</string>
 
 </resources>

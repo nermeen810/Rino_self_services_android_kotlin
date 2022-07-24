@@ -175,14 +175,22 @@ class HRClearanceDetailsFragment : Fragment() {
     private fun oberveData(){
         viewModel.detailsData.observe(viewLifecycleOwner){
             var details = it.data
-            binding.clearanceId.text = Constants.convertNumsToArabic(details?.id.toString())
-            binding.clearanceDetailsDate.text = details?.date?.split("T")?.get(0)?.dateToArabic()
-            binding.clearanceDescription.text = details?.current?.name
-            binding.hrDEmpName.text = details?.employee
-            binding.hrDEmpId.text = Constants.convertNumsToArabic(details?.employeeID.toString())
-            binding.hrDDepartment.text = details?.department
-            binding.hrFowrwerdTo.text = details?.current?.users?.get(0) ?: ""
-            binding.hrType.text = details?.type
+            binding.clearanceId.text = Constants.convertNumsToArabic(details.id.toString())
+            binding.clearanceDetailsDate.text = details.date?.split("T")?.get(0)?.dateToArabic()
+            binding.clearanceDescription.text = details.current?.name
+            binding.hrDEmpName.text = details.employee
+            binding.hrDEmpId.text = Constants.convertNumsToArabic(details.employeeID.toString())
+            binding.hrDDepartment.text = details.department
+            if(details.current?.users?.size !=0 && details.current?.users!= null) {
+                binding.hrFowrwerdTo.text = details.current?.users?.get(0) ?: ""
+            }
+            else {
+                binding.hrFowrwerdTo.text = details.current?.users?.get(0) ?: ""
+                binding.textView39.visibility = View.GONE
+
+            }
+            binding.hrFowrwerdTo.text = details.current?.users?.get(0) ?: ""
+            binding.hrType.text = details.type
             binding.hrDStatus.text = details.status
             if(details.status=="جديد"){
                 binding.hrDenay.visibility =View.VISIBLE
@@ -191,7 +199,7 @@ class HRClearanceDetailsFragment : Fragment() {
                 binding.hrDenay.visibility =View.GONE
             }
 
-            when(details?.step){
+            when(details.step){
                 1 ->{ binding.clearanceStepper.setImageResource(R.drawable.second_stepper) }
                 2 ->{ binding.clearanceStepper.setImageResource(R.drawable.third_stepper) }
                 3 ->{ binding.clearanceStepper.setImageResource(R.drawable.fourth_stepper) }
@@ -201,24 +209,24 @@ class HRClearanceDetailsFragment : Fragment() {
                 7 ->{ binding.clearanceStepper.setImageResource(R.drawable.seventh_stepper) }
             }
             if(details.type?.contains("خروج وعوده") == true && details.start != null && details.end != null){
-                binding.hrLEnd.alpha = 1f
-                binding.hrLStart.alpha = 1f
-                binding.hrStart.text = details?.start
-                binding.hrEnd.text = details?.end
-                binding.hrStart.alpha = 1f
-                binding.hrEnd.alpha = 1f
+                binding.hrLEnd.visibility = View.VISIBLE
+                binding.hrLStart.visibility = View.VISIBLE
+                binding.hrStart.text = details.start
+                binding.hrEnd.text = details.end
+                binding.hrStart.visibility = View.VISIBLE
+                binding.hrEnd.visibility = View.VISIBLE
             }else{
-                binding.hrLEnd.alpha = 0f
-                binding.hrLStart.alpha = 0f
-                binding.hrStart.alpha = 0f
-                binding.hrEnd.alpha = 0f
+                binding.hrLEnd.visibility = View.GONE
+                binding.hrLStart.visibility = View.GONE
+                binding.hrStart.visibility = View.GONE
+                binding.hrEnd.visibility = View.GONE
             }
             if(details.hasApproved == false && details.hasPermission == true){
-                binding.hrDenay.alpha = 1f
-                binding.hrApprove.alpha = 1f
+                binding.hrDenay.visibility = View.VISIBLE
+                binding.hrApprove.visibility = View.VISIBLE
             }else{
-                binding.hrDenay.alpha = 0f
-                binding.hrApprove.alpha = 0f
+                binding.hrDenay.visibility = View.GONE
+                binding.hrApprove.visibility = View.GONE
             }
                 binding.viewAttachment.setOnClickListener {
                     if(viewModel.attachments.size != 0) {
