@@ -16,4 +16,5 @@
     <dimen name="welcomeMarginTop">40dp</dimen>
     <dimen name="subTextTextSize">10sp</dimen>
     <dimen name="marginTxt">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
