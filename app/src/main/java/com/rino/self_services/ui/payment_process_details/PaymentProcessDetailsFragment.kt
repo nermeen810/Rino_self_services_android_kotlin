@@ -195,12 +195,12 @@ class PaymentProcessDetailsFragment : Fragment() {
                 builder.setMessage("لا يوجد تغيير فى المبلغ " )
             }
             else if (newAmount-oldAmount>=0){
-                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
+                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"الى قيمة "
+                        + newAmount.toString().dateToArabic()+" ر.س "+"بمقدار "+(newAmount-oldAmount).toString().dateToArabic()+" ر.س ؟" )
             }
             else if(newAmount-oldAmount<0){
-                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
+                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"الى قيمة "
+                        + newAmount.toString().dateToArabic()+" ر.س "+"بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic()+" ر.س ؟" )
 
             }
             else{

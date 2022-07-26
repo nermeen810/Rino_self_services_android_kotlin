@@ -22,6 +22,7 @@ import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
+import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
@@ -61,7 +62,9 @@ interface ApiService {
     @POST("api/identity/password/change")
     suspend fun changePassword(@Header("Authorization"   ) auth: String,
                                @Body changePasswordRequest: ChangePasswordRequest): Response<Any?>
-
+    @POST("api/notifications/mobile/add")
+    suspend fun setDeviceToken(@Header("Authorization"   ) auth: String,
+                               @Body deviceTokenRequest: DeviceTokenRequest): Response<Any?>
     @GET("api/identity/permissions")
     suspend fun getPermissions(@Header("Authorization") token:String):Response<PermissionResponse?>
 

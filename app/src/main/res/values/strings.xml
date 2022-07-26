@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Self_Services</string>
+    <string name="app_name">شركة رينو المتحدة المحدودة</string>
     <string name="login">تسجيل الدخول</string>
     <string name="login_userName_hint">البريد الألكترونى</string>
     <string name="login_password_hint">كلمة المرور</string>
@@ -118,7 +118,7 @@
     <string name="phone_num">رقم الهاتف</string>
     <string name="details_request">تفاصيل الطلب</string>
     <string name="request_details">تفاصيل الطلب</string>
-    <string name="chars">حرف</string>
+    <string name="chars">حرف(500)</string>
     <string name="update_amount">تعديل المبلغ</string>
     <string name="NoMessage">الغاء</string>
     <string name="yesMessage">تأكيد</string>
@@ -127,5 +127,7 @@
     <string name="changePassword">تغيير كلمة المرور</string>
     <string name="old_password_hint">كلمة المرور الحالية</string>
     <string name="oldPassword_and_newPassword_are_the_same">كلمتا المرور متطابقتان</string>
+    <string name="must_be_less_than_500">يجب الا يحتوي على اكثر من 500 حرف</string>
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
 
 </resources>

@@ -4,6 +4,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
@@ -11,6 +13,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
+import androidx.navigation.Navigation.findNavController
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -22,11 +26,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     val NOTIFICATION_ID = 100
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        super.onMessageReceived(remoteMessage)
+       // super.onMessageReceived(remoteMessage)
+        Log.e("message","Message Received ...")
+        println("messsssssssssssage received ")
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d("NotificationData", "Message data payload: " + remoteMessage.getData());
+            val processType = remoteMessage.data["processType"]
+            val id = remoteMessage.data["id"]
+            val title = remoteMessage.data["title"]
+            val body = remoteMessage.data["body"]
 
-        Log.e("message","Message Received ...");
-        if (remoteMessage.notification != null) {
-            showNotification(applicationContext,remoteMessage.notification?.title, remoteMessage.notification?.body)
+            if(processType=="clearance"){
+                val entityType = remoteMessage.data["entityType"]
+
+            }
+            else if(processType == "payment")
+            {
+
+            }
+
+            showNotification(applicationContext, title, body)
+        }
+        else {
+            if (remoteMessage.notification != null) {
+                showNotification(
+                    applicationContext,
+                    remoteMessage.notification?.title,
+                    remoteMessage.notification?.body
+                )
+            }
         }
 //        if (remoteMessage.data.size > 0) {
 //            val title = remoteMessage.data["title"]
@@ -40,11 +68,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-
-
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        sendRegistrationToServer(token);
+      //  sendRegistrationToServer(token);
 
         Log.e("token","New Token :"+token)
     }
@@ -63,9 +89,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         ii = Intent(context, MainActivity::class.java)
         ii.data = Uri.parse("custom://" + System.currentTimeMillis())
         ii.action = "actionstring" + System.currentTimeMillis()
-        ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+
         val pi =
-            PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(
+                applicationContext,
+                0,
+                ii,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
         val notification: Notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //Log.e("Notification", "Created in up to orio OS device");

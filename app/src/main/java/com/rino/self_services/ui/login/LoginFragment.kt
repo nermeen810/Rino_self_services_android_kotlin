@@ -13,7 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentLoginBinding
 import com.rino.self_services.model.pojo.login.LoginRequest
@@ -82,6 +84,7 @@ class LoginFragment : Fragment() {
 
     private fun observeData() {
         observeSuccessLogin()
+        observeSetDeviceToken()
         observeLoading()
         observeShowError()
 
@@ -91,12 +94,8 @@ class LoginFragment : Fragment() {
         viewModel.isLogin.observe(viewLifecycleOwner) {
             if (it) {
                 //   binding.progress.visibility = View.GONE
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.success_login),
-                    Toast.LENGTH_SHORT
-                ).show()
-                navigateToHome()
+                    viewModel.setDeviceToken()
+
 
             } else {
                 Toast.makeText(
@@ -108,6 +107,20 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun observeSetDeviceToken() {
+        viewModel.setDeviceTokenResponse.observe(viewLifecycleOwner) {
+            it?.let {
+             if(it) {
+                 Toast.makeText(
+                     requireActivity(),
+                     getString(R.string.success_login),
+                     Toast.LENGTH_SHORT
+                 ).show()
+                 navigateToHome()
+             }
+            }
+        }
+    }
     private fun navigateToHome() {
         val action = LoginFragmentDirections.loginToHome()
         findNavController().navigate(action)

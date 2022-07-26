@@ -11,6 +11,7 @@ import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
+import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
 import com.rino.self_services.model.pojo.profile.ProfileResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -36,6 +37,8 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
         refresh_token:String,
         client_id:String) = apiService.refreshToken(grant_type,refresh_token,client_id)
     suspend fun changePassword( auth: String, changePasswordRequest: ChangePasswordRequest)  = apiService.changePassword(auth,changePasswordRequest)
+
+    suspend fun setDeviceToken(auth: String, deviceTokenRequest: DeviceTokenRequest) = apiService.setDeviceToken(auth,deviceTokenRequest)
 
     suspend fun getPermissions(token:String) = apiService.getPermissions(token)
 

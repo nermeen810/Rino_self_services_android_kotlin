@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
