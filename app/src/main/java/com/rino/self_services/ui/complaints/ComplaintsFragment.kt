@@ -22,6 +22,7 @@ import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentComplaintsBinding
 import com.rino.self_services.ui.main.FileCaller
 import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -74,7 +75,7 @@ class ComplaintsFragment : Fragment() {
         binding.notesEditTxt.addTextChangedListener {
             val notesLength =  binding.notesEditTxt.text.toString().length
             binding.notesLength.text =
-                "${Constants.convertNumsToArabic(notesLength.toString())} ${getString(R.string.chars)} "
+                "${Constants.convertNumsToArabic(notesLength.toString())} ${getString(R.string.chars).dateToArabic()} "
         }
 
     }
@@ -108,8 +109,10 @@ class ComplaintsFragment : Fragment() {
             binding.textInputNotes.error = getString(R.string.required_field)
             bodyFlag = false
         }
-
-
+        if (body.length >500) {
+            binding.textInputNotes.error = getString(R.string.must_be_less_than_500)
+            bodyFlag = false
+        }
         else {
             binding.textInputNotes.error = null
             binding.textInputNotes.isErrorEnabled = false

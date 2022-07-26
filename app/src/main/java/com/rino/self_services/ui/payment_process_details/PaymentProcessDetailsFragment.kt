@@ -34,13 +34,13 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class PaymentProcessDetailsFragment : Fragment() {
     var shouldShowActions = true
-    private  var parts = ArrayList<MultipartBody.Part>()
+    private var parts = ArrayList<MultipartBody.Part>()
     private var action = ""
     private var oldAmount = 0.0
     private val viewModel: PaymentProcessDetailsViewModel by viewModels()
     private lateinit var binding: FragmentPaymentProcessDetailsBinding
-    private  lateinit var navToDetails: NavToDetails
-    private  lateinit var seeAll:NavSeeAll
+    private lateinit var navToDetails: NavToDetails
+    private lateinit var seeAll: NavSeeAll
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -64,19 +64,18 @@ class PaymentProcessDetailsFragment : Fragment() {
         handleBackBotton()
         viewModel.getPermissions()
         viewModel.getData(navToDetails.id)
-        if(navToDetails.me_or_others == "others"){
+        if (navToDetails.me_or_others == "others") {
             binding.approve.visibility = View.GONE
         }
-        if (!navToDetails.isActionBefore ){
+        if (!navToDetails.isActionBefore) {
             binding.approve.visibility = View.GONE
             binding.deny.visibility = View.GONE
         }
 
-        if(navToDetails.me_or_others == "others") {
+        if (navToDetails.me_or_others == "others") {
             binding.amountChangelogBtn.visibility = View.GONE
             binding.updateAmountBtn.visibility = View.GONE
-        }
-        else {
+        } else {
             binding.amountChangelogBtn.setOnClickListener {
                 navToPaymentArchive()
             }
@@ -85,29 +84,28 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
         }
         binding.viewPpAttachments.setOnClickListener {
-        if(viewModel.attachments.size != 0) {
-            var action =
-                PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(
-                    NavToAttachment(
-                        null,
-                        viewModel.attachments.toList().toTypedArray(),
-                        true,
-                        navToDetails.me_or_others,
-                        navToDetails.id,
-                        shouldShowActions
-                    ),
-                    seeAll
-                )
-            findNavController().navigate(action)
+            if (viewModel.attachments.size != 0) {
+                var action =
+                    PaymentProcessDetailsFragmentDirections.actionPaymentProcessDetailsFragmentToPPAttachmentFragment(
+                        NavToAttachment(
+                            null,
+                            viewModel.attachments.toList().toTypedArray(),
+                            true,
+                            navToDetails.me_or_others,
+                            navToDetails.id,
+                            shouldShowActions
+                        ),
+                        seeAll
+                    )
+                findNavController().navigate(action)
+            } else {
+                showMessage("لا توجد مرفقات لهذا الطلب")
+            }
         }
-        else{
-            showMessage("لا توجد مرفقات لهذا الطلب")
-        }
-        }
-        viewModel.setToTrue.observe(viewLifecycleOwner){
-            if (it){
+        viewModel.setToTrue.observe(viewLifecycleOwner) {
+            if (it) {
                 showMessage("تم اضافه المرفقات بنجاح")
-            }else{
+            } else {
                 showMessage("حدث خطأً الرجاء المحاوله في وقت لاحق")
             }
         }
@@ -119,23 +117,23 @@ class PaymentProcessDetailsFragment : Fragment() {
         }
         binding.approve.setOnClickListener {
             action = "approve"
-            viewModel.createAction(navToDetails.id,action)
+            viewModel.createAction(navToDetails.id, action)
         }
-        if (navToDetails.me_or_others != "me"){
+        if (navToDetails.me_or_others != "me") {
             binding.ppAddAttachment.visibility = View.GONE
-        }else{
+        } else {
             binding.ppAddAttachment.visibility = View.VISIBLE
         }
-        binding.ppAddAttachment.setOnClickListener{
+        binding.ppAddAttachment.setOnClickListener {
             (activity as MainActivity).caller = FileCaller.paymentDetails
             (activity as MainActivity).openGalary()
-            (activity as MainActivity).paymentProcessFiles.observe(viewLifecycleOwner){
-                if (!it.isEmpty()){
+            (activity as MainActivity).paymentProcessFiles.observe(viewLifecycleOwner) {
+                if (!it.isEmpty()) {
                     parts = ArrayList()
                     it.map {
                         val requestFile: RequestBody =
                             it.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                        var  part = MultipartBody.Part.createFormData(
+                        var part = MultipartBody.Part.createFormData(
                             "Attachments",
                             it.name.trim(),
                             requestFile
@@ -143,19 +141,19 @@ class PaymentProcessDetailsFragment : Fragment() {
                         parts.add(part)
                     }
 
-                    viewModel.createAttachment(parts,navToDetails.id)
+                    viewModel.createAttachment(parts, navToDetails.id)
                     (activity as MainActivity)._paymentProcessFiles.value = ArrayList()
                 }
             }
         }
-        viewModel.action.observe(viewLifecycleOwner){
-            if (it.success == true){
+        viewModel.action.observe(viewLifecycleOwner) {
+            if (it.success == true) {
                 shouldShowActions = false
                 binding.approve.alpha = 0f
                 binding.deny.alpha = 0f
                 showMessage("تم تعديل حاله الطلب بنجاح")
                 viewModel.getData(navToDetails.id)
-            }else{
+            } else {
                 it.message?.let { it1 -> showMessage(it1) }
             }
         }
@@ -164,22 +162,27 @@ class PaymentProcessDetailsFragment : Fragment() {
 
     private fun navToPaymentArchive() {
         val action =
-            PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentPaymentArchiveFragment(navToDetails,seeAll)
+            PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentPaymentArchiveFragment(
+                navToDetails,
+                seeAll
+            )
         findNavController().navigate(action)
     }
+
     private fun observePermission() {
-        viewModel.getPermission.observe(viewLifecycleOwner){
-            it.let{
-                if(!it?.isGM!!) {
+        viewModel.getPermission.observe(viewLifecycleOwner) {
+            it.let {
+                if (!it?.isGM!!) {
                     binding.amountChangelogBtn.visibility = View.GONE
                 }
             }
 
         }
     }
+
     private fun observeEditAmount() {
-        viewModel.editAmount.observe(viewLifecycleOwner){
-            if(it) {
+        viewModel.editAmount.observe(viewLifecycleOwner) {
+            if (it) {
                 showMessage("تم تعديل المبلغ بنجاح")
             }
         }
@@ -188,22 +191,30 @@ class PaymentProcessDetailsFragment : Fragment() {
     private fun viewDailoge() {
         try {
             val id = binding.orderNumberDetails.text.toString().toInt()
-            val newAmount = binding.paymentProcessDetailsAmount.text.toString().replace(" ر.س ","").numToEnglish().toDouble()
+            val newAmount = binding.paymentProcessDetailsAmount.text.toString().replace(" ر.س ", "")
+                .numToEnglish().toDouble()
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle(R.string.app_name)
-            if (newAmount-oldAmount==0.0){
-                builder.setMessage("لا يوجد تغيير فى المبلغ " )
-            }
-            else if (newAmount-oldAmount>=0){
-                builder.setMessage(" هل تريد زيادة المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
-            }
-            else if(newAmount-oldAmount<0){
-                builder.setMessage(" هل تريد نقص المبلغ من قيمة "+oldAmount.toString().dateToArabic()+" ر.س "+"  الى قيمة"
-                        + newAmount.toString().dateToArabic()+" ر.س "+" بمقدار "+Math.abs(newAmount-oldAmount).toString().dateToArabic()+" ر.س " )
+            if (newAmount - oldAmount == 0.0) {
+                builder.setMessage("لا يوجد تغيير فى المبلغ ")
+            } else if (newAmount - oldAmount >= 0) {
+                builder.setMessage(
+                    " هل تريد زيادة المبلغ من قيمة " + oldAmount.toString()
+                        .dateToArabic() + " ر.س " + "الى قيمة "
+                            + newAmount.toString()
+                        .dateToArabic() + " ر.س " + "بمقدار " + (newAmount - oldAmount).toString()
+                        .dateToArabic() + " ر.س ؟"
+                )
+            } else if (newAmount - oldAmount < 0) {
+                builder.setMessage(
+                    " هل تريد نقص المبلغ من قيمة " + oldAmount.toString()
+                        .dateToArabic() + " ر.س " + "الى قيمة "
+                            + newAmount.toString().dateToArabic() + " ر.س " + "بمقدار " + Math.abs(
+                        newAmount - oldAmount
+                    ).toString().dateToArabic() + " ر.س ؟"
+                )
 
-            }
-            else{
+            } else {
 
             }
             builder.setIcon(android.R.drawable.ic_dialog_info)
@@ -217,46 +228,45 @@ class PaymentProcessDetailsFragment : Fragment() {
                 viewModel.editAmount(id, newAmount)
             }
 
-        // Create the AlertDialog
-        val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
-        catch (e:Exception){
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        } catch (e: Exception) {
             showMessage("برجاء ادخال رقم عشري")
         }
     }
 
     private fun handleBackBotton() {
         binding.backbtn.setOnClickListener {
-            if(seeAll.me_or_others == ""&&seeAll.startPeriod ==""&&seeAll.endPeriod=="") {
+            if (seeAll.me_or_others == "" && seeAll.startPeriod == "" && seeAll.endPeriod == "") {
                 val action =
                     PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToHomePayment()
                 findNavController().navigate(action)
-            }
-            else{
-         //       Log.e("seeAll",seeAll.me_or_others+" , "+seeAll.startPeriod+" , "+seeAll.endPeriod)
+            } else {
+                //       Log.e("seeAll",seeAll.me_or_others+" , "+seeAll.startPeriod+" , "+seeAll.endPeriod)
                 val action =
-                PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToSeeAllPayment(seeAll)
+                    PaymentProcessDetailsFragmentDirections.paymentProcessDetailsFragmentToSeeAllPayment(
+                        seeAll
+                    )
                 findNavController().navigate(action)
             }
         }
     }
+
     private fun observeLoading() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
-      //          binding.ppDetailsProgress.visibility = it
-                if(it == View.VISIBLE)
-                {
-                    Log.e("shimmer","start")
+                //          binding.ppDetailsProgress.visibility = it
+                if (it == View.VISIBLE) {
+                    Log.e("shimmer", "start")
                     binding.shimmer.visibility = View.VISIBLE
                     binding.detailsLayout.visibility = View.GONE
                     binding.shimmer.startShimmer()
 
-                }
-                else{
-                    Log.e("shimmer","stop")
+                } else {
+                    Log.e("shimmer", "stop")
                     binding.shimmer.stopShimmer()
                     binding.detailsLayout.visibility = View.VISIBLE
                     binding.shimmer.visibility = View.GONE
@@ -272,15 +282,17 @@ class PaymentProcessDetailsFragment : Fragment() {
             }
         }
     }
-    private fun obseveError(){
-        viewModel.setError.observe(viewLifecycleOwner){
-            if(it != null && it != ""){
+
+    private fun obseveError() {
+        viewModel.setError.observe(viewLifecycleOwner) {
+            if (it != null && it != "") {
                 showMessage(it)
-            }else{
+            } else {
                 binding.ppErrorMessage.visibility = View.GONE
             }
         }
     }
+
     private fun showMessage(msg: String) {
         lifecycleScope.launchWhenResumed {
             Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
@@ -295,11 +307,12 @@ class PaymentProcessDetailsFragment : Fragment() {
                 }.show()
         }
     }
+
     @SuppressLint("SetTextI18n")
-    private fun oberveData(){
-        viewModel.detailsData.observe(viewLifecycleOwner){
+    private fun oberveData() {
+        viewModel.detailsData.observe(viewLifecycleOwner) {
             var details = it.data
-            oldAmount = details?.amount?: 0.0
+            oldAmount = details?.amount ?: 0.0
             binding.orderNumberDetails.text = Constants.convertNumsToArabic(details?.id.toString())
             binding.orderDateDetails.text = details?.date?.split("T")?.get(0)?.dateToArabic()
             binding.orderState.text = details?.status
@@ -307,35 +320,47 @@ class PaymentProcessDetailsFragment : Fragment() {
             binding.beneficiaryPayment.text = details?.beneficiary
             binding.provisionPaymentDetails.text = details?.provision
             binding.paymentMethodPaymentprocessDetails.text = details?.payType
-            binding.paymentProcessDetailsAmount.setText(Constants.convertNumsToArabic(details?.amount.toString())+" ر.س ")
+            binding.paymentProcessDetailsAmount.setText(Constants.convertNumsToArabic(details?.amount.toString()) + " ر.س ")
             binding.orderSidePayment.text = details?.department
             binding.beneficiaryPayment.text = details?.beneficiary ?: "لا يوجد"
             binding.approve.text = details?.current?.name
-            if(details?.current?.users?.size !=0 && details?.current?.users!= null) {
+            if (details?.current?.users?.size != 0 && details?.current?.users != null) {
                 binding.ppForwardToValue.text = details?.current?.users?.get(0)
-            }
-            else {
+            } else {
                 binding.ppForwardToValue.visibility = View.GONE
                 binding.ppForwardToTxt.visibility = View.GONE
 
             }
             binding.paymentLimit.text = details?.limit?.toString() ?: "لا يوجد"
 
-            if(details?.status=="جديد"){
-                binding.deny.visibility =View.VISIBLE
-            }
-            else{
-                binding.deny.visibility =View.GONE
+            if (details?.status == "جديد") {
+                binding.deny.visibility = View.VISIBLE
+            } else {
+                binding.deny.visibility = View.GONE
             }
 
-            when(details?.step){
-                1 ->{ binding.stepperView.setImageResource(R.drawable.second_stepper) }
-                2 ->{ binding.stepperView.setImageResource(R.drawable.third_stepper) }
-                3 ->{ binding.stepperView.setImageResource(R.drawable.fourth_stepper) }
-                4 ->{ binding.stepperView.setImageResource(R.drawable.fifth_stepper) }
-                5 ->{ binding.stepperView.setImageResource(R.drawable.sixth_stepper) }
-                6 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
-                7 ->{ binding.stepperView.setImageResource(R.drawable.seventh_stepper) }
+            when (details?.step) {
+                1 -> {
+                    binding.stepperView.setImageResource(R.drawable.second_stepper)
+                }
+                2 -> {
+                    binding.stepperView.setImageResource(R.drawable.third_stepper)
+                }
+                3 -> {
+                    binding.stepperView.setImageResource(R.drawable.fourth_stepper)
+                }
+                4 -> {
+                    binding.stepperView.setImageResource(R.drawable.fifth_stepper)
+                }
+                5 -> {
+                    binding.stepperView.setImageResource(R.drawable.sixth_stepper)
+                }
+                6 -> {
+                    binding.stepperView.setImageResource(R.drawable.seventh_stepper)
+                }
+                7 -> {
+                    binding.stepperView.setImageResource(R.drawable.seventh_stepper)
+                }
             }
 
 //            if(details?.hasMadeAction == false && details?.status == "جديد"){

@@ -86,7 +86,7 @@ class PaymentProcessesFragment : Fragment() {
         observeNoData()
         observeSearchHistoryData()
         observeNavToSeeAll()
-     //   observeNavigationCount()
+        observeNavigationCount()
         observeNavToServiceDetails()
         observeLoading()
         observeShowError()
