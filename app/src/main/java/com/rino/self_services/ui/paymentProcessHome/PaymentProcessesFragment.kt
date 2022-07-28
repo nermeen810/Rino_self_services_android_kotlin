@@ -192,12 +192,31 @@ class PaymentProcessesFragment : Fragment() {
     }
 
     private fun observeShowError() {
-        viewModel.setError.observe(viewLifecycleOwner) {
-            it?.let {
-              showMessage(it)
+            viewModel.setError.observe(viewLifecycleOwner) {
+                it?.let {
+                    if(it.contains("Time out")){
+                        binding.noDataAnim.visibility = View.VISIBLE
+                        binding.textNoData.visibility = View.VISIBLE
+                        binding.noDataAnim.setAnimation(R.raw.rino_timeout)
+                        binding.textNoData.text = getString(R.string.timeout_msg)
+                        binding.searchHistoryRecycle.visibility = View.GONE
+                        binding.historyRecycle.visibility = View.GONE
+                    }
+                    else if(it.contains("server is down"))
+                    {
+                        binding.noDataAnim.visibility = View.VISIBLE
+                        binding.textNoData.visibility = View.VISIBLE
+                        binding.noDataAnim.setAnimation(R.raw.rino_server_error2)
+                        binding.textNoData.text = getString(R.string.server_error_msg)
+                        binding.searchHistoryRecycle.visibility = View.GONE
+                        binding.historyRecycle.visibility = View.GONE                    }
+                    else{
+                        showMessage(it)
+                    }
+                }
             }
         }
-    }
+
 
     private fun showMessage(it: String) {
         Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)

@@ -96,17 +96,36 @@ class PaymentArchiveFragment : Fragment() {
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
-                Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                        resources.getColor(
-                            R.color.color_orange
-                        )
-                    )
-                    .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
-                    {
-                    }.show()
+                if(it.contains("Time out")){
+                    binding.noDataLayout.visibility = View.VISIBLE
+                    binding.noDataAnim.setAnimation(R.raw.rino_timeout)
+                    binding.textNoData.text = getString(R.string.timeout_msg)
+                    binding.paymentArchiveRecycle.visibility = View.GONE
+                }
+                else if(it.contains("server is down"))
+                {
+                    binding.noDataLayout.visibility = View.VISIBLE
+                    binding.noDataAnim.setAnimation(R.raw.rino_server_error2)
+                    binding.textNoData.text = getString(R.string.server_error_msg)
+                    binding.paymentArchiveRecycle.visibility = View.GONE
+                }
+                else{
+                    showMsg(it)
+                }
             }
         }
+    }
+
+    private fun showMsg(it: String) {
+        Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                resources.getColor(
+                    R.color.color_orange
+                )
+            )
+            .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
+            {
+            }.show()
     }
     private fun setupUI() {
         binding.paymentArchiveRecycle.visibility = View.GONE

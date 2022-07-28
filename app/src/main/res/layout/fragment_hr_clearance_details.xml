@@ -245,7 +245,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -254,10 +253,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="?android:attr/listDivider"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/hr_d_department" />
+                        app:layout_constraintTop_toBottomOf="@+id/hr_d_department"
+                        app:layout_constraintBottom_toTopOf="@+id/hr_fowrwerd_to"/>
 
                     <TextView
                         android:id="@+id/textView39"
@@ -289,7 +290,8 @@
                         android:background="?android:attr/listDivider"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+                        app:layout_constraintTop_toBottomOf="@+id/hr_fowrwerd_to"
+                        app:layout_constraintBottom_toTopOf="@+id/textView41"/>
 
                     <TextView
                         android:id="@+id/textView41"
@@ -444,7 +446,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2"
-                app:layout_constraintWidth_percent="0.4" />
+               app:layout_constraintBottom_toTopOf="@+id/hr_denay" />
 
 
             <androidx.appcompat.widget.AppCompatButton

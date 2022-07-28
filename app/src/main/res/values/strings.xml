@@ -137,5 +137,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="timeout_msg">حدث خطأ برجاء اعادة المحاولة</string>
+    <string name="server_error_msg">"حدث خطأ بالاتصال بالسرفر برجاء اعادة المحاولة "</string>
 
 </resources>

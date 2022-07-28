@@ -425,7 +425,7 @@
                 android:text="@string/approve_head_department"
                 android:textColor="@color/white"
                 app:cornerRadius="10dp"
-
+                app:layout_constraintBottom_toTopOf="@+id/deny"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stepper_view" />

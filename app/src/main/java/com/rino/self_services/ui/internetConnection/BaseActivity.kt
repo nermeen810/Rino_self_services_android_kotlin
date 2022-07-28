@@ -22,14 +22,13 @@ open class BaseActivity : AppCompatActivity(), MyConnectivityReceiver.Connectivi
 
     private fun showMessage(isConnected: Boolean) {
         if (!isConnected) {
-            val messageToUser = "You are offline now."
+            val messageToUser = "حدث خطأ في الاتصال بالانترنت برجاء فحص لشبكة"
             mSnackBar = Snackbar.make(findViewById(R.id.rootLayout), messageToUser, Snackbar.LENGTH_LONG) //Assume "rootLayout" as the root layout of every activity.
-            mSnackBar?.duration = Snackbar.LENGTH_INDEFINITE
+            mSnackBar?.duration = Snackbar.LENGTH_LONG
             mSnackBar?.show()
         } else {
             if(mSnackBar?.isShown == true) {
-                mSnackBar?.dismiss()
-                val messageToUser = "internet restored."
+                val messageToUser = "انترنت متصل الان"
                 mSnackBar = Snackbar.make(
                     findViewById(R.id.rootLayout),
                     messageToUser,

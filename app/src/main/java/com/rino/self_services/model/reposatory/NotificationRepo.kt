@@ -15,6 +15,7 @@ import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSource,private val context: Application)
@@ -42,23 +43,25 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
+                        result = Result.Error(Exception("حدث خطأ برجاء اعادة تسجيل الدخول"))
                         sharedPreference.logout()
                         Log.i("refreshToken refresh token:", "Result $result")
 
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
+                    408 -> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
 
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
+                    504 -> {
+                        Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -66,11 +69,16 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 }
             }
 
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -86,10 +94,12 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        //  result = Result.Error(Exception("Not Found"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -101,39 +111,43 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
-                    else -> {
-                        Log.e("Error", "Generic Error")
-                        result = Result.Error(Exception("Error"))
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -150,10 +164,12 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        //  result = Result.Error(Exception("Not Found"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -165,39 +181,43 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
-                    else -> {
-                        Log.e("Error", "Generic Error")
-                        result = Result.Error(Exception("Error"))
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -214,10 +234,12 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        //  result = Result.Error(Exception("Not Found"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -229,39 +251,43 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
                     }
-                    else -> {
-                        Log.e("Error", "Generic Error")
-                        result = Result.Error(Exception("Error"))
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(e)
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }

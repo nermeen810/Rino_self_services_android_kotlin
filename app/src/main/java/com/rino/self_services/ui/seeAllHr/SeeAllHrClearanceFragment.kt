@@ -1,7 +1,6 @@
 package com.rino.self_services.ui.seeAllHr
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +47,7 @@ class SeeAllHrClearanceFragment : Fragment() {
         layoutManager = LinearLayoutManager(requireContext())
         observeLoading()
         oserveData()
-        overseError()
+        observeError()
         handleBack()
         adapter = HRSeeAllRVAdapter(period.meOrOthers,ArrayList()){
             if (it != null) {
@@ -110,7 +109,7 @@ class SeeAllHrClearanceFragment : Fragment() {
             }
 
     }
-    private fun overseError(){
+    private fun observeError(){
         viewModel.setError.observe(viewLifecycleOwner){
             if (it != null || it != ""){
                 if (viewModel.seeAllPaymentProcessData.value?.data?.isNotEmpty() == true){
