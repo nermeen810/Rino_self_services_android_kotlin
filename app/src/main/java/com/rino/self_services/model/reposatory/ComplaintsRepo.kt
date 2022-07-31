@@ -59,11 +59,11 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
 
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     504 -> {
                         Log.e("Error 502", "Time out")
@@ -82,7 +82,7 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -133,11 +133,11 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("server is down"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     504 -> {
                         Log.e("Error 504", "Time out")
@@ -152,7 +152,7 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -203,11 +203,11 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ فى السرفر برجاء اعادة المحاولة"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("حدث خطأ فى السرفر برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     504 -> {
                         Log.e("Error 504", "Time out")
@@ -222,7 +222,7 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -293,7 +293,7 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
         message = "Time out"
         result = Result.Error(java.lang.Exception(message))
     } else {
-        result = Result.Error(e)
+        result = Result.Error(Exception("server is down"))
         Log.e("ModelRepository", "IOException ${e.message}")
         Log.e("ModelRepository", "IOException ${e.localizedMessage}")
     }
@@ -356,11 +356,11 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                         500 -> {
                             Log.e("Error 500", "Server Error")
                             result =
-                                Result.Error(Exception("حدث خطأ فى السرفر برجاء اعادة المحاولة"))
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                         }
                         502 -> {
                             result =
-                                Result.Error(Exception("حدث خطأ فى السرفر برجاء اعادة المحاولة"))
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                         }
                         504 -> {
                             Log.e("Error 504", "Time out")
@@ -376,7 +376,7 @@ class ComplaintsRepo  @Inject constructor(private val apiDataSource: ApiDataSour
                     message = "حدث خطأ برجاء اعادة المحاولة"
                     result = Result.Error(java.lang.Exception(message))
                 } else {
-                    result = Result.Error(e)
+                    result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     Log.e("ModelRepository", "IOException ${e.message}")
                     Log.e("ModelRepository", "IOException ${e.localizedMessage}")
                 }

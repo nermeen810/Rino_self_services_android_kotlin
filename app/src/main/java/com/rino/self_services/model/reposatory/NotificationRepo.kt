@@ -43,28 +43,30 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("حدث خطأ برجاء اعادة تسجيل الدخول"))
-                        sharedPreference.logout()
-                        Log.i("refreshToken refresh token:", "Result $result")
-
+                        result = Result.Error(Exception("Bad Request "))
                     }
                     408 -> {
-                        Log.e("Error 408", "Time out")
+                        Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
-
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    502 ->{
+                        Log.e("Error 502", "Server Error")
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة "))
                     }
                     504 -> {
                         Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
-                        Log.e("Error", "Generic Error")
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
                     }
                 }
             }
@@ -75,7 +77,7 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -144,7 +146,7 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -214,7 +216,7 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -284,7 +286,7 @@ class NotificationRepo @Inject constructor(private val apiDataSource: ApiDataSou
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }

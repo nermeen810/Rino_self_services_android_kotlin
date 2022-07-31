@@ -57,38 +57,47 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
-                        logout()
-                        Log.i("refreshToken refresh token:", "Result $result")
-
+                        result = Result.Error(Exception("Bad Request "))
                     }
                     408 -> {
-                        Log.e("Error 502", "Time out")
-                        result = Result.Error(Exception("Time out"))
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    502 ->{
+                        Log.e("Error 502", "Server Error")
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة "))
                     }
                     504 -> {
-                        Log.e("Error 502", "Time out")
+                        Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
-
                     else -> {
-                        Log.e("Error", "Generic Error")
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
                     }
                 }
             }
 
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
+
     }
 
     fun logout() {
@@ -110,31 +119,32 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Request "))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    408 -> {
+                    408-> {
                         Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("Time out"))
                     }
-                    401 ->{
+                    401 -> {
                         Log.e("Error 401", "Not Auth please, logout and login again")
                         if (sharedPreference.isLogin()) {
                             Log.i(
                                 "Model Repo:",
                                 "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                             )
-                         val res = refreshToken()
-                            when(res) {
+                            val res = refreshToken()
+                            when (res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result =
+                                        Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result =
+                                        Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             result =
                                 Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
@@ -143,10 +153,14 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                         Log.e("Error 500", "Server Error")
                         result = Result.Error(Exception("server is down"))
                     }
-                    504 -> {
-                        Log.e("Error 504", "Time out")
+                    502 -> {
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("server is down"))
+                    }
+                    504 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("Time out"))
                     }
                     else -> {
                         Log.e("Error", response.code().toString())
@@ -156,10 +170,15 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
             }
 
         } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", " ${e.message}")
-            Log.e("ModelRepository", " ${e.javaClass}")
-
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "Time out"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("server is down"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -234,7 +253,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 message = "Time out"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("server is down"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -257,222 +276,6 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     408-> {
                         Log.e("Error 504", "Time out")
-                        result =
-                            Result.Error(Exception("Time out"))
-                    }
-                    401 ->{
-                        Log.e("Error 401", "Not Auth please, logout and login again")
-                        if (sharedPreference.isLogin()) {
-                            Log.i(
-                                "Model Repo:",
-                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
-                            )
-                            val res = refreshToken()
-                            when(res) {
-                                is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
-                                }
-                                is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                                }
-                            }
-                        }
-                        else {
-                            result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                        }
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
-                    }
-                    502 -> {
-                        result =
-                            Result.Error(Exception("server is down"))
-                    }
-                    504 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("Time out"))
-                    }
-                }
-            }
-        }catch(e: IOException) {
-            val message: String
-            if (e is SocketTimeoutException) {
-                message = "Time out"
-                result = Result.Error(java.lang.Exception(message))
-            } else {
-                result = Result.Error(e)
-                Log.e("ModelRepository", "IOException ${e.message}")
-                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-            }
-        }
-        return result
-    }
-    suspend fun getPaymentDetails(token:String,id:Int): Result<PaymentProcessDetails?> {
-        var result: Result<PaymentProcessDetails?> = Result.Loading
-        try {
-            val response = apiDataSource.getPaymentDetails(token, id)
-            if (response.isSuccessful) {
-                result = Result.Success(response.body())
-
-
-            } else {
-                when (response.code()) {
-                    400 -> {
-                        Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Request"))
-                    }
-                    408 -> {
-                        Log.e("Error 504", "Time out")
-                        result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة"))
-                    }
-                    401 -> {
-                        Log.e("Error 401", "Not Auth please, logout and login again")
-                        if (sharedPreference.isLogin()) {
-                            Log.i(
-                                "Model Repo:",
-                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
-                            )
-                            val res = refreshToken()
-                            when (res) {
-                                is Result.Success -> {
-                                    result =
-                                        Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
-                                }
-                                is Result.Error -> {
-                                    result =
-                                        Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                                }
-                            }
-                        } else {
-                            result =
-                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                        }
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
-                    }
-                    502 -> {
-                        result =
-                            Result.Error(Exception("حدث خطأ بالسرفر  برجاء اعادة المحاولة"))
-                    }
-                    504 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
-                    }
-                }
-            }
-        } catch (e: IOException) {
-            val message: String
-            if (e is SocketTimeoutException) {
-                message = "حدث خطأ برجاء اعادة المحاولة"
-                result = Result.Error(java.lang.Exception(message))
-            } else {
-                result = Result.Error(e)
-                Log.e("ModelRepository", "IOException ${e.message}")
-                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-            }
-        }
-        return result
-    }
-
-    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<ArrayList<Attachment>?>{
-        var result: Result<ArrayList<Attachment>?> = Result.Loading
-
-        try {
-            val response = attachments.parts?.let {
-                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.attachmentType,
-                    it
-                )
-            }
-            if (response != null) {
-                if (response.isSuccessful) {
-                    result = Result.Success(response.body())
-                    Log.i("getHrClearanceHomeList", "Result $result")
-                } else {
-                    Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
-                    when (response.code()) {
-                        400 -> {
-                            Log.e("Error 400", "Bad Request")
-                            result = Result.Error(Exception("Bad Request "))
-                        }
-                        408 -> {
-                            Log.e("Error 408", "Not Found")
-                            result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
-                        }
-                        401 ->{
-                            Log.e("Error 401", "Not Auth please, logout and login again")
-                            if (sharedPreference.isLogin()) {
-                                Log.i(
-                                    "Model Repo:",
-                                    "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
-                                )
-                                val res = refreshToken()
-                                when(res) {
-                                    is Result.Success -> {
-                                        result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
-                                    }
-                                    is Result.Error -> {
-                                        result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                                    }
-                                }
-                            }
-                            else {
-                                result =
-                                    Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
-                            }
-                        }
-                        500 -> {
-                            Log.e("Error 500", "Server Error")
-                            result = Result.Error(Exception("server is down"))
-                        }
-                        504 -> {
-                            Log.e("Error 504", "Time out")
-                            result =
-                                Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
-                        }
-                        else -> {
-                            Log.e("Error", response.code().toString())
-                            result = Result.Error(Exception("Error"))
-                        }
-                    }
-                }
-            }
-
-        } catch (e: IOException) {
-            val message: String
-            if (e is SocketTimeoutException) {
-                message = "حدث خطأ برجاء اعادة المحاولة"
-                result = Result.Error(java.lang.Exception(message))
-            } else {
-                result = Result.Error(e)
-                Log.e("ModelRepository", "IOException ${e.message}")
-                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-            }
-        }
-        return result
-    }
-    suspend fun paymentAction(id:Int,action:String): Result<ActionResponse?> {
-        var result: Result<ActionResponse?> = Result.Loading
-        try {
-            val response = apiDataSource.paymentAction("Bearer "+sharedPreference.getToken(), action = action, id = id)
-            if (response.isSuccessful) {
-                result = Result.Success(response.body())
-
-
-            } else {
-                when (response.code()) {
-                    400 -> {
-                        Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Request"))
-                    }
-                    408-> {
-                        Log.e("Error 408", "Time out")
                         result =
                             Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
@@ -500,15 +303,14 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     504 -> {
-                        Log.e("Error 504", "Time out")
+                        Log.e("Error 502", "Time out")
                         result =
                             Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
@@ -520,7 +322,224 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
+        }
+            return result
+    }
+    suspend fun getPaymentDetails(token:String,id:Int): Result<PaymentProcessDetails?> {
+        var result: Result<PaymentProcessDetails?> = Result.Loading
+        try {
+            val response = apiDataSource.getPaymentDetails(token, id)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+
+
+            } else {
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
+                    }
+                    408-> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    502 -> {
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    504 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
+                }
+            }
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
+        }
+        return result
+    }
+
+    suspend fun createAttachment(attachments: CreateAttachmentRequest):Result<ArrayList<Attachment>?>{
+        var result: Result<ArrayList<Attachment>?> = Result.Loading
+
+        try {
+            val response = attachments.parts?.let {
+                apiDataSource.createAttachment("Bearer "+sharedPreference.getToken(),attachments.id,attachments.attachmentType,
+                    it
+                )
+            }
+            if (response != null) {
+                if (response.isSuccessful) {
+                    result = Result.Success(response.body())
+                    Log.i("getHrClearanceHomeList", "Result $result")
+                } else {
+                    Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                    when (response.code()) {
+                        400 -> {
+                            Log.e("Error 400", "Bad Request")
+                            result = Result.Error(Exception("Bad Request"))
+                        }
+                        408 -> {
+                            Log.e("Error 504", "Time out")
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                        }
+                        401 -> {
+                            Log.e("Error 401", "Not Auth please, logout and login again")
+                            if (sharedPreference.isLogin()) {
+                                Log.i(
+                                    "Model Repo:",
+                                    "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                                )
+                                val res = refreshToken()
+                                when (res) {
+                                    is Result.Success -> {
+                                        result =
+                                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
+                                    }
+                                    is Result.Error -> {
+                                        result =
+                                            Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    }
+                                }
+                            } else {
+                                result =
+                                    Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                            }
+                        }
+                        500 -> {
+                            Log.e("Error 500", "Server Error")
+                            result =
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                        }
+                        502 -> {
+                            result =
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                        }
+                        504 -> {
+                            Log.e("Error 502", "Time out")
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                        }
+                    }
+                }
+            }
+            }catch(e: IOException) {
+                val message: String
+                if (e is SocketTimeoutException) {
+                    message = "حدث خطأ برجاء اعادة المحاولة"
+                    result = Result.Error(java.lang.Exception(message))
+                } else {
+                    result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    Log.e("ModelRepository", "IOException ${e.message}")
+                    Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+                }
+            }
+            return result
+    }
+    suspend fun paymentAction(id:Int,action:String): Result<ActionResponse?> {
+        var result: Result<ActionResponse?> = Result.Loading
+        try {
+            val response = apiDataSource.paymentAction("Bearer "+sharedPreference.getToken(), action = action, id = id)
+            if (response.isSuccessful) {
+                result = Result.Success(response.body())
+
+
+            } else {
+                when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
+                    }
+                    408-> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    502 -> {
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    504 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
+                }
+            }
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -572,11 +591,11 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("حدث خطأ بالسرفر برجاء اعادة المحاولة"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     504 -> {
                         Log.e("Error 502", "Time out")
@@ -591,7 +610,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -661,7 +680,7 @@ class PaymentRepo @Inject constructor(private val apiDataSource: ApiDataSource,p
                 message = "Time out"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
