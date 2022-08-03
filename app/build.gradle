@@ -107,13 +107,14 @@ dependencies {
     // Ayman Ali Omara
     implementation 'commons-io:commons-io:2.4'
 
-
-    // nermeen
     //firebase
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
-    
+
+    //pdfViewer
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'

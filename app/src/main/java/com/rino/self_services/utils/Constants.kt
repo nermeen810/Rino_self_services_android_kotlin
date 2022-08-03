@@ -4,7 +4,7 @@ object Constants {
 
     val base_url = "https://rino-app-staging.azurewebsites.net/"
 
- //   val base_url = "https://rino-app.azurewebsites.net/"
+//    val base_url = "https://rino-app.azurewebsites.net/"
 
 //    val base_url = "https://04d4-156-214-216-38.ngrok.io/"
   

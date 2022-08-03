@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -129,12 +130,11 @@ class SeeAllPaymentProcessFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
                 .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                    resources.getColor(
-                        R.color.color_orange
-                    )
-                )
-                .setActionTextColor(resources.getColor(R.color.white))
-                .setAction(getString(R.string.dismiss))
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_orange)).setActionTextColor(ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white)).setAction(getString(R.string.dismiss))
                 {
                 }.show()
         }

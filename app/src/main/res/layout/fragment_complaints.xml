@@ -169,6 +169,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/attachmentRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/paddingLayout"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/textInputNotes"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:listitem="@layout/preview_attachment_item" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_attachment_btn"
         android:layout_width="match_parent"
@@ -181,7 +193,7 @@
         android:textColor="@color/dark_gray"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputNotes"
+        app:layout_constraintTop_toBottomOf="@+id/attachmentRecycle"
         app:layout_constraintWidth_percent="0.4" />
 
         <androidx.appcompat.widget.AppCompatButton

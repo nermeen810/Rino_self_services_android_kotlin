@@ -148,12 +148,12 @@ class ChangePasswordFragment : Fragment() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
                 Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
-                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(ContextCompat.getColor(
+                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.color_orange)).setActionTextColor(ContextCompat.getColor(
                         requireContext(),
-                        R.color.color_orange
-                    )
-                    )
-                    .setActionTextColor(resources.getColor(R.color.white)).setAction("Ok")
+                        R.color.white)).setAction(getString(R.string.dismiss))
                     {
                     }.show()
             }
