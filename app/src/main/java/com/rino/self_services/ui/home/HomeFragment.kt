@@ -40,9 +40,9 @@ class HomeFragment : Fragment() {
         binding.paymentProcessBtn.setOnClickListener{
             navigateToPayment()
         }
-//        binding.notificationBtn.setOnClickListener{
-//
-//        }
+        binding.notificationBtn.setOnClickListener{
+
+        }
     }
     private fun navigateToPayment() {
         val action = HomeFragmentDirections.homeToPayment()

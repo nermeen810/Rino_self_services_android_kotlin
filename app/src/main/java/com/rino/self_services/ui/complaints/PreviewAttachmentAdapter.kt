@@ -39,10 +39,10 @@ class PreviewAttachmentAdapter (private var attachmentList: ArrayList<File>, pri
         // openAttachment(attachmentList[position],getMimeType(attachmentList[position]))
           //  val mime =getMimeType(attachmentList[position])
             val url = attachmentList[position].name
-            if(url.contains(".jpg") || url.contains(".jpeg") || url.contains(".png")||url.contains(".pdf"))
-            {
-                viewModel.setNavToPdfPreview(attachmentList[position])
-            }
+//            if(url.contains(".jpg") || url.contains(".jpeg") || url.contains(".png")||url.contains(".pdf"))
+//            {
+//                viewModel.setNavToPdfPreview(attachmentList[position])
+//            }
 
         }
         holder.binding.cancelBtn.setOnClickListener {
