@@ -21,10 +21,14 @@ class NotificationViewModel @Inject constructor(private val modelRepository:Noti
     private var _setNotificationASRead = MutableLiveData<SetNotificationAsRead?>()
     private var _readNotificationPosition = MutableLiveData<Int>()
     private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _setError = MutableLiveData<String>()
     private var _noData = MutableLiveData<Boolean>()
 
     val loading: LiveData<Int>
         get() = _loading
+
+    val setError: LiveData<String>
+        get() = _setError
 
     val noData: LiveData<Boolean>
         get() = _noData
@@ -49,6 +53,8 @@ class NotificationViewModel @Inject constructor(private val modelRepository:Noti
 
                 is Result.Error -> {
                     Log.e("getAllNotification:", "${result.exception.message}")
+                    _setError.postValue(result.exception.message)
+
 
                 }
                 is Result.Loading -> {
@@ -70,6 +76,7 @@ class NotificationViewModel @Inject constructor(private val modelRepository:Noti
 
                 is Result.Error -> {
                     Log.e("setNotificationAsRead:", "${result.exception.message}")
+                    _setError.postValue(result.exception.message)
 
                 }
                 is Result.Loading -> {

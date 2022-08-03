@@ -18,6 +18,7 @@ import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.PREF_FILE_NAME
 import com.rino.self_services.utils.Result
 import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSource, private val context: Application){
@@ -43,34 +44,44 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
-                        sharedPreference.logout()
-                        Log.i("refreshToken refresh token:", "Result $result")
-
+                        result = Result.Error(Exception("Bad Request "))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
+                    408 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
+                    502 ->{
+                        Log.e("Error 502", "Server Error")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة "))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                     }
                     else -> {
-                        Log.e("Error", "Generic Error")
+                        Log.e("Error", response.code().toString())
+                        result = Result.Error(Exception("Error"))
                     }
                 }
             }
 
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -89,15 +100,12 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("Time out"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -109,35 +117,43 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("حدث حطأاثناء الاتصال برجاء اعادة المحاولة"))
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("server is down"))
                     }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+                    502 -> {
+                        result =
+                            Result.Error(Exception("server is down"))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("Time out"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "Time out"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("server is down"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -154,11 +170,12 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Request "))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("Time out"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -170,16 +187,16 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
@@ -187,23 +204,26 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                         result = Result.Error(Exception("server is down"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("server is down"))
                     }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("Time out"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "Time out"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("server is down"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -219,15 +239,12 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -239,35 +256,43 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("حدث حطأأثناء الاتصال  برجاء اعادة المحاولة"))
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+                    502 -> {
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("server is down"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -283,15 +308,12 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Bad Reques "))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-                    404 -> {
-                        Log.e("Error 404", "Not Found")
-                        result = Result.Error(Exception("Not Found"))
-                    }
-                    500 -> {
-                        Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
@@ -303,35 +325,43 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
-                        result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال برجاء المحاوله مره اخري "))
+                    500 -> {
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
-                    else -> {
-                        Log.e("Error", response.code().toString())
-                        result = Result.Error(Exception("Error"))
+                    502 -> {
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+        }catch(e: IOException) {
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -354,13 +384,14 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                     when (response.code()) {
                         400 -> {
                             Log.e("Error 400", "Bad Request")
-                            result = Result.Error(Exception("Bad Reques "))
+                            result = Result.Error(Exception("Bad Request"))
                         }
-                        404 -> {
-                            Log.e("Error 404", "Not Found")
-                            result = Result.Error(Exception("Not Found"))
+                        408 -> {
+                            Log.e("Error 408", "Time out")
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                         }
-                        401 ->{
+                        401 -> {
                             Log.e("Error 401", "Not Auth please, logout and login again")
                             if (sharedPreference.isLogin()) {
                                 Log.i(
@@ -368,44 +399,50 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                                     "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
                                 )
                                 val res = refreshToken()
-                                when(res) {
+                                when (res) {
                                     is Result.Success -> {
-                                        result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                        result =
+                                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                     }
                                     is Result.Error -> {
-                                        result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                        result =
+                                            Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 result =
-                                    Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                             }
                         }
                         500 -> {
                             Log.e("Error 500", "Server Error")
-                            result = Result.Error(Exception("server is down"))
+                            result =
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                         }
                         502 -> {
-                            Log.e("Error 502", "Time out")
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                         }
-                        else -> {
-                            Log.e("Error", response.code().toString())
-                            result = Result.Error(Exception("Error"))
+                        504 -> {
+                            Log.e("Error 504", "Time out")
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                         }
                     }
                 }
             }
-
-        } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
-        }
-        return result
+            }catch(e: IOException) {
+                val message: String
+                if (e is SocketTimeoutException) {
+                    message = "حدث خطأ برجاء اعادة المحاولة"
+                    result = Result.Error(java.lang.Exception(message))
+                } else {
+                    result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                    Log.e("ModelRepository", "IOException ${e.message}")
+                    Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+                }
+            }
+            return result
     }
     suspend fun clearanceAction(id:Int,action:String,entity:Int): Result<ActionResponse?> {
         var result: Result<ActionResponse?> = Result.Loading
@@ -416,6 +453,15 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
 
             } else {
                 when (response.code()) {
+                    400 -> {
+                        Log.e("Error 400", "Bad Request")
+                        result = Result.Error(Exception("Bad Request"))
+                    }
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
                     401 ->{
                         Log.e("Error 401", "Not Auth please, logout and login again")
                         if (sharedPreference.isLogin()) {
@@ -426,30 +472,44 @@ class HrClearanceRepo  @Inject constructor(private val apiDataSource: ApiDataSou
                             val res = refreshToken()
                             when(res) {
                                 is Result.Success -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
-                        result = Result.Error(Exception("server is down"))
+                        Log.e("Error 500", "Server Error")
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
                     502 -> {
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                     }
-
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
                 }
             }
         }catch(e: IOException) {
-            result = Result.Error(e)}
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء اعادة المحاولة"
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
+        }
         return result
     }
 }

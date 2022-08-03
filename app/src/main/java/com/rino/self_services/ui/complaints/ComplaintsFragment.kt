@@ -13,14 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentComplaintsBinding
-import com.rino.self_services.ui.main.FileCaller
+import com.rino.self_services.ui.pdfViewer.MyFile
 import com.rino.self_services.utils.Constants
 import com.rino.self_services.utils.dateToArabic
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +40,9 @@ class ComplaintsFragment : Fragment() {
     private lateinit var binding: FragmentComplaintsBinding
     private var from_where = ""
     private var department = ""
+    private lateinit var serviceAdapter: PreviewAttachmentAdapter
+    private lateinit var servicesList: ArrayList<File>
+    var filesArray = ArrayList<File>()
     private var isDepartmentSelected = false
     private  var parts:ArrayList<MultipartBody.Part> = arrayListOf()
 
@@ -62,12 +67,24 @@ class ComplaintsFragment : Fragment() {
 
     private fun init() {
         viewModel.getDepartment()
+        serviceAdapter = PreviewAttachmentAdapter(arrayListOf(), requireActivity(),viewModel)
+
+        setUpUI()
+      //  serviceAdapter.updateItems(servicesList)
         observeData()
         setBodyLength()
         addAttachments()
         addComplaint()
         handleBack()
 
+    }
+
+    private fun setUpUI() {
+        binding.attachmentRecycle.visibility = View.GONE
+        binding.attachmentRecycle.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = serviceAdapter
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,6 +100,7 @@ class ComplaintsFragment : Fragment() {
     private fun addComplaint() {
         binding.addComplaintsBtn.setOnClickListener {
             Log.e("attachment",parts.toString())
+            setParts(filesArray)
             val body =   binding.notesEditTxt.text.toString()
             val officer = binding.administratorEditTxt.text.toString()
             if(validateData(officer,body)) {
@@ -110,7 +128,7 @@ class ComplaintsFragment : Fragment() {
             bodyFlag = false
         }
         if (body.length >500) {
-            binding.textInputNotes.error = getString(R.string.must_be_less_than_500)
+            binding.textInputNotes.error = getString(R.string.must_be_less_than_500).dateToArabic()
             bodyFlag = false
         }
         else {
@@ -177,7 +195,7 @@ class ComplaintsFragment : Fragment() {
     }
     fun emitFileForCaller(data: Intent?, resultCode:Int){
         if (resultCode == Activity.RESULT_OK && data != null) {
-            var array = ArrayList<File>()
+
             if(data.clipData != null){
 
                 val data: Intent? = data
@@ -189,7 +207,7 @@ class ComplaintsFragment : Fragment() {
                         val imageUri: Uri? = data.clipData?.getItemAt(i)?.uri
                         val file = getImageFromUri(imageUri)
                         file?.let {
-                            array.add(it)
+                            filesArray.add(it)
                         }
                     }
                 }
@@ -198,13 +216,14 @@ class ComplaintsFragment : Fragment() {
                 val imageUri: Uri? = data.data
                 val file = getImageFromUri(imageUri)
                 file?.let{
-                    array.add(it)
+                    filesArray.add(it)
 
                 }
             }
-            Log.e("attachmentArray",array.toString())
+            Log.e("attachmentArray",filesArray.toString())
+            binding.attachmentRecycle.visibility= View.VISIBLE
+            serviceAdapter.updateItems(filesArray)
 
-            setParts(array)
 
         }
     }
@@ -232,11 +251,12 @@ class ComplaintsFragment : Fragment() {
     private fun showMessage(msg: String) {
         Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                resources.getColor(
-                    R.color.color_orange
-                )
-            )
-            .setActionTextColor(resources.getColor(R.color.white)).setAction("Ok")
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_orange)).setActionTextColor(
+                ContextCompat.getColor(
+                requireContext(),
+                R.color.white)).setAction(getString(R.string.dismiss))
             {
             }.show()
     }
@@ -254,13 +274,52 @@ class ComplaintsFragment : Fragment() {
         observeDepartments()
         observeCreateComplaint()
         observeLoading()
+        observeAttachmentDeleted()
+        observeNavToPDF()
         observeShowError()
+    }
+
+    private fun observeNavToPDF() {
+        viewModel.navToPdfPreview.observe(viewLifecycleOwner){
+            it?.let {
+                navToPdfPreview(it)
+            }
+        }
+    }
+
+    private fun navToPdfPreview(file:File) {
+        if (from_where == "hr_profile") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToPdfViewerFragment("hr",  MyFile(file))
+            findNavController().navigate(action)
+        } else if (from_where == "payment_profile") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToPdfViewerFragment("payment", MyFile(file) )
+            findNavController().navigate(action)
+        } else if (from_where == "hr_view_complaints") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToPdfViewerFragment("hr_profile",  MyFile(file))
+            findNavController().navigate(action)
+        } else if (from_where == "payment_view_complaints") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToPdfViewerFragment("payment_profile",  MyFile(file))
+            findNavController().navigate(action)
+
+        }
+    }
+
+    private fun observeAttachmentDeleted() {
+        viewModel.attachmentsDeleteItem.observe(viewLifecycleOwner){
+            it?.let {
+              filesArray.remove(it)
+            }
+        }
     }
 
     private fun observeCreateComplaint() {
         viewModel.createComplaintResponse.observe(viewLifecycleOwner){
             it?.let {
-               showMessage("تم ارسال الشكوى بنحاح")
+               showMessage("تم ارسال الشكوى بنجاح")
                 goBack()
             }
         }

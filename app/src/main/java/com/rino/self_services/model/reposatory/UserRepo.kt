@@ -48,7 +48,7 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("حدث حطأ برجاء اعادة تسجيل الدخول"))
+                        result = Result.Error(Exception("حدث خطأ برجاء اعادة تسجيل الدخول"))
                         sharedPreference.logout()
                         Log.i("refreshToken refresh token:", "Result $result")
 
@@ -59,12 +59,17 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
 
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاءاعادة المحاولة"))
                     }
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء فحص الشبكة"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاءاعادة المحاولة"))
+                    }
+                    504 -> {
+                        Log.e("Error 502", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاءاعادة المحاولة"))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -73,10 +78,15 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
             }
 
         } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -111,23 +121,28 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                                     result = Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
                                 }
                                 is Result.Error -> {
-                                    result = Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                                 }
                             }
                         }
                         else {
                             result =
-                                Result.Error(Exception("حدث حطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
                         }
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
+                        Log.e("Error 502", "Server Error")
                         result =
-                            Result.Error(Exception("حدث حطأ برجاء اعادة المحاولة "))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى "))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء المحاولة مرة أخرى "))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -137,10 +152,15 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
             }
 
         } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -157,7 +177,7 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("Wrong Email or Password "))
+                        result = Result.Error(Exception("خطأ فى البريد الكترونى او كلمة المرور "))
                     }
                     404 -> {
                         Log.e("Error 404", "Not Found")
@@ -165,12 +185,12 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
-                    502 -> {
-                        Log.e("Error 502", "Time out")
+                    504 -> {
+                        Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("time out"))
+                            Result.Error(Exception("حدث خطأ برجاء المحاولة مرة أخرى"))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -180,10 +200,15 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
             }
 
         } catch (e: IOException) {
-            result = Result.Error(e)
-            Log.e("ModelRepository", "IOException ${e.message}")
-            Log.e("ModelRepository", "IOException ${e.localizedMessage}")
-
+            val message: String
+            if (e is SocketTimeoutException) {
+                message = "حدث خطأ برجاء المحاولة مرة أخرى."
+                result = Result.Error(java.lang.Exception(message))
+            } else {
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
+                Log.e("ModelRepository", "IOException ${e.message}")
+                Log.e("ModelRepository", "IOException ${e.localizedMessage}")
+            }
         }
         return result
     }
@@ -211,12 +236,17 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                     }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("server idd down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
+                    Log.e("Error 502", "Server Error")
+                    result =
+                        Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -228,10 +258,10 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
         } catch (e: IOException) {
             val message: String
             if (e is SocketTimeoutException) {
-                message = "حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى."
+                message = "حدث خطأ برجاء المحاولة مرة أخرى."
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -263,13 +293,18 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
 
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("Server is down"))
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
 
                     }
                     502 -> {
                         Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال  برجاء المحاولة مرة أخرى"))
+                    }
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
                     else -> {
                         Log.e("Error", "Generic Error")
@@ -281,10 +316,10 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
         } catch (e: IOException) {
             val message: String
             if (e is SocketTimeoutException) {
-                message = "حدث خطأ أثناء الاتصال بالانترنت برجاء المحاولة مرة أخرى."
+                message = "حدث خطأ برجاء المحاولة مرة أخرى."
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }
@@ -303,33 +338,57 @@ class UserRepo @Inject constructor(private val apiDataSource: ApiDataSource,priv
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")
-                        result = Result.Error(Exception("كلمة المرور الحالية خاطئة"))
+                        result = Result.Error(Exception("Bad Request"))
                     }
-
+                    408-> {
+                        Log.e("Error 408", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
+                    }
+                    401 ->{
+                        Log.e("Error 401", "Not Auth please, logout and login again")
+                        if (sharedPreference.isLogin()) {
+                            Log.i(
+                                "Model Repo:",
+                                "isLogin:" + sharedPreference.isLogin() + ", token:" + sharedPreference.getToken() + ",  refresh token:" + sharedPreference.getRefreshToken()
+                            )
+                            val res = refreshToken()
+                            when(res) {
+                                is Result.Success -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة "))
+                                }
+                                is Result.Error -> {
+                                    result = Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                                }
+                            }
+                        }
+                        else {
+                            result =
+                                Result.Error(Exception("حدث خطأ برجاء تسجيل الخروج ثم اعادة تسجيل الدخول"))
+                        }
+                    }
                     500 -> {
                         Log.e("Error 500", "Server Error")
-                        result = Result.Error(Exception("Server is down"))
-
+                        result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
                     502 -> {
-                        Log.e("Error 502", "Time out")
                         result =
-                            Result.Error(Exception("حدث خطأ برجاء المحاولة مرة أخرى"))
+                            Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء المحاولة مرة أخرى"))
                     }
-                    else -> {
-                        Log.e("Error", "Generic Error")
-                        //      result = Result.Error(Exception("Error"))
+                    504 -> {
+                        Log.e("Error 504", "Time out")
+                        result =
+                            Result.Error(Exception("حدث خطأ برجاء اعادة المحاولة"))
                     }
                 }
             }
-
-        } catch (e: IOException) {
+        }catch(e: IOException) {
             val message: String
             if (e is SocketTimeoutException) {
-                message = "حدث خطأ برجاء المحاولة مرة أخرى."
+                message = "حدث خطأ برجاء اعادة المحاولة"
                 result = Result.Error(java.lang.Exception(message))
             } else {
-                result = Result.Error(e)
+                result = Result.Error(Exception("حدث خطأ أثناء الاتصال بالسرفر برجاء اعادة المحاولة"))
                 Log.e("ModelRepository", "IOException ${e.message}")
                 Log.e("ModelRepository", "IOException ${e.localizedMessage}")
             }

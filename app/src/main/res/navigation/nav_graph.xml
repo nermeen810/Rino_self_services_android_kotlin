@@ -262,6 +262,9 @@
         <action
             android:id="@+id/action_complaintsFragment_to_viewComplaintsFragment"
             app:destination="@id/viewComplaintsFragment" />
+        <action
+            android:id="@+id/action_complaintsFragment_to_pdfViewerFragment"
+            app:destination="@id/pdfViewerFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentArchiveFragment"
@@ -320,6 +323,25 @@
         <action
             android:id="@+id/action_changePasswordFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.rino.self_services.ui.pdfViewer.PdfViewerFragment"
+        android:label="fragment_pdf_viewer"
+        tools:layout="@layout/fragment_pdf_viewer" >
+        <action
+            android:id="@+id/action_pdfViewerFragment_to_ComplaintsFragment"
+            app:destination="@id/complaintsFragment"
+            app:popUpTo="@id/complaintsFragment"
+            app:popUpToInclusive="true"
+            />
+        <argument
+            android:name="from_where"
+            app:argType="string" />
+        <argument
+            android:name="file"
+            app:argType="com.rino.self_services.ui.pdfViewer.MyFile" />
+
     </fragment>
 
 </navigation>

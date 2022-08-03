@@ -20,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
+import com.rino.self_services.ui.internetConnection.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,7 @@ import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     val viewModel: MainActivityViewModel by viewModels()
     var _paymentProcessFiles = MutableLiveData<ArrayList<File>>()

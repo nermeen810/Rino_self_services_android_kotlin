@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentNotificationsBinding
 import com.rino.self_services.model.pojo.notifications.Data
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,8 +46,26 @@ class NotificationsFragment : Fragment() {
         observeAllNotification()
         observeSetNotificationAsRead()
         observeLoading()
+        observeShowError()
         serviceAdapter.updateItems(servicesList)
 
+    }
+
+    private fun observeShowError() {
+       viewModel.setError.observe(viewLifecycleOwner, this::showMsg)
+    }
+
+    private fun showMsg(it: String) {
+        Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_orange)).setActionTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white)).setAction(getString(R.string.dismiss))
+            {
+            }.show()
     }
 
     private fun observeSetNotificationAsRead() {

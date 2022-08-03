@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 @HiltViewModel
 class ComplaintsViewModel @Inject constructor( private val complaintsRepo: ComplaintsRepo) : ViewModel() {
@@ -25,6 +26,8 @@ class ComplaintsViewModel @Inject constructor( private val complaintsRepo: Compl
     private  var _departmentsList = MutableLiveData<ArrayList<String>>()
     private var _setError = MutableLiveData<String>()
     private var _loading = MutableLiveData<Int>(View.GONE)
+    private var _attachmentsDeleteItem = MutableLiveData<File>()
+    private var _navToPdfPreview = MutableLiveData<File>()
 
     val loading: LiveData<Int>
         get() = _loading
@@ -34,7 +37,18 @@ class ComplaintsViewModel @Inject constructor( private val complaintsRepo: Compl
         get() = _createComplaintResponse
     val departmentsList: LiveData<ArrayList<String>>
         get() = _departmentsList
+    val attachmentsDeleteItem: LiveData<File>
+        get() = _attachmentsDeleteItem
+    val navToPdfPreview: LiveData<File>
+        get() = _navToPdfPreview
 
+
+    fun setAttachmentsDeleteItem(attachmentItem: File) {
+        _attachmentsDeleteItem.value = attachmentItem
+    }
+    fun setNavToPdfPreview(attachmentItem: File) {
+        _navToPdfPreview.value = attachmentItem
+    }
     fun getDepartment() {
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {

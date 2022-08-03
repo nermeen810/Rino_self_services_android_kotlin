@@ -38,5 +38,5 @@ class NetworkConnectionInterceptor(val context: Context) : Interceptor {
 }
 class NoConnectivityException : IOException() {
     override val message: String
-        get() = "No Internet Connection"
+        get() = "حدث خطأ في الاتصال بالانترنت برجاء فحص لشبكة"
 }

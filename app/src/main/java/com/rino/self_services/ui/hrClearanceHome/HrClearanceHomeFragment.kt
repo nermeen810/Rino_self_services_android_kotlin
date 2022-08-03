@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -183,7 +184,25 @@ class HrClearanceHomeFragment : Fragment() {
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
-                showMessage(it)
+                if(it.contains("Time out")){
+                    binding.noDataAnim.visibility = View.VISIBLE
+                    binding.textNoData.visibility = View.VISIBLE
+                    binding.noDataAnim.setAnimation(R.raw.rino_timeout)
+                    binding.textNoData.text = getString(R.string.timeout_msg)
+                    binding.searchHistoryRecycle.visibility = View.GONE
+                    binding.historyRecycle.visibility = View.GONE
+                }
+                else if(it.contains("server is down"))
+                {
+                    binding.noDataAnim.visibility = View.VISIBLE
+                    binding.textNoData.visibility = View.VISIBLE
+                    binding.noDataAnim.setAnimation(R.raw.rino_server_error2)
+                    binding.textNoData.text = getString(R.string.server_error_msg)
+                    binding.searchHistoryRecycle.visibility = View.GONE
+                    binding.historyRecycle.visibility = View.GONE                    }
+                else{
+                    showMessage(it)
+                }
             }
         }
     }
@@ -244,11 +263,11 @@ class HrClearanceHomeFragment : Fragment() {
     private fun showMessage(it:String) {
         Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                resources.getColor(
-                    R.color.color_orange
-                )
-            )
-            .setActionTextColor(resources.getColor(R.color.white)).setAction(getString(R.string.dismiss))
+                ContextCompat.getColor(
+               requireContext(),
+                    R.color.color_orange)).setActionTextColor(ContextCompat.getColor(
+                requireContext(),
+                R.color.white)).setAction(getString(R.string.dismiss))
             {
             }.show()
     }
