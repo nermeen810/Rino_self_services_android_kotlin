@@ -140,5 +140,6 @@
     <string name="timeout_msg">حدث خطأ برجاء اعادة المحاولة</string>
     <string name="server_error_msg">"حدث خطأ بالاتصال بالسرفر برجاء اعادة المحاولة "</string>
     <string name="request_type_alerts">نوع الطلب</string>
+    <string name="dialogMessage">هل تريد حذف هذا الملف؟</string>
 
 </resources>

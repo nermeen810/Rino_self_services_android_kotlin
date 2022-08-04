@@ -5,20 +5,27 @@ import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.barteksc.pdfviewer.PDFView
 import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentComplaintsBinding
@@ -104,7 +111,8 @@ class ComplaintsFragment : Fragment() {
             val body =   binding.notesEditTxt.text.toString()
             val officer = binding.administratorEditTxt.text.toString()
             if(validateData(officer,body)) {
-                viewModel.createComplaint(department, officer, body, parts)
+               // viewModel.createComplaint(department, officer, body, parts)
+                Log.e("filesLog:",filesArray.toString())
             }
             else{
                 showMessage("برجاء اضافه البيانات المطلوبة")
@@ -282,8 +290,66 @@ class ComplaintsFragment : Fragment() {
     private fun observeNavToPDF() {
         viewModel.navToPdfPreview.observe(viewLifecycleOwner){
             it?.let {
-                navToPdfPreview(it)
+              //  navToPdfPreview(it)
+                showViewerPopup(it)
             }
+        }
+    }
+
+    private fun showViewerPopup(file: File) {
+        if(file.toString().contains(".jpg") || file.toString().contains(".jpeg") || file.toString().contains(".png")||file.toString().contains(".pdf")) {
+            val inflater =
+                requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.preview_attachment_popup, null)
+            binding.mainLayout.alpha = 0.3f
+            var afterPopup = PopupWindow(
+                view,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            afterPopup.setOnDismissListener { binding.mainLayout.alpha = 1f }
+            afterPopup.isOutsideTouchable = true
+            afterPopup.isFocusable = true
+            //        afterPopup.animationStyle = R.anim.down_to_up
+            afterPopup.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.white)))
+            afterPopup.showAtLocation(requireView(), Gravity.BOTTOM, 0, 0)
+            val attachment_pdf = view.findViewById<PDFView>(R.id.pdfView)
+            val attachment_img = view.findViewById<ImageView>(R.id.imageView)
+            val back_img = view.findViewById<ImageView>(R.id.backbtn)
+            back_img.setOnClickListener {
+                afterPopup.dismiss()
+            }
+            if (file.exists()) {
+                if (file.toString().contains(".jpg") || file.toString()
+                        .contains(".jpeg") || file.toString().contains(".png")
+                ) {
+                    val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    attachment_img.visibility = View.VISIBLE
+                    attachment_pdf.visibility = View.GONE
+                    attachment_img.setImageBitmap(myBitmap)
+                } else if (file.toString().contains(".pdf")) {
+                    attachment_img.visibility = View.GONE
+                    attachment_pdf.visibility = View.VISIBLE
+                    attachment_pdf.fromFile(file)
+                        .password(null)
+                        .defaultPage(0)
+                        .enableSwipe(true)
+                        .swipeHorizontal(false)
+                        .enableDoubletap(true)
+                        .onPageError { page, _ ->
+                            Toast.makeText(
+                                requireContext(),
+                                "Error at page: $page", Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        .load()
+                }
+
+
+            }
+        } else
+        {
+            showMessage("لا يمكن فتح هذا النوع من الملفات حاليا")
         }
     }
 

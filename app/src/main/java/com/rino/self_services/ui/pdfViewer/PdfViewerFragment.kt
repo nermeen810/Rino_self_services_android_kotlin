@@ -47,7 +47,6 @@ class PdfViewerFragment : Fragment() {
 
     private fun init() {
         if (file.exists()) {
-            val mime = getMimeType(file)
             if(file.toString().contains(".jpg") || file.toString().contains(".jpeg") || file.toString().contains(".png"))
             {
                 val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
