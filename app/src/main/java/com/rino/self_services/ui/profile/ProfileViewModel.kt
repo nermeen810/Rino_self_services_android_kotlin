@@ -6,12 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.installations.FirebaseInstallations
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.reposatory.ComplaintsRepo
 import com.rino.self_services.model.reposatory.UserRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +31,11 @@ class ProfileViewModel  @Inject constructor(private val modelRepository: UserRep
         get()  =_getPermission
 
     fun logout() {
+        FirebaseMessaging.getInstance().apply {
+            deleteToken().addOnCompleteListener { it ->
+                Log.d("TAG++", "firebase token deleted ${it.result}")
+            }
+        }
         modelRepository.logout()
     }
 
