@@ -46,18 +46,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/notification_btn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/orange_rect"-->
-<!--        android:layout_margin="@dimen/paddingLayout"-->
-<!--        android:text="@string/notification"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="@dimen/sub_header_text"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/hr_clearance_btn"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        />-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/notification_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/orange_rect"
+        android:layout_margin="@dimen/paddingLayout"
+        android:text="@string/notification"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sub_header_text"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/hr_clearance_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
