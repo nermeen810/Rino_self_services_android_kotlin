@@ -33,6 +33,14 @@
         <action
             android:id="@+id/home_to_hr"
             app:destination="@id/hrClearanceHomeFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_HRClearanceDetailsFragment"
+            app:destination="@id/HRClearanceDetailsFragment"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentProcessDetailsFragment"
+            app:destination="@id/paymentProcessDetailsFragment"
+            app:popUpTo="@id/homeFragment" />
 
     </fragment>
     <fragment

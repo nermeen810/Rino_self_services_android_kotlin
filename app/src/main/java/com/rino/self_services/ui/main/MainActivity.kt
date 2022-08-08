@@ -11,7 +11,6 @@ import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -20,7 +19,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
+import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.ui.internetConnection.BaseActivity
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,8 +31,6 @@ import kotlinx.coroutines.launch
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
-
 
 @AndroidEntryPoint
 
@@ -45,16 +45,25 @@ class MainActivity : BaseActivity() {
     val hrdetailsFile: LiveData<ArrayList<File>>
         get() = _hrDetailsFiles
     private var  count = 0
-     var caller:FileCaller = FileCaller.none
+    var caller:FileCaller = FileCaller.none
+    private var value:NavToDetails? = null
+    private var hrValue:HRClearanceDetailsRequest? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-       splashSetup(navController)
-  //     setArabicAsDefault()
+
+        value = intent.getParcelableExtra("detailsData") as NavToDetails?
+        hrValue = intent.getParcelableExtra("hrDetailsData") as HRClearanceDetailsRequest?
+
+        splashSetup(navController)
     }
+
+
 
     private fun setArabicAsDefault() {
         val locale = Locale("ar")
@@ -66,7 +75,7 @@ class MainActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-     //   super.onBackPressed()
+        //   super.onBackPressed()
         if(count==0)
         {
             Toast.makeText(
@@ -87,10 +96,38 @@ class MainActivity : BaseActivity() {
         CoroutineScope(Dispatchers.Default).launch{
             delay(3000)
             CoroutineScope(Dispatchers.Main).launch{
-                if(viewModel.isLogin())
-                {
+
+                if(viewModel.isLogin() && value == null && intent.extras?.getString("processType") == null && hrValue == null) {
                     navController.popBackStack()
                     navController.navigate(R.id.homeFragment)
+                }else if(viewModel.isLogin() && value?.id != null ){
+                    navController.popBackStack()
+                    if(value != null){
+                        val args = Bundle()
+                        args.putParcelable("nav_to_pp_details", NavToDetails("me",value!!.id,false))
+                        args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
+                        navController.navigate(R.id.homeFragment,args)
+                    }
+
+                }else if(viewModel.isLogin() && hrValue?.requestID != null){
+                    navController.popBackStack()
+                    val args = Bundle()
+                    args.putParcelable("nav_to_HR_details", HRClearanceDetailsRequest(hrValue!!.entity,hrValue!!.requestID,false,"me"))
+                    navController.navigate(R.id.homeFragment,args)
+                }
+                else if (viewModel.isLogin() && intent.extras?.getString("processType") != null){
+                    navController.popBackStack()
+
+                    if(intent.extras?.getString("processType").equals("payment")){
+                        val args = Bundle()
+                        args.putParcelable("nav_to_pp_details", NavToDetails("me",intent.extras?.getString("id")!!.toInt(),false))
+//                        args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
+                        navController.navigate(R.id.homeFragment,args)
+                    }else if(intent.extras?.getString("processType").equals("clearance")){
+                        val args = Bundle()
+                        args.putParcelable("nav_to_HR_details", HRClearanceDetailsRequest(intent.extras?.getString("entityType")!!.toInt(),intent.extras?.getString("id")!!.toInt(),false,"me"))
+                        navController.navigate(R.id.homeFragment,args)
+                    }
                 }
                 else {
                     navController.popBackStack()
@@ -207,22 +244,27 @@ class MainActivity : BaseActivity() {
         }
     }
 
-fun openGalary(){
-    val chooseFile: Intent
-    val intent: Intent
-    chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-    chooseFile.type = "*/*"
-    chooseFile.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-    intent = Intent.createChooser(chooseFile, "Choose a file")
-    startActivityForResult(intent, 111)
-}
-override fun onSupportNavigateUp(): Boolean {
+    fun openGalary(){
+        val chooseFile: Intent
+        val intent: Intent
+        chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+        chooseFile.type = "/"
+        chooseFile.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent = Intent.createChooser(chooseFile, "Choose a file")
+        startActivityForResult(intent, 111)
+    }
+    override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
 
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        setIntent(intent)
+//    }
+
 }
 enum class FileCaller{
-     paymentDetails,hrDetails,none
+    paymentDetails,hrDetails,none
 }

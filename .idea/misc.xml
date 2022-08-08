@@ -64,7 +64,10 @@
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_see_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.31567028985507245" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.1634963768115942" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.6556016597510373" />
         <entry key="app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.11296859169199595" />
         <entry key="app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.12689969604863222" />
         <entry key="app/src/main/res/layout/payment_shimmer_item.xml" value="0.24295774647887325" />
