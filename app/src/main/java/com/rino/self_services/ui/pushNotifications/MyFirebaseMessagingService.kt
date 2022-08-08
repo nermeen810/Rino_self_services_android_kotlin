@@ -28,7 +28,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var preference: MySharedPreference
     private lateinit var pendingIntent: PendingIntent
     private  lateinit var DetailsIntnet:Intent
-
+    private var notificationID = 0
     var pp_or_hr = ""
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -41,7 +41,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val id = remoteMessage.data["id"]
             val title = remoteMessage.data["title"]
             val body = remoteMessage.data["body"]
-
+            notificationID = remoteMessage.data["notificationId"]?.toInt() ?: 0
             if (processType == "clearance") {
                 pp_or_hr = "hr"
                 val entityType = remoteMessage.data["entityType"]
@@ -105,6 +105,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if (pp_or_hr == "hr") {
                 DetailsIntnet = Intent(this,MainActivity::class.java)
                 DetailsIntnet.putExtra("hrDetailsData",navToHRDetails)
+                DetailsIntnet.putExtra("notificationID",notificationID)
                 pendingIntent = TaskStackBuilder.create(this).run {
                     addNextIntentWithParentStack(DetailsIntnet)
                     getPendingIntent(0,
@@ -114,13 +115,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             } else if (pp_or_hr == "pp") {
 
                 DetailsIntnet = Intent(this,MainActivity::class.java)
+                DetailsIntnet.putExtra("notificationID",notificationID)
                 DetailsIntnet.putExtra("detailsData",navToPPDetails)
                 pendingIntent = TaskStackBuilder.create(this).run {
                     addNextIntentWithParentStack(DetailsIntnet)
                     getPendingIntent(0,
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
                 }
-
             }
         }
 

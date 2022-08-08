@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
     var caller:FileCaller = FileCaller.none
     private var value:NavToDetails? = null
     private var hrValue:HRClearanceDetailsRequest? = null
-
+    private var notificationID = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,8 +59,13 @@ class MainActivity : BaseActivity() {
 
         value = intent.getParcelableExtra("detailsData") as NavToDetails?
         hrValue = intent.getParcelableExtra("hrDetailsData") as HRClearanceDetailsRequest?
-
+        notificationID = intent.getIntExtra("notificationID",0)
+        Log.e("errrrrorrr new system.now",intent.getIntExtra("notificationID",0).toString())
+        Log.e("errrrrorrr new system.now",intent.extras?.getInt("notificationID").toString())
         splashSetup(navController)
+        if (notificationID > 0){
+            viewModel.markNotificationAsRead(notificationID)
+        }
     }
 
 
