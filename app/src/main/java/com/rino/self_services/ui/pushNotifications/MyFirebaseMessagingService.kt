@@ -1,21 +1,13 @@
 package com.rino.self_services.ui.pushNotifications
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.navigation.NavDeepLinkBuilder
-import androidx.navigation.Navigation.findNavController
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -25,7 +17,6 @@ import com.rino.self_services.model.dataSource.localDataSource.Preference
 import com.rino.self_services.model.dataSource.localDataSource.PreferenceDataSource
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
 import com.rino.self_services.ui.main.MainActivity
-import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import com.rino.self_services.utils.PREF_FILE_NAME
 
@@ -36,12 +27,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var navToHRDetails: HRClearanceDetailsRequest
     private lateinit var preference: MySharedPreference
     private lateinit var pendingIntent: PendingIntent
-
+    private  lateinit var DetailsIntnet:Intent
 
     var pp_or_hr = ""
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // super.onMessageReceived(remoteMessage)
+        super.onMessageReceived(remoteMessage)
         Log.e("message", "Message Received ...")
         println("messsssssssssssage received ")
         if (remoteMessage.data.isNotEmpty()) {
@@ -68,13 +59,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             showNotification(applicationContext, title, body)
         } else {
-            if (remoteMessage.notification != null) {
-                showNotification(
-                    applicationContext,
-                    remoteMessage.notification?.title,
-                    remoteMessage.notification?.body
-                )
+            if (remoteMessage.data.size > 0) {
+                val title = remoteMessage.data["title"]
+                val body = remoteMessage.data["body"]
+                showNotification(applicationContext, title, body)
+            } else {
+                val title = remoteMessage.notification!!.title
+                val body = remoteMessage.notification!!.body
+                showNotification(applicationContext, title, body)
             }
+
+
+//            if (remoteMessage.notification != null) {
+//                showNotification(
+//                    applicationContext,
+//                    remoteMessage.notification?.title,
+//                    remoteMessage.notification?.body
+//                )
+//            }
         }
 //        if (remoteMessage.data.size > 0) {
 //            val title = remoteMessage.data["title"]
@@ -106,11 +108,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         title: String?,
         message: String?
     ) {
-        val ii: Intent
-        ii = Intent(context, MainActivity::class.java)
+        val ii: Intent = Intent(context, MainActivity::class.java)
         ii.data = Uri.parse("custom://" + System.currentTimeMillis())
         ii.action = "actionstring" + System.currentTimeMillis()
-        val args = Bundle()
+//        val args = Bundle()
 //        var pi = PendingIntent.getActivity(
 //            applicationContext,
 //            0,
@@ -128,21 +129,42 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (sharedPreference.isLogin()) {
             if (pp_or_hr == "hr") {
 
-                args.putParcelable("hr_clearance_details", navToHRDetails)
-                args.putParcelable("nav_to_see_all_clearance", NavSeeAll("", "", ""))
-                pendingIntent = NavDeepLinkBuilder(context)
-                    .setGraph(R.navigation.nav_graph)
-                    .setDestination(R.id.HRClearanceDetailsFragment)
-                    .setArguments(args)
-                    .createPendingIntent()
+//                args.putParcelable("hr_clearance_details", navToHRDetails)
+//                args.putParcelable("nav_to_see_all_clearance", NavSeeAll("", "", ""))
+//                pendingIntent = NavDeepLinkBuilder(context)
+//                    .setGraph(R.navigation.nav_graph)
+//                    .setDestination(R.id.HRClearanceDetailsFragment)
+//                    .setArguments(args)
+//                    .createPendingIntent()
             } else if (pp_or_hr == "pp") {
-                args.putParcelable("nav_to_pp_details", navToPPDetails)
-                args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
-                pendingIntent = NavDeepLinkBuilder(context)
-                    .setGraph(R.navigation.nav_graph)
-                    .setDestination(R.id.paymentProcessDetailsFragment)
-                    .setArguments(args)
-                    .createPendingIntent()
+
+                DetailsIntnet = Intent(this,MainActivity::class.java)
+                DetailsIntnet.putExtra("detailsData",navToPPDetails)
+                pendingIntent = TaskStackBuilder.create(this).run {
+                    addNextIntentWithParentStack(DetailsIntnet)
+                    getPendingIntent(0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }
+                /*
+                val resultIntent = Intent(this, ResultActivity::class.java)
+// Create the TaskStackBuilder
+val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+    // Add the intent, which inflates the back stack
+    addNextIntentWithParentStack(resultIntent)
+    // Get the PendingIntent containing the entire back stack
+    getPendingIntent(0,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+}
+                 */
+//                pendingIntent = Intent()
+//                args.putParcelable("nav_to_pp_details", navToPPDetails)
+//                args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
+//                pendingIntent = NavDeepLinkBuilder(context)
+//                    .setComponentName(MainActivity::class.java)
+//                    .setGraph(R.navigation.nav_graph)
+//                    .setDestination(R.id.homeFragment)
+//                    .setArguments(args)
+//                    .createPendingIntent()
             }
 //            } else {
 //                pendingIntent = PendingIntent.getActivity(
