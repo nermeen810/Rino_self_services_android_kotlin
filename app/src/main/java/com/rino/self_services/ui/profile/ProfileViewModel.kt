@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel  @Inject constructor(private val modelRepository: UserRepo,private val complaintsRepo: ComplaintsRepo) : ViewModel() {
     private var _getPermission = MutableLiveData<PermissionResponse?>()
-    private var _setError = MutableLiveData<String>()
+    private var _setError = MutableLiveData<String>( )
 
     val setError: LiveData<String>
         get() = _setError
