@@ -22,7 +22,7 @@ import com.rino.self_services.utils.PREF_FILE_NAME
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private var NOTIFICATION_CHANNEL_ID = "net.larntech.notification"
-    private val NOTIFICATION_ID = 100
+    private var NOTIFICATION_ID = 100
     private lateinit var navToPPDetails: NavToDetails
     private lateinit var navToHRDetails: HRClearanceDetailsRequest
     private lateinit var preference: MySharedPreference
@@ -57,7 +57,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 navToPPDetails = NavToDetails("me", id?.toInt() ?: -1, true)
             }
 
-            showNotification(applicationContext, title, body)
+//            showNotification(applicationContext, title, body)
         } else {
             if (remoteMessage.data.size > 0) {
                 val title = remoteMessage.data["title"]
@@ -78,15 +78,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //                )
 //            }
         }
-//        if (remoteMessage.data.size > 0) {
-//            val title = remoteMessage.data["title"]
-//            val body = remoteMessage.data["body"]
-//            showNotification(applicationContext, title, body)
-//        } else {
-//            val title = remoteMessage.notification!!.title
-//            val body = remoteMessage.notification!!.body
-//            showNotification(applicationContext, title, body)
-//        }
+        if (remoteMessage.data.size > 0) {
+            val title = remoteMessage.data["title"]
+            val body = remoteMessage.data["body"]
+            showNotification(applicationContext, title, body)
+        } else {
+            val title = remoteMessage.notification!!.title
+            val body = remoteMessage.notification!!.body
+            showNotification(applicationContext, title, body)
+        }
     }
 
 
@@ -143,7 +143,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 pendingIntent = TaskStackBuilder.create(this).run {
                     addNextIntentWithParentStack(DetailsIntnet)
                     getPendingIntent(0,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                        PendingIntent.FLAG_UPDATE_CURRENT)
                 }
                 /*
                 val resultIntent = Intent(this, ResultActivity::class.java)
@@ -207,7 +207,7 @@ val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(notificationChannel)
-            notificationManager.notify(NOTIFICATION_ID, notification)
+            notificationManager.notify(NOTIFICATION_ID++, notification)
         } else {
             notification = NotificationCompat.Builder(context)
                 .setSmallIcon(getNotificationIcon())
@@ -219,7 +219,7 @@ val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
             val notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE
             ) as NotificationManager
-            notificationManager.notify(NOTIFICATION_ID, notification)
+            notificationManager.notify(NOTIFICATION_ID++, notification)
         }
     }
 
