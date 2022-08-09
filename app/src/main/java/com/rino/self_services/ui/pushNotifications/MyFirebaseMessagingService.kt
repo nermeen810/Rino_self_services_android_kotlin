@@ -4,7 +4,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -28,9 +27,28 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var preference: MySharedPreference
     private lateinit var pendingIntent: PendingIntent
     private  lateinit var DetailsIntnet:Intent
-
+    private var notificationID = 0
     var pp_or_hr = ""
 
+//   override fun zzm(intent: Intent) {
+//        Log.i("uniqbadge", "zzm")
+//        val keys = intent.extras!!.keySet()
+//        for (key in keys) {
+//            try {
+//                Log.i("uniq", " " + key + " " + intent.extras!![key])
+//                if (key == "badge") {
+//                    val cnt = intent.extras!![key].toString()
+//                    val badgeCount = Integer.valueOf(cnt)
+//                    Log.i("uniq", " badge count $badgeCount")
+////                    ShortcutBadger.applyCount(this, badgeCount)
+//                    Log.i("uniq", " " + "end")
+//                }
+//            } catch (e: Exception) {
+//                Log.i("uniqbadge", "zzm Custom_FirebaseMessagingService" + e.message)
+//            }
+//        }
+//        super.zzm(intent)
+//    }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.e("message", "Message Received ...")
@@ -41,6 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val id = remoteMessage.data["id"]
             val title = remoteMessage.data["title"]
             val body = remoteMessage.data["body"]
+            notificationID = remoteMessage.data["notificationId"]?.toInt() ?: 0
 
             if (processType == "clearance") {
                 pp_or_hr = "hr"
@@ -104,6 +123,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (sharedPreference.isLogin()) {
             if (pp_or_hr == "hr") {
                 DetailsIntnet = Intent(this,MainActivity::class.java)
+                DetailsIntnet.putExtra("notificationID",notificationID)
                 DetailsIntnet.putExtra("hrDetailsData",navToHRDetails)
                 pendingIntent = TaskStackBuilder.create(this).run {
                     addNextIntentWithParentStack(DetailsIntnet)
@@ -115,6 +135,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                 DetailsIntnet = Intent(this,MainActivity::class.java)
                 DetailsIntnet.putExtra("detailsData",navToPPDetails)
+                DetailsIntnet.putExtra("notificationID",notificationID)
                 pendingIntent = TaskStackBuilder.create(this).run {
                     addNextIntentWithParentStack(DetailsIntnet)
                     getPendingIntent(0,

@@ -2,6 +2,7 @@ package com.rino.self_services.ui.notifications
 
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,7 @@ class NotificationAdapter (private var context: Context,private var notification
          holder.binding.card.setOnClickListener{
 
              if(notificationList[position].isread == false){
+                 Log.e("notification id",notificationList[position]?.id.toString())
          //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
                  viewModel.setNotificationAsRead(notificationList[position].id?:-1,position)
              }

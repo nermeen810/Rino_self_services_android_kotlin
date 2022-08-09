@@ -11,6 +11,7 @@ import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -20,7 +21,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
-import com.rino.self_services.ui.internetConnection.BaseActivity
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +34,7 @@ import java.util.*
 
 @AndroidEntryPoint
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     val viewModel: MainActivityViewModel by viewModels()
     var _paymentProcessFiles = MutableLiveData<ArrayList<File>>()
@@ -48,18 +48,21 @@ class MainActivity : BaseActivity() {
     var caller:FileCaller = FileCaller.none
     private var value:NavToDetails? = null
     private var hrValue:HRClearanceDetailsRequest? = null
+    private var notificationID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         value = intent.getParcelableExtra("detailsData") as NavToDetails?
         hrValue = intent.getParcelableExtra("hrDetailsData") as HRClearanceDetailsRequest?
-
+        notificationID = intent.getIntExtra("notificationID",0)
+        if(notificationID > 0){
+            viewModel.markNotificationAsRead(notificationID)
+        }
         splashSetup(navController)
     }
 

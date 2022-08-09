@@ -47,6 +47,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
     <androidx.appcompat.widget.AppCompatButton
+        android:visibility="gone"
         android:id="@+id/notification_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

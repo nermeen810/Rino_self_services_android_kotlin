@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         navToDetails = arguments?.get("nav_to_pp_details") as NavToDetails?
         navToHr = arguments?.get("nav_to_HR_details") as HRClearanceDetailsRequest?
         Log.e("errrrrorrrr no",navToDetails?.id.toString())
@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
     }
     private fun navToPaymentDetails(){
         val action = HomeFragmentDirections.actionHomeFragmentToPaymentProcessDetailsFragment(
-            NavToDetails("me",navToDetails!!.id,false), NavSeeAll
+            NavToDetails("me",navToDetails!!.id,true), NavSeeAll
                 ("","","")
         )
         findNavController().navigate(action)
@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
     }
     private fun navToHRDetails(){
         val action = HomeFragmentDirections.actionHomeFragmentToHRClearanceDetailsFragment(
-            HRClearanceDetailsRequest(navToHr!!.entity,navToHr!!.requestID,false,"me"),
+            HRClearanceDetailsRequest(navToHr!!.entity,navToHr!!.requestID,true,"me"),
             NavSeeAll("","","")
         )
         findNavController().navigate(action)
