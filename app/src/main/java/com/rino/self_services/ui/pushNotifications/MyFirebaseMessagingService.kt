@@ -4,7 +4,9 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessaging
@@ -93,6 +95,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         title: String?,
         message: String?
     ) {
+
         preference = MySharedPreference(
             context.getSharedPreferences(
                 PREF_FILE_NAME,
@@ -123,6 +126,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
                 }
 
+            }
+        }else{
+            val ii: Intent
+            ii = Intent(context, MainActivity::class.java)
+            ii.data = Uri.parse("custom://" + System.currentTimeMillis())
+            ii.action = "actionstring" + System.currentTimeMillis()
+            val args = Bundle()
+            pendingIntent = TaskStackBuilder.create(this).run {
+                addNextIntentWithParentStack(ii)
+                getPendingIntent(0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             }
         }
 
