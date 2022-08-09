@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.reposatory.ComplaintsRepo
 import com.rino.self_services.model.reposatory.UserRepo
@@ -28,6 +29,9 @@ class ProfileViewModel  @Inject constructor(private val modelRepository: UserRep
 
     fun logout() {
         modelRepository.logout()
+//        FirebaseInstanceId.getInstance().deleteInstanceId();
+//        FirebaseMessaging.getInstance().deleteToken()
+//        FirebaseMessaging.getInstance().isNotificationDelegationEnabled = false
     }
 
     fun getPermissions() {

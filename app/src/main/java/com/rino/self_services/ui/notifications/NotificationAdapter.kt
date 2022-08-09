@@ -47,7 +47,7 @@ class NotificationAdapter (private var context: Context,private var notification
              if(notificationList[position].isread == false){
                  Log.e("notification id",notificationList[position]?.id.toString())
          //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
-                 viewModel.setNotificationAsRead(notificationList[position].id?:-1,position)
+                 viewModel.setNotificationAsRead(position,notificationList[position].id?:-1)
              }
 
           }

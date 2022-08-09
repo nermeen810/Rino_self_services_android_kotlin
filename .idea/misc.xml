@@ -57,6 +57,11 @@
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_see_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/layout/fragment_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Self_Services/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/attachment_item_pp.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/attatchment_item.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/complaint_item.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/complaints_shimmer_item.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/fragment_complaints.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.1634963768115942" />
         <entry key="app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.11296859169199595" />

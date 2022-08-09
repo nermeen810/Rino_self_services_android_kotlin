@@ -97,7 +97,8 @@ class PaymentProcessesFragment : Fragment() {
         viewModel.getNotificationCount()
         viewModel.getNotificationCount.observe(viewLifecycleOwner) {
             it?.let {
-           binding.countTxt.text = it.data.toString()
+                binding.countTxt.text = it.data.toString()
+                notificationCount = it.data
             }
         }
     }

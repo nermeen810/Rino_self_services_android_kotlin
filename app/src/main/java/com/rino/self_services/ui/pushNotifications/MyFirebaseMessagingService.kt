@@ -30,25 +30,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private var notificationID = 0
     var pp_or_hr = ""
 
-//   override fun zzm(intent: Intent) {
-//        Log.i("uniqbadge", "zzm")
-//        val keys = intent.extras!!.keySet()
-//        for (key in keys) {
-//            try {
-//                Log.i("uniq", " " + key + " " + intent.extras!![key])
-//                if (key == "badge") {
-//                    val cnt = intent.extras!![key].toString()
-//                    val badgeCount = Integer.valueOf(cnt)
-//                    Log.i("uniq", " badge count $badgeCount")
-////                    ShortcutBadger.applyCount(this, badgeCount)
-//                    Log.i("uniq", " " + "end")
-//                }
-//            } catch (e: Exception) {
-//                Log.i("uniqbadge", "zzm Custom_FirebaseMessagingService" + e.message)
-//            }
-//        }
-//        super.zzm(intent)
-//    }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.e("message", "Message Received ...")
