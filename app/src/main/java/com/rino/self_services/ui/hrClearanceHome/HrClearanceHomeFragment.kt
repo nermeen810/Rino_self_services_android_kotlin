@@ -91,8 +91,8 @@ class HrClearanceHomeFragment : Fragment() {
         viewModel.getNotificationCount()
         viewModel.getNotificationCount.observe(viewLifecycleOwner) {
             it?.let {
-                binding.countTxt.text = it.data.toString()
-                notificationCount = it .data
+                binding.countTxt.text = (it.data?.hr ?: 0).toString()
+                notificationCount = (it.data?.payments?.let { it1 -> it.data?.hr?.plus(it1) }) ?: 0
             }
         }
     }

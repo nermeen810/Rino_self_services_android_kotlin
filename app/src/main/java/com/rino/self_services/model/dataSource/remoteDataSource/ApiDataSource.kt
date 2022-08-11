@@ -11,6 +11,7 @@ import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
+import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
 import com.rino.self_services.model.pojo.profile.ProfileResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,7 +24,7 @@ import retrofit2.http.*
 import javax.inject.Inject
 
 class ApiDataSource @Inject constructor(private val apiService: ApiService) {
-
+    suspend fun setDeviceToken(auth: String, deviceTokenRequest: DeviceTokenRequest) = apiService.setDeviceToken(auth,deviceTokenRequest)
     suspend fun login(
         grant_type: String,
         username: String,

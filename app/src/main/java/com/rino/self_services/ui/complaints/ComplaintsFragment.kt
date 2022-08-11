@@ -110,9 +110,8 @@ class ComplaintsFragment : Fragment() {
             setParts(filesArray)
             val body =   binding.notesEditTxt.text.toString()
             val officer = binding.administratorEditTxt.text.toString()
-            if(validateData(officer,body)) {
-               // viewModel.createComplaint(department, officer, body, parts)
-                Log.e("filesLog:",filesArray.toString())
+            if(validateData(officer,department,body)) {
+                viewModel.createComplaint(department, officer, body, parts)
             }
             else{
                 showMessage("برجاء اضافه البيانات المطلوبة")
@@ -120,37 +119,12 @@ class ComplaintsFragment : Fragment() {
         }
     }
 
-    private fun validateData(officer:String,body:String) :Boolean{
-        var officerFlag = false
-        var bodyFlag    = false
-         if (officer.isEmpty()) {
-            binding.textInputAdministrator.error = getString(R.string.required_field)
-            officerFlag = false
-        } else {
-            binding.textInputAdministrator.error = null
-            binding.textInputAdministrator.isErrorEnabled = false
-             officerFlag =  true
-        }
-        if (body.isEmpty()) {
-            binding.textInputNotes.error = getString(R.string.required_field)
-            bodyFlag = false
-        }
-        if (body.length >500) {
-            binding.textInputNotes.error = getString(R.string.must_be_less_than_500).dateToArabic()
-            bodyFlag = false
-        }
-        else {
-            binding.textInputNotes.error = null
-            binding.textInputNotes.isErrorEnabled = false
-            bodyFlag =  true
-        }
-        if (!isDepartmentSelected) {
-            binding.departmentTextInputLayout.error = getString(R.string.required_field)
-        } else {
-            binding.departmentTextInputLayout.error = null
-            binding.departmentTextInputLayout.isErrorEnabled = false
-        }
-        return (officerFlag && bodyFlag && isDepartmentSelected)
+    private fun validateData(officer:String,department:String,complaintBody:String) :Boolean{
+        if (officer.isEmpty()) binding.textInputAdministrator.error = getString(R.string.required_field) else binding.textInputAdministrator.error = null
+        if (!isDepartmentSelected)   binding.departmentTextInputLayout.error = getString(R.string.required_field) else binding.departmentTextInputLayout.error = null
+        if (complaintBody.isEmpty()) binding.textInputNotes.error = getString(R.string.required_field) else binding.textInputNotes.error = null
+
+        return (officer.isNotEmpty() && department.isNotEmpty() && complaintBody.isNotEmpty() && complaintBody.length < 500)
     }
 
     private fun addAttachments() {

@@ -13,6 +13,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentNotificationsBinding
 import com.rino.self_services.model.pojo.notifications.Data
+import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
+import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,12 +23,12 @@ class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
     private lateinit var serviceAdapter: NotificationAdapter
     private lateinit var servicesList: ArrayList<Data>
-    private var fromWhere =""
+    private var fromWhere = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            fromWhere =  arguments?.get("fromWhere").toString()
+            fromWhere = arguments?.get("fromWhere").toString()
         }
     }
 
@@ -38,10 +40,13 @@ class NotificationsFragment : Fragment() {
         init()
         return binding.root
     }
+
     private fun init() {
         viewModel.getAllNotification()
         servicesList = arrayListOf()
-        serviceAdapter = NotificationAdapter(requireContext(),arrayListOf(),viewModel)
+        serviceAdapter = NotificationAdapter(requireContext(), arrayListOf(), viewModel) {
+            getPressedItemData(it)
+        }
         setUpUI()
         observeAllNotification()
         observeSetNotificationAsRead()
@@ -51,8 +56,28 @@ class NotificationsFragment : Fragment() {
 
     }
 
+    fun getPressedItemData(notification: Data) {
+
+
+        if (notification.subcategory.equals("Payment Process")) {
+            val action =
+                notification.requestid?.let { NavToDetails("me", it, true) }?.let {
+                    NotificationsFragmentDirections.actionNotificationsFragmentToPaymentProcessDetailsFragment(
+                        it,
+                        NavSeeAll("", "", "")
+                    )
+                }
+            if (action != null) {
+                findNavController().navigate(action)
+            }
+        } else {
+
+        }
+
+    }
+
     private fun observeShowError() {
-       viewModel.setError.observe(viewLifecycleOwner, this::showMsg)
+        viewModel.setError.observe(viewLifecycleOwner, this::showMsg)
     }
 
     private fun showMsg(it: String) {
@@ -60,10 +85,14 @@ class NotificationsFragment : Fragment() {
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.color_orange)).setActionTextColor(
+                    R.color.color_orange
+                )
+            ).setActionTextColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.white)).setAction(getString(R.string.dismiss))
+                    R.color.white
+                )
+            ).setAction(getString(R.string.dismiss))
             {
             }.show()
     }
@@ -105,6 +134,7 @@ class NotificationsFragment : Fragment() {
         }
 
     }
+
     private fun handleBackButton() {
         binding.backbtn.setOnClickListener {
             if (fromWhere == "hr") {

@@ -14,10 +14,10 @@ import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.PaymentHomeViewModel
 import com.rino.self_services.utils.Constants
 
-class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
-                              private val hrClearanceViewModel: HrClearanceViewModel, private val context: Context
-)
-    : RecyclerView.Adapter<HrClearanceMainAdapter.HrClearanceMainViewHolder>() {
+class HrClearanceMainAdapter(
+    private var filteredHistoryList: ArrayList<Data>,
+    private val hrClearanceViewModel: HrClearanceViewModel, private val context: Context
+) : RecyclerView.Adapter<HrClearanceMainAdapter.HrClearanceMainViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -39,13 +39,16 @@ class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HrClearanceMainViewHolder, position: Int) {
         val temp = filteredHistoryList[position]
-        holder.binding.periodTxt.text = Constants.convertNumsToArabic(temp.title?:"")
-        holder.binding.requestNumTxt.text = Constants.convertNumsToArabic("("+temp.count.toString())+" "+context.getString(
-            R.string.task)+")"
+        holder.binding.periodTxt.text = Constants.convertNumsToArabic(temp.title ?: "")
+        holder.binding.requestNumTxt.text =
+            Constants.convertNumsToArabic("(" + temp.count.toString()) + " " + context.getString(
+                R.string.task
+            ) + ")"
 
         holder.binding.historyRecycle.visibility = View.VISIBLE
-        var historyAdapter = HrClearanceSubAdapter(arrayListOf(),hrClearanceViewModel,context)
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+        var historyAdapter = HrClearanceSubAdapter(arrayListOf(), hrClearanceViewModel, context)
+        val linearLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         linearLayoutManager.stackFromEnd = true
         holder.binding.historyRecycle.apply {
             layoutManager = linearLayoutManager
@@ -56,21 +59,24 @@ class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
             hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
                     hrClearanceViewModel.me_or_others, temp.start.toString(),
-                temp.end.toString())
+                    temp.end.toString()
+                )
             )
         }
         holder.binding.showAllBtn.setOnClickListener {
             hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
                     hrClearanceViewModel.me_or_others, temp.start.toString(),
-                temp.end.toString())
+                    temp.end.toString()
+                )
             )
         }
         holder.binding.card.setOnClickListener {
             hrClearanceViewModel.navToSeeAll(
                 NavSeeAll(
                     hrClearanceViewModel.me_or_others, temp.start.toString(),
-                temp.end.toString())
+                    temp.end.toString()
+                )
             )
         }
 
@@ -81,13 +87,14 @@ class HrClearanceMainAdapter (private var filteredHistoryList: ArrayList<Data>,
         filteredHistoryList.addAll(newList)
         notifyDataSetChanged()
     }
+
     fun clearList() {
         filteredHistoryList.clear()
         notifyDataSetChanged()
     }
+
     inner class HrClearanceMainViewHolder(val binding: PaymentHomeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-
 
 
 }

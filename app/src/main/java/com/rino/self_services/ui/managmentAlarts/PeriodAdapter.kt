@@ -11,7 +11,10 @@ import com.rino.self_services.R
 import com.rino.self_services.databinding.PeriodItemBinding
 
 
-class PeriodAdapter(private var periodList: ArrayList<String>,private val managementsAlartsViewModel: ManagementsAlertsViewModel) : RecyclerView.Adapter<PeriodAdapter.PeriodViewHolder>(){
+class PeriodAdapter(
+    private var periodList: ArrayList<String>,
+    private val managementsAlartsViewModel: ManagementsAlertsViewModel
+) : RecyclerView.Adapter<PeriodAdapter.PeriodViewHolder>() {
 
     var lastSelectedCard: CardView? = null
     var lastSelectedText: TextView? = null
@@ -22,9 +25,11 @@ class PeriodAdapter(private var periodList: ArrayList<String>,private val manage
 
     ): PeriodViewHolder {
         return PeriodViewHolder(
-            PeriodItemBinding.inflate( LayoutInflater.from(parent.context),
+            PeriodItemBinding.inflate(
+                LayoutInflater.from(parent.context),
                 parent,
-                false)
+                false
+            )
         )
     }
 
@@ -33,7 +38,10 @@ class PeriodAdapter(private var periodList: ArrayList<String>,private val manage
         // Log.e("lastPosition",FilteredHistoryViewModel.lastSelectedPos.toString())
 
         if (lastSelectedCard == null && position == ManagementsAlertsViewModel.lastSelectedPos) {
-            Log.e("period", ManagementsAlertsViewModel.periodTimeList_en[ManagementsAlertsViewModel.lastSelectedPos])
+            Log.e(
+                "period",
+                ManagementsAlertsViewModel.periodTimeList_en[ManagementsAlertsViewModel.lastSelectedPos]
+            )
 
             lastSelectedCard = holder.binding.categoryCard
             lastSelectedText = holder.binding.categoryName
@@ -59,13 +67,13 @@ class PeriodAdapter(private var periodList: ArrayList<String>,private val manage
     inner class PeriodViewHolder(val binding: PeriodItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(period: String,position: Int) {
+        fun bind(period: String, position: Int) {
 
             binding.categoryName.text = period
             binding.categoryCard.setOnClickListener {
                 ManagementsAlertsViewModel.lastSelectedPos = position
                 Log.e("lastPos", ManagementsAlertsViewModel.lastSelectedPos.toString())
-           //     managementsAlartsViewModel.getPaymentData()
+                //     managementsAlartsViewModel.getPaymentData()
                 lastSelectedCard?.setCardBackgroundColor(
                     ContextCompat.getColor(
                         it.context,

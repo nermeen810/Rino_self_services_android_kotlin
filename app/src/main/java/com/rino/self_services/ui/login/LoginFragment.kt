@@ -10,11 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentLoginBinding
 import com.rino.self_services.model.pojo.login.LoginRequest
@@ -40,7 +41,7 @@ class LoginFragment : Fragment() {
 
     private fun init() {
         loginButtonOnClick()
-            resetPassOnClick()
+        resetPassOnClick()
         privacyPolicyOnClick()
         observeData()
     }
@@ -83,6 +84,7 @@ class LoginFragment : Fragment() {
 
     private fun observeData() {
         observeSuccessLogin()
+        observeSetDeviceToken()
         observeLoading()
         observeShowError()
 
@@ -92,12 +94,8 @@ class LoginFragment : Fragment() {
         viewModel.isLogin.observe(viewLifecycleOwner) {
             if (it) {
                 //   binding.progress.visibility = View.GONE
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.success_login),
-                    Toast.LENGTH_SHORT
-                ).show()
-                navigateToHome()
+                viewModel.setDeviceToken()
+
 
             } else {
                 Toast.makeText(
@@ -109,6 +107,20 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun observeSetDeviceToken() {
+        viewModel.setDeviceTokenResponse.observe(viewLifecycleOwner) {
+            it?.let {
+                if(it) {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.success_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navigateToHome()
+                }
+            }
+        }
+    }
     private fun navigateToHome() {
         val action = LoginFragmentDirections.loginToHome()
         findNavController().navigate(action)
@@ -185,18 +197,19 @@ class LoginFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-      //  (activity as MainActivity).bottomNavigation.isGone = true
+        //  (activity as MainActivity).bottomNavigation.isGone = true
     }
 
     private fun showMessage(msg: String) {
         lifecycleScope.launchWhenResumed {
             Snackbar.make(requireView(), msg, Snackbar.LENGTH_INDEFINITE)
                 .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.color_orange)).setActionTextColor(ContextCompat.getColor(
-                    requireContext(),
-                    R.color.white)).setAction(getString(R.string.dismiss))
+                    resources.getColor(
+                        R.color.color_orange
+                    )
+                )
+                .setActionTextColor(resources.getColor(R.color.white))
+                .setAction(getString(R.string.dismiss))
                 {
                 }.show()
         }

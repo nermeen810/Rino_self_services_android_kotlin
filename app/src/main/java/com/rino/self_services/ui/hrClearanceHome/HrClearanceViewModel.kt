@@ -22,7 +22,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrClearanceRepo, private  val notificationRepo: NotificationRepo) : ViewModel() {
+class HrClearanceViewModel @Inject constructor(
+    private val modelRepository: HrClearanceRepo,
+    private val notificationRepo: NotificationRepo
+) : ViewModel() {
     private var _setError = MutableLiveData<String>()
     private var _noData = MutableLiveData<Boolean>()
     private var _loading = MutableLiveData<Int>()
@@ -36,10 +39,20 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
     companion object {
 
         var periodTimeList_en =
-            arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
-        var lastSelectedPos = periodTimeList_en.size-1
+            arrayListOf(
+                "twoyearsago",
+                "lastyear",
+                "year",
+                "lastmonth",
+                "month",
+                "lastweek",
+                "week",
+                "all"
+            )
+        var lastSelectedPos = periodTimeList_en.size - 1
     }
-        val navToTaskDetails: LiveData<HRClearanceDetailsRequest>
+
+    val navToTaskDetails: LiveData<HRClearanceDetailsRequest>
         get() = _navToTaskDetails
 
     val getSearchHistoryData: LiveData<SearchHrResponse?>
@@ -63,28 +76,28 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
     val getNotificationCount: LiveData<NotificationCountResponse?>
         get() = _getNotificationCount
 
-    fun navToSeeAll(navSeeAll: NavSeeAll)
-    {
+    fun navToSeeAll(navSeeAll: NavSeeAll) {
         _navToSeeAll.value = navSeeAll
     }
 
-        fun navToServiceDetails(item: HRClearanceDetailsRequest) {
-            _navToTaskDetails.value = item
-        }
+    fun navToServiceDetails(item: HRClearanceDetailsRequest) {
+        _navToTaskDetails.value = item
+    }
 
-    fun getHrData(me_or_other :String) {
+    fun getHrData(me_or_other: String) {
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            Log.i("me_or_others:",me_or_others)
-            when (val result = modelRepository.getHrClearanceHomeList(me_or_others,periodTimeList_en[lastSelectedPos])) {
+            Log.i("me_or_others:", me_or_others)
+            when (val result = modelRepository.getHrClearanceHomeList(
+                me_or_others,
+                periodTimeList_en[lastSelectedPos]
+            )) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
                     Log.i("getPaymentData:", "${result.data}")
-                    if(result.data?.data?.size==0)
-                    {
+                    if (result.data?.data?.size == 0) {
                         _noData.postValue(true)
-                    }
-                    else {
+                    } else {
                         _getPaymentData.postValue(result.data)
                     }
 
@@ -102,7 +115,8 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
             }
         }
     }
-    fun searchHrRequest(searchTxt:String) {
+
+    fun searchHrRequest(searchTxt: String) {
         _loading.postValue(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = modelRepository.searchRequest(searchTxt)) {
@@ -111,11 +125,9 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
                     Log.i("searchHistoryDataByService:", "${result.data}")
                     _loading.postValue(View.GONE)
 
-                    if(result.data?.data?.size==0)
-                    {
+                    if (result.data?.data?.size == 0) {
                         _noData.postValue(true)
-                    }
-                    else {
+                    } else {
                         _getSearchHistoryData.postValue(result.data)
                     }
                 }
@@ -134,7 +146,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
 
     }
 
-    fun getNotificationCount(){
+    fun getNotificationCount() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = notificationRepo.getNotificationCount()) {
                 is Result.Success -> {
@@ -155,7 +167,7 @@ class HrClearanceViewModel  @Inject constructor(private val modelRepository: HrC
     }
 
 
-    fun viewLoading(loading:Int){
+    fun viewLoading(loading: Int) {
         _loading.value = loading
     }
 

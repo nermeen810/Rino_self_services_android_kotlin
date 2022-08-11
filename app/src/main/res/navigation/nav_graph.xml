@@ -225,6 +225,10 @@
         <action
             android:id="@+id/action_notificationsFragment_to_hrClearanceHomeFragment"
             app:destination="@id/hrClearanceHomeFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_paymentProcessDetailsFragment"
+            app:destination="@id/paymentProcessDetailsFragment"
+            app:popUpTo="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

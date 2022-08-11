@@ -8,7 +8,10 @@ import com.rino.self_services.databinding.MangementAlertsItemBinding
 import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsResponse
 
 
-class ManagementAlertsAdapter (private var managementAlertsList: ArrayList<ManagementAlertsResponse>, private  var viewModel: ManagementsAlertsViewModel) : RecyclerView.Adapter<ManagementAlertsAdapter.ManagementAlertsViewHolder>() {
+class ManagementAlertsAdapter(
+    private var managementAlertsList: ArrayList<ManagementAlertsResponse>,
+    private var viewModel: ManagementsAlertsViewModel
+) : RecyclerView.Adapter<ManagementAlertsAdapter.ManagementAlertsViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

@@ -128,13 +128,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             }
         }else{
-            val ii: Intent
-            ii = Intent(context, MainActivity::class.java)
-            ii.data = Uri.parse("custom://" + System.currentTimeMillis())
-            ii.action = "actionstring" + System.currentTimeMillis()
-            val args = Bundle()
+            DetailsIntnet = Intent(this,MainActivity::class.java)
+
             pendingIntent = TaskStackBuilder.create(this).run {
-                addNextIntentWithParentStack(ii)
+                addNextIntentWithParentStack(DetailsIntnet)
                 getPendingIntent(0,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             }
@@ -144,8 +141,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //Log.e("Notification", "Created in up to orio OS device");
             notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+
                 .setOngoing(true)
-                .setSmallIcon(getNotificationIcon())
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -162,11 +160,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 title,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+            notificationChannel.setShowBadge(true)
             notificationManager.createNotificationChannel(notificationChannel)
             notificationManager.notify(NOTIFICATION_ID++, notification)
         } else {
             notification = NotificationCompat.Builder(context)
-                .setSmallIcon(getNotificationIcon())
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
@@ -175,12 +174,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE
             ) as NotificationManager
+
             notificationManager.notify(NOTIFICATION_ID++, notification)
         }
     }
 
-    private fun getNotificationIcon(): Int {
-        return R.mipmap.ic_launcher
-    }
+//    private fun getNotificationIcon(): Int {
+//        return R.mipmap.ic_launcher
+//    }
 
 }

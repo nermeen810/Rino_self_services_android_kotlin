@@ -22,6 +22,7 @@ import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
+import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
 import com.rino.self_services.model.pojo.notifications.SetNotificationAsRead
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
@@ -37,6 +38,10 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
+    @POST("api/notifications/mobile/add")
+    suspend fun setDeviceToken(@Header("Authorization"   ) auth: String,
+                               @Body deviceTokenRequest: DeviceTokenRequest
+    ): Response<Any?>
     @FormUrlEncoded
     @POST("connect/token")
     suspend fun login(@Field("grant_type") grant_type:String,
@@ -79,7 +84,7 @@ interface ApiService {
     @GET("api/requests/{me_or_others}/period/{period_value}")
     suspend fun getPaymentHomeList(@Header("Authorization"   ) auth: String,
                                    @Path("me_or_others")me_or_other :String,
-                                   @Path("period_value")period_value :String):Response<PaymentHomeResponse>
+                                   @Path("period_value")period_value :String):Response<PaymentHomeResponse?>
 
     @GET("api/requests/search/{search_txt}")
     suspend fun searchRequest(@Header("Authorization"   ) auth: String,

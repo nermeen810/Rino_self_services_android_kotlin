@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
     var _hrDetailsFiles = MutableLiveData<ArrayList<File>>()
     val hrdetailsFile: LiveData<ArrayList<File>>
         get() = _hrDetailsFiles
-    private var  count = 0
-    var caller:FileCaller = FileCaller.none
-    private var value:NavToDetails? = null
-    private var hrValue:HRClearanceDetailsRequest? = null
+    private var count = 0
+    var caller: FileCaller = FileCaller.none
+    private var value: NavToDetails? = null
+    private var hrValue: HRClearanceDetailsRequest? = null
     private var notificationID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +59,17 @@ class MainActivity : AppCompatActivity() {
 
         value = intent.getParcelableExtra("detailsData") as NavToDetails?
         hrValue = intent.getParcelableExtra("hrDetailsData") as HRClearanceDetailsRequest?
-        notificationID = intent.getIntExtra("notificationID",0)
-        if(notificationID > 0){
+        notificationID = intent.getIntExtra("notificationID", 0)
+        if (notificationID > 0) {
             viewModel.markNotificationAsRead(notificationID)
         }
         splashSetup(navController)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
 
 
     private fun setArabicAsDefault() {
@@ -79,71 +83,90 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         //   super.onBackPressed()
-        if(count==0)
-        {
+        if (count == 0) {
             Toast.makeText(
                 this,
                 getString(R.string.exit_msg),
                 Toast.LENGTH_SHORT
             ).show()
             count += 1
-        }
-        else {
+        } else {
             finish()
         }
     }
 
 
-    private fun splashSetup(navController: NavController){
+    private fun splashSetup(navController: NavController) {
 
-        CoroutineScope(Dispatchers.Default).launch{
+        CoroutineScope(Dispatchers.Default).launch {
             delay(3000)
-            CoroutineScope(Dispatchers.Main).launch{
+            CoroutineScope(Dispatchers.Main).launch {
 
-                if(viewModel.isLogin() && value == null && intent.extras?.getString("processType") == null && hrValue == null) {
+                if (viewModel.isLogin() && value == null && intent.extras?.getString("processType") == null && hrValue == null) {
                     navController.popBackStack()
                     navController.navigate(R.id.homeFragment)
-                }else if(viewModel.isLogin() && value?.id != null ){
+                } else if (viewModel.isLogin() && value?.id != null) {
                     navController.popBackStack()
-                    if(value != null){
+                    if (value != null) {
                         val args = Bundle()
-                        args.putParcelable("nav_to_pp_details", NavToDetails("me",value!!.id,false))
+                        args.putParcelable(
+                            "nav_to_pp_details",
+                            NavToDetails("me", value!!.id, false)
+                        )
                         args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
-                        navController.navigate(R.id.homeFragment,args)
+                        navController.navigate(R.id.homeFragment, args)
                     }
 
-                }else if(viewModel.isLogin() && hrValue?.requestID != null){
+                } else if (viewModel.isLogin() && hrValue?.requestID != null) {
                     navController.popBackStack()
                     val args = Bundle()
-                    args.putParcelable("nav_to_HR_details", HRClearanceDetailsRequest(hrValue!!.entity,hrValue!!.requestID,false,"me"))
-                    navController.navigate(R.id.homeFragment,args)
-                }
-                else if (viewModel.isLogin() && intent.extras?.getString("processType") != null){
+                    args.putParcelable(
+                        "nav_to_HR_details",
+                        HRClearanceDetailsRequest(
+                            hrValue!!.entity,
+                            hrValue!!.requestID,
+                            false,
+                            "me"
+                        )
+                    )
+                    navController.navigate(R.id.homeFragment, args)
+                } else if (viewModel.isLogin() && intent.extras?.getString("processType") != null) {
                     navController.popBackStack()
 
-                    if(intent.extras?.getString("processType").equals("payment")){
+                    if (intent.extras?.getString("processType").equals("payment")) {
                         val args = Bundle()
-                        args.putParcelable("nav_to_pp_details", NavToDetails("me",intent.extras?.getString("id")!!.toInt(),false))
+                        args.putParcelable(
+                            "nav_to_pp_details",
+                            NavToDetails("me", intent.extras?.getString("id")!!.toInt(), false)
+                        )
 //                        args.putParcelable("nav_to_see_all_payment", NavSeeAll("", "", ""))
-                        navController.navigate(R.id.homeFragment,args)
-                    }else if(intent.extras?.getString("processType").equals("clearance")){
+                        navController.navigate(R.id.homeFragment, args)
+                    } else if (intent.extras?.getString("processType").equals("clearance")) {
                         val args = Bundle()
-                        args.putParcelable("nav_to_HR_details", HRClearanceDetailsRequest(intent.extras?.getString("entityType")!!.toInt(),intent.extras?.getString("id")!!.toInt(),false,"me"))
-                        navController.navigate(R.id.homeFragment,args)
+                        args.putParcelable(
+                            "nav_to_HR_details",
+                            HRClearanceDetailsRequest(
+                                intent.extras?.getString("entityType")!!.toInt(),
+                                intent.extras?.getString("id")!!.toInt(),
+                                false,
+                                "me"
+                            )
+                        )
+                        navController.navigate(R.id.homeFragment, args)
                     }
-                }
-                else {
+                } else {
                     navController.popBackStack()
                     navController.navigate(R.id.loginFragment)
                 }
             }
         }
     }
-    private fun getImageFromUri(imageUri: Uri?) : File? {
+
+    private fun getImageFromUri(imageUri: Uri?): File? {
         imageUri?.let { uri ->
             val mimeType = getMimeType(this@MainActivity, uri)
             mimeType?.let {
-                val file = createTmpFileFromUri(this, imageUri,"temp_image", ".$it")
+                val file = createTmpFileFromUri(this, imageUri, "temp_image", ".$it")
 //                file?.let { Log.d("image Url = ", file.absolutePath) }
                 return file
             }
@@ -166,11 +189,16 @@ class MainActivity : AppCompatActivity() {
         return extension
     }
 
-    private fun createTmpFileFromUri(context: Context, uri: Uri, fileName: String, mimeType: String): File? {
+    private fun createTmpFileFromUri(
+        context: Context,
+        uri: Uri,
+        fileName: String,
+        mimeType: String
+    ): File? {
         return try {
             val stream = context.contentResolver.openInputStream(uri)
-            val file = File.createTempFile(fileName, mimeType,cacheDir)
-            FileUtils.copyInputStreamToFile(stream,file)
+            val file = File.createTempFile(fileName, mimeType, cacheDir)
+            FileUtils.copyInputStreamToFile(stream, file)
             file
         } catch (e: Exception) {
             e.printStackTrace()
@@ -196,14 +224,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (caller != FileCaller.none){
-            emitFileForCaller(data,resultCode)
+        if (caller != FileCaller.none) {
+            emitFileForCaller(data, resultCode)
         }
     }
-    fun emitFileForCaller(data:Intent?,resultCode:Int){
+
+    fun emitFileForCaller(data: Intent?, resultCode: Int) {
         if (resultCode == Activity.RESULT_OK && data != null) {
             var array = ArrayList<File>()
-            if(data.clipData != null){
+            if (data.clipData != null) {
 
                 val data: Intent? = data
                 if (data?.clipData != null) {
@@ -218,23 +247,23 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-            }else if(data?.data != null){
+            } else if (data?.data != null) {
 
                 val imageUri: Uri? = data.data
                 val file = getImageFromUri(imageUri)
-                file?.let{
+                file?.let {
                     array.add(it)
 
                 }
             }
-            when(caller){
-                FileCaller.hrDetails  -> {
-                    Log.d("hr","hr")
+            when (caller) {
+                FileCaller.hrDetails -> {
+                    Log.d("hr", "hr")
                     _hrDetailsFiles.postValue(array)
 
 //                    caller = FileCaller.none
                 }
-                FileCaller.paymentDetails  -> {
+                FileCaller.paymentDetails -> {
                     _paymentProcessFiles.postValue(array)
 
 //                    caller = FileCaller.none
@@ -247,15 +276,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun openGalary(){
+    fun openGalary() {
         val chooseFile: Intent
         val intent: Intent
         chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-        chooseFile.type = "/"
+        chooseFile.type = "*/*"
         chooseFile.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent = Intent.createChooser(chooseFile, "Choose a file")
         startActivityForResult(intent, 111)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
@@ -268,6 +298,7 @@ class MainActivity : AppCompatActivity() {
 //    }
 
 }
-enum class FileCaller{
-    paymentDetails,hrDetails,none
+
+enum class FileCaller {
+    paymentDetails, hrDetails, none
 }

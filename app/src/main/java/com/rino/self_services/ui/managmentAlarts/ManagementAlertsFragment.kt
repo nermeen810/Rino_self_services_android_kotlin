@@ -28,7 +28,7 @@ class ManagementAlertsFragment : Fragment() {
     private lateinit var periodTimeList_en: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ManagementsAlertsViewModel.lastSelectedPos = PaymentHomeViewModel.periodTimeList_en.size -1
+        ManagementsAlertsViewModel.lastSelectedPos = PaymentHomeViewModel.periodTimeList_en.size - 1
 
         arguments?.let {
 
@@ -45,33 +45,52 @@ class ManagementAlertsFragment : Fragment() {
     }
 
     private fun init() {
-        periodTimeList_ar = arrayListOf(" منذ عامين "," السنة السابقة "," السنة الحالية "," الشهر السابق "," الشهر الحالى "," الاسبوع السابق "," الاسبوع الحالى "," الكل ")
-        periodTimeList_en = arrayListOf("twoyearsago","lastyear","year","lastmonth","month","lastweek","week","all")
-       setupUI()
-       observeData()
-       handleBack()
+        periodTimeList_ar = arrayListOf(
+            " منذ عامين ",
+            " السنة السابقة ",
+            " السنة الحالية ",
+            " الشهر السابق ",
+            " الشهر الحالى ",
+            " الاسبوع السابق ",
+            " الاسبوع الحالى ",
+            " الكل "
+        )
+        periodTimeList_en = arrayListOf(
+            "twoyearsago",
+            "lastyear",
+            "year",
+            "lastmonth",
+            "month",
+            "lastweek",
+            "week",
+            "all"
+        )
+        setupUI()
+        observeData()
+        handleBack()
     }
 
     private fun setupUI() {
         binding.alertsRecycle.visibility = View.GONE
-      //  paymentList = arrayListOf()
-        managementAlertsAdapter = ManagementAlertsAdapter(arrayListOf(),viewModel)
+        //  paymentList = arrayListOf()
+        managementAlertsAdapter = ManagementAlertsAdapter(arrayListOf(), viewModel)
         binding.alertsRecycle.visibility = View.VISIBLE
         binding.alertsRecycle.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = managementAlertsAdapter
         }
-            val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-            linearLayoutManager.reverseLayout = false
-            linearLayoutManager.stackFromEnd = true
-            binding.periodRecycle.apply {
-                layoutManager = linearLayoutManager
-                adapter = periodAdapter
-            }
+        val linearLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        linearLayoutManager.reverseLayout = false
+        linearLayoutManager.stackFromEnd = true
+        binding.periodRecycle.apply {
+            layoutManager = linearLayoutManager
+            adapter = periodAdapter
+        }
         binding.mSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-     //               viewModel.searchHistoryDataByService(query)
+                    //               viewModel.searchHistoryDataByService(query)
                 }
                 return false
             }
@@ -100,15 +119,13 @@ class ManagementAlertsFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner) {
             it?.let {
                 //        binding.progress.visibility = it
-                if(it == View.VISIBLE)
-                {
+                if (it == View.VISIBLE) {
                     binding.shimmer.visibility = View.VISIBLE
                     binding.shimmer.startShimmer()
                     binding.alertsRecycle.visibility = View.GONE
                     binding.noDataAnim.visibility = View.GONE
                     binding.textNoData.visibility = View.GONE
-                }
-                else if(it == View.GONE){
+                } else if (it == View.GONE) {
                     binding.shimmer.stopShimmer()
                     binding.shimmer.visibility = View.GONE
                     binding.alertsRecycle.visibility = View.VISIBLE
@@ -122,22 +139,19 @@ class ManagementAlertsFragment : Fragment() {
     private fun observeShowError() {
         viewModel.setError.observe(viewLifecycleOwner) {
             it?.let {
-                if(it.contains("Time out")){
+                if (it.contains("Time out")) {
                     binding.noDataAnim.visibility = View.VISIBLE
                     binding.textNoData.visibility = View.VISIBLE
                     binding.noDataAnim.setAnimation(R.raw.rino_timeout)
                     binding.textNoData.text = getString(R.string.timeout_msg)
                     binding.alertsRecycle.visibility = View.GONE
-                }
-                else if(it.contains("server is down"))
-                {
+                } else if (it.contains("server is down")) {
                     binding.noDataAnim.visibility = View.VISIBLE
                     binding.textNoData.visibility = View.VISIBLE
                     binding.noDataAnim.setAnimation(R.raw.rino_server_error2)
                     binding.textNoData.text = getString(R.string.server_error_msg)
                     binding.alertsRecycle.visibility = View.GONE
-                }
-                else{
+                } else {
                     showMsg(it)
                 }
             }
@@ -149,16 +163,17 @@ class ManagementAlertsFragment : Fragment() {
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.color_orange)).setActionTextColor(
+                    R.color.color_orange
+                )
+            ).setActionTextColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.white)).setAction(getString(R.string.dismiss))
+                    R.color.white
+                )
+            ).setAction(getString(R.string.dismiss))
             {
             }.show()
     }
-
-
-
 
 
 }

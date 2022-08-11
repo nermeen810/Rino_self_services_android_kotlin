@@ -27,7 +27,7 @@ class MyProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            from_where =  arguments?.get("from_where").toString()
+            from_where = arguments?.get("from_where").toString()
 
         }
     }
@@ -58,14 +58,14 @@ class MyProfileFragment : Fragment() {
     }
 
     private fun observeProfileData() {
-        viewModel.profileData.observe(viewLifecycleOwner){
+        viewModel.profileData.observe(viewLifecycleOwner) {
             setupUI(it)
         }
     }
 
     private fun setupUI(profileData: ProfileResponse?) {
-        binding.departmentValue.text =profileData?.departmentArabic
-        binding.phoneNumValue.text = profileData?.phoneNumber?:" لا يوجد ".dateToArabic()
+        binding.departmentValue.text = profileData?.departmentArabic
+        binding.phoneNumValue.text = profileData?.phoneNumber ?: " لا يوجد ".dateToArabic()
         binding.emailValue.text = profileData?.email
         binding.nameTxt.text = profileData?.arabicName
 
@@ -93,10 +93,14 @@ class MyProfileFragment : Fragment() {
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.color_orange)).setActionTextColor(
+                    R.color.color_orange
+                )
+            ).setActionTextColor(
                 ContextCompat.getColor(
-                requireContext(),
-                R.color.white)).setAction(getString(R.string.dismiss))
+                    requireContext(),
+                    R.color.white
+                )
+            ).setAction(getString(R.string.dismiss))
             {
             }.show()
     }

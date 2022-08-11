@@ -24,7 +24,6 @@
             android:layout_height="40dp"
             android:layout_margin="20dp"
             android:src="@drawable/unread_msg"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,13 +31,50 @@
             android:id="@+id/notification_body_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/paddingLayout"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="32dp"
             android:text="اعتماد طلب رقم 25324"
             android:textColor="@color/dark_gray"
-            app:layout_constraintBottom_toBottomOf="@+id/notification_isRead_img"
-            app:layout_constraintRight_toLeftOf="@+id/notification_isRead_img"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/notification_isRead_img"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/notification_isRead_img" />
+
+        <TextView
+            android:textColor="@color/dark_gray"
+            android:id="@+id/notificationID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="10dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            app:layout_constraintEnd_toEndOf="@+id/notification_body_text"
+            app:layout_constraintTop_toBottomOf="@+id/notification_body_text" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/markAsRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="70dp"
+            android:text="تعيين كمقروء"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="384dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notificationID" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

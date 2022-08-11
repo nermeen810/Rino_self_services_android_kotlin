@@ -10,9 +10,15 @@ import com.rino.self_services.R.drawable.read_msg
 import com.rino.self_services.R.drawable.unread_msg
 import com.rino.self_services.databinding.NotificationItemBinding
 import com.rino.self_services.model.pojo.notifications.Data
+import com.rino.self_services.utils.numToArabic
 
 
-class NotificationAdapter (private var context: Context,private var notificationList: ArrayList<Data>,private  var viewModel: NotificationViewModel) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter(
+    private var context: Context,
+    private var notificationList: ArrayList<Data>,
+    private var viewModel: NotificationViewModel,
+    private val onItemClicked: (notification: Data) -> Unit
+) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,26 +40,27 @@ class NotificationAdapter (private var context: Context,private var notification
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         holder.binding.notificationBodyText.text = notificationList[position].body
+        holder.binding.notificationID.text = "رقم الطلب:  "+notificationList[position].id.toString().numToArabic()
 
-        if(notificationList[position].isread == true){
+        if (notificationList[position].isread == true) {
             holder.binding.notificationIsReadImg.setImageResource(read_msg)
-        }
-        else {
+        } else {
             holder.binding.notificationIsReadImg.setImageResource(unread_msg)
         }
-
-         holder.binding.card.setOnClickListener{
-
-             if(notificationList[position].isread == false){
-                 Log.e("notification id",notificationList[position]?.id.toString())
-         //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
-                 viewModel.setNotificationAsRead(position,notificationList[position].id?:-1)
-             }
-
-          }
+        holder.binding.card.setOnClickListener {
+            onItemClicked(notificationList[position])
+        }
+        holder.binding.markAsRead.setOnClickListener {
+            if (notificationList[position].isread == false) {
+                Log.e("notification id", notificationList[position]?.id.toString())
+                //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
+                viewModel.setNotificationAsRead(position, notificationList[position].id ?: -1)
+            }
+        }
 
     }
-     fun setNotificationAsRead(position:Int) {
+
+    fun setNotificationAsRead(position: Int) {
         notificationList[position].isread = true
         notifyDataSetChanged()
     }
@@ -63,10 +70,12 @@ class NotificationAdapter (private var context: Context,private var notification
         notificationList.addAll(newList)
         notifyDataSetChanged()
     }
+
     fun clearList() {
         notificationList.clear()
         notifyDataSetChanged()
     }
+
     inner class NotificationViewHolder(val binding: NotificationItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 

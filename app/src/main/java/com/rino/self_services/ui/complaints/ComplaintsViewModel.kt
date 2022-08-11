@@ -6,17 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rino.self_services.model.pojo.CreateAttachmentRequest
-import com.rino.self_services.model.pojo.HRClearanceDetails
 import com.rino.self_services.model.pojo.complaints.ComplaintResponse
 import com.rino.self_services.model.pojo.complaints.CreateComplaintRequest
-import com.rino.self_services.model.pojo.forgetPassword.RequestOTP
 import com.rino.self_services.model.reposatory.ComplaintsRepo
 import com.rino.self_services.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject

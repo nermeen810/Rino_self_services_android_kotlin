@@ -61,11 +61,14 @@
         <entry key="app/src/main/res/layout/attatchment_item.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/complaint_item.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/complaints_shimmer_item.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/details_shimmer.xml" value="0.1590678824721378" />
         <entry key="app/src/main/res/layout/fragment_complaints.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2859375" />
         <entry key="app/src/main/res/layout/fragment_payment_process_details.xml" value="0.1634963768115942" />
         <entry key="app/src/main/res/layout/fragment_see_all_hr_clearance.xml" value="0.11296859169199595" />
         <entry key="app/src/main/res/layout/fragment_see_all_payment_process.xml" value="0.12689969604863222" />
+        <entry key="app/src/main/res/layout/notification_item.xml" value="0.5669724770642202" />
         <entry key="app/src/main/res/layout/payment_shimmer_item.xml" value="0.24295774647887325" />
         <entry key="app/src/main/res/layout/see_all_shimmer_item.xml" value="0.146403242147923" />
         <entry key="app/src/main/res/layout/shimmer_view.xml" value="0.14918946301925026" />

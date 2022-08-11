@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rino.self_services.R
 import com.rino.self_services.databinding.PeriodItemBinding
 
-class HrPeriodAdapter (private var periodList: ArrayList<String>,private val hrClearanceHomeViewModel: HrClearanceViewModel) : RecyclerView.Adapter<HrPeriodAdapter.PeriodViewHolder>() {
+class HrPeriodAdapter(
+    private var periodList: ArrayList<String>,
+    private val hrClearanceHomeViewModel: HrClearanceViewModel
+) : RecyclerView.Adapter<HrPeriodAdapter.PeriodViewHolder>() {
 
     var lastSelectedCard: CardView? = null
     var lastSelectedText: TextView? = null

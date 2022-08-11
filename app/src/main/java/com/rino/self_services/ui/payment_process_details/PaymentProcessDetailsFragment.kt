@@ -363,23 +363,6 @@ class PaymentProcessDetailsFragment : Fragment() {
                     binding.stepperView.setImageResource(R.drawable.seventh_stepper)
                 }
             }
-
-//            if(details?.hasMadeAction == false && details?.status == "جديد"){
-//                binding.deny.alpha = 1f
-//                binding.approve.alpha = 1f
-//            }else if(details?.hasMadeAction == true){
-//                binding.deny.alpha = 0f
-//                binding.approve.alpha = 0f
-//            }else if(details?.hasMadeAction == false &&  details?.status == "تم اعتماد مدير القسم"){
-//                binding.approve.alpha = 1f
-//
-//            }else if(details?.hasMadeAction == true &&  details?.status == "تم اعتماد مدير القسم"){
-//                binding.deny.alpha = 0f
-//                binding.approve.alpha = 0f
-//            }else if(details?.status?.contains("تم اعتماد مدير الحسابات") == true && details?.hasMadeAction == true){
-//                binding.deny.alpha = 0f
-//                binding.approve.alpha = 0f
-//            }else if(details?.status?.contains("اعتماد المراةع المالي") == true){}
         }
     }
 }
