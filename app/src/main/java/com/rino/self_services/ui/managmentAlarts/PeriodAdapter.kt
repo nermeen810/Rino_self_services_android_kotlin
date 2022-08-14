@@ -13,7 +13,7 @@ import com.rino.self_services.databinding.PeriodItemBinding
 
 class PeriodAdapter(
     private var periodList: ArrayList<String>,
-    private val managementsAlartsViewModel: ManagementsAlertsViewModel
+    private val managementsAlertsViewModel: ManagementsAlertsViewModel
 ) : RecyclerView.Adapter<PeriodAdapter.PeriodViewHolder>() {
 
     var lastSelectedCard: CardView? = null
@@ -45,7 +45,7 @@ class PeriodAdapter(
 
             lastSelectedCard = holder.binding.categoryCard
             lastSelectedText = holder.binding.categoryName
-            //     filteredHistoryViewModel.getHistoryData(filteredHistoryViewModel.serviceId,FilteredHistoryViewModel.periodTimeList_en[FilteredHistoryViewModel.lastSelectedPos])
+    //        managementsAlertsViewModel.getManagementAlertsData()
 
             lastSelectedCard?.setCardBackgroundColor(
                 ContextCompat.getColor(
@@ -73,7 +73,7 @@ class PeriodAdapter(
             binding.categoryCard.setOnClickListener {
                 ManagementsAlertsViewModel.lastSelectedPos = position
                 Log.e("lastPos", ManagementsAlertsViewModel.lastSelectedPos.toString())
-                //     managementsAlartsViewModel.getPaymentData()
+                     managementsAlertsViewModel.getManagementAlertsData()
                 lastSelectedCard?.setCardBackgroundColor(
                     ContextCompat.getColor(
                         it.context,

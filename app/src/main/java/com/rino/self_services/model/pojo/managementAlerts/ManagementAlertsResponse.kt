@@ -10,6 +10,17 @@ data class ManagementAlertsResponse (
 
 data class Data (
 
+    @SerializedName("title" ) var title : String?          = null,
+    @SerializedName("from"  ) var from  : String?          = null,
+    @SerializedName("to"    ) var to    : String?          = null,
+    @SerializedName("items" ) var items : ArrayList<Items> = arrayListOf(),
+    @SerializedName("count" ) var count : Int?             = null
+
+)
+
+
+data class Items (
+
     @SerializedName("id"          ) var id         : Int,
     @SerializedName("status"      ) var status     : Int,
     @SerializedName("status_date" ) var statusDate : String,
@@ -20,7 +31,7 @@ data class Data (
 data class CustomData (
 
     @SerializedName("details"     ) var details     : String? = null,
-    @SerializedName("amount"      ) var amount      : Int?    = null,
+    @SerializedName("amount"      ) var amount      : Float?    = null,
     @SerializedName("beneficiary" ) var beneficiary : String? = null
 
 )

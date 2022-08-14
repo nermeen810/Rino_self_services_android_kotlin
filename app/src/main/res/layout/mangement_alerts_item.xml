@@ -67,27 +67,56 @@
                     app:layout_constraintTop_toBottomOf="@id/serviceNumTxt"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"/>
+
                 <TextView
                     android:id="@+id/request_statusTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingLayout"
                     android:layout_marginRight="@dimen/paddingText"
-                    android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
                     android:text="@string/request_type_alerts"
                     android:textColor="@color/black"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_statusValue"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line2" />
+                    app:layout_constraintTop_toTopOf="@+id/request_statusValue" />
 
                 <TextView
                     android:id="@+id/request_statusValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingText"
+                    android:maxWidth="200dp"
+                    android:layout_marginTop="@dimen/paddingLayout"
+                    android:background="@drawable/brown_border_rect"
+                    android:padding="8dp"
+                    android:text="25"
+                    android:textColor="@color/dark_gray"
+                    android:textDirection="rtl"
+                    android:textSize="@dimen/normalTextSize"
+                    android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="@+id/serviceNumValue"
+                    app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+                <TextView
+                    android:id="@+id/amountTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/paddingText"
+                    android:padding="4dp"
+                    android:text="@string/amount"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/amountValue"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/request_statusValue" />
+
+                <TextView
+                    android:id="@+id/amountValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/orange_rect"
-                    android:maxWidth="250dp"
+                    android:maxWidth="200dp"
+                    android:layout_marginTop="@dimen/paddingText"
                     android:maxLines="2"
                     android:padding="8dp"
                     android:text="25"
@@ -95,72 +124,41 @@
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/request_statusTxt"
-                    app:layout_constraintRight_toRightOf="@+id/serviceNumValue"
-                    app:layout_constraintTop_toTopOf="@+id/request_statusTxt" />
-                <TextView
-                    android:id="@+id/amountTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingLayout"
-                    android:layout_marginRight="@dimen/paddingText"
-                    android:layout_marginBottom="@dimen/paddingLayout"
-                    android:padding="4dp"
-                    android:text="@string/amount"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/request_statusTxt" />
-
-                <TextView
-                    android:id="@+id/amountValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingText"
-                    android:maxWidth="250dp"
-                    android:background="@drawable/brown_border_rect"
-                    android:maxLines="2"
-                    android:padding="8dp"
-                    android:text="25"
-                    android:textColor="@color/dark_gray"
-                    android:textDirection="rtl"
-                    android:textSize="@dimen/normalTextSize"
-                    android:textStyle="bold"
                     app:layout_constraintRight_toRightOf="@+id/request_statusValue"
-                    app:layout_constraintTop_toTopOf="@+id/amountTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/request_statusValue" />
 
 
                 <TextView
                     android:id="@+id/request_toTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingLayout"
                     android:layout_marginRight="@dimen/paddingText"
-                    android:layout_marginBottom="@dimen/paddingLayout"
                     android:padding="4dp"
                     android:text="@string/emp_name"
                     android:textColor="@color/black"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/request_toValue"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amountTxt" />
+                    app:layout_constraintTop_toTopOf="@+id/request_toValue"
+                    />
 
                 <TextView
                     android:id="@+id/request_toValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/paddingText"
-                    android:maxWidth="250dp"
                     android:background="@drawable/brown_border_rect"
+                    android:maxWidth="200dp"
                     android:maxLines="2"
                     android:padding="8dp"
+                    android:layout_marginTop="@dimen/paddingText"
                     android:text="25"
                     android:textColor="@color/dark_gray"
                     android:textDirection="rtl"
                     android:textSize="@dimen/normalTextSize"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/request_toTxt"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="@+id/amountValue"
-                    app:layout_constraintTop_toTopOf="@+id/request_toTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/amountValue" />
 
 
                 <TextView

@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentManagmentAlartsBinding
 import com.rino.self_services.model.pojo.managementAlerts.Data
+import com.rino.self_services.model.pojo.managementAlerts.Items
 
 import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsResponse
 import com.rino.self_services.ui.hrClearanceHome.*
@@ -30,7 +31,7 @@ class ManagementAlertsFragment : Fragment() {
     private lateinit var searchHistoryAdapter: ManagementAlertsSubAdapter
     private lateinit var periodAdapter: PeriodAdapter
 
-    private lateinit var searchHistoryList: ArrayList<Data>
+    private lateinit var searchHistoryList: ArrayList<Items>
     private lateinit var periodTimeList_ar: ArrayList<String>
     private lateinit var periodTimeList_en: ArrayList<String>
     private lateinit var hrClearanceHomeResponse: ManagementAlertsResponse
@@ -95,7 +96,7 @@ class ManagementAlertsFragment : Fragment() {
     }
     private fun observeNoData() {
         viewModel.noData.observe(viewLifecycleOwner) {
-//            binding.historyRecycle.visibility = View.GONE
+            binding.alertsRecycle.visibility = View.GONE
             binding.searchRecycle.visibility = View.GONE
             binding.noDataAnim.visibility = View.VISIBLE
             binding.textNoData.visibility = View.VISIBLE
@@ -104,7 +105,7 @@ class ManagementAlertsFragment : Fragment() {
 
 
     private fun observeHistoryData() {
-   //     viewModel.getManagementAlertsData()
+        viewModel.getManagementAlertsData()
         viewModel.getPaymentData.observe(viewLifecycleOwner) {
             it?.let {
                 hrClearanceHomeResponse = it

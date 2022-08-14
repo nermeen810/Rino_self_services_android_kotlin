@@ -97,9 +97,9 @@ class ManagementsAlertsRepo  @Inject constructor(private val apiDataSource: ApiD
             )
             if (response.isSuccessful) {
                 result = Result.Success(response.body())
-                Log.i("getHrClearanceHomeList", "Result $result")
+                Log.i("getManagementAlertsList", "Result $result")
             } else {
-                Log.i("getHrClearanceHomeList", "Error${response.errorBody()}")
+                Log.e("getManagementAlertsList", "Error${response.code()}")
                 when (response.code()) {
                     400 -> {
                         Log.e("Error 400", "Bad Request")

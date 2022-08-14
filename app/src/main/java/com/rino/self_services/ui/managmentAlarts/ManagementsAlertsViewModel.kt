@@ -83,7 +83,7 @@ class ManagementsAlertsViewModel @Inject constructor(private val managementsAler
             when (val result = managementsAlertsRepo.getManagementAlertsList(periodTimeList_en[lastSelectedPos])) {
                 is Result.Success -> {
                     _loading.postValue(View.GONE)
-                    Log.i("getPaymentData:", "${result.data}")
+                    Log.i("getManagementAlertsList:", "${result.data}")
                     if (result.data?.data?.size == 0) {
                         _noData.postValue(true)
                     } else {
@@ -92,13 +92,13 @@ class ManagementsAlertsViewModel @Inject constructor(private val managementsAler
 
                 }
                 is Result.Error -> {
-                    Log.e("getPaymentData:", "${result.exception.message}")
+                    Log.e("getManagementAlertsList:", "${result.exception.message}")
                     _setError.postValue(result.exception.message)
                     _loading.postValue(View.GONE)
 
                 }
                 is Result.Loading -> {
-                    Log.i("getPaymentData", "Loading")
+                    Log.i("getManagementAlertsList", "Loading")
                     _loading.postValue(View.VISIBLE)
                 }
             }

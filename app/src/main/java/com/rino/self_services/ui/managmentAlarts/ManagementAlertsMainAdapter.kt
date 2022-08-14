@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rino.self_services.R
 import com.rino.self_services.databinding.PaymentHomeItemBinding
 import com.rino.self_services.model.pojo.managementAlerts.Data
+import com.rino.self_services.utils.Constants
+import com.rino.self_services.utils.dateToArabic
 
 class ManagementAlertsMainAdapter (private var managementAlertsList: ArrayList<Data>,
                                    private val ViewModel: ManagementsAlertsViewModel, private val context: Context
@@ -34,11 +37,11 @@ class ManagementAlertsMainAdapter (private var managementAlertsList: ArrayList<D
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ManagementAlertsMainViewHolder, position: Int) {
         val temp = managementAlertsList[position]
-//        holder.binding.periodTxt.text = Constants.convertNumsToArabic(temp.title ?: "")
-//        holder.binding.requestNumTxt.text =
-//            Constants.convertNumsToArabic("(" + temp.count.toString()) + " " + context.getString(
-//                R.string.task
-//            ) + ")"
+        holder.binding.periodTxt.text = temp.title?.dateToArabic() ?: ""
+        holder.binding.requestNumTxt.text =
+            Constants.convertNumsToArabic("(" + temp.count.toString()) + " " + context.getString(
+                R.string.task
+            ) + ")"
 
         holder.binding.historyRecycle.visibility = View.VISIBLE
         var historyAdapter = ManagementAlertsSubAdapter(arrayListOf(), ViewModel, context)
@@ -49,7 +52,7 @@ class ManagementAlertsMainAdapter (private var managementAlertsList: ArrayList<D
             layoutManager = linearLayoutManager
             adapter = historyAdapter
         }
-//        historyAdapter.updateItems(temp.items)
+        historyAdapter.updateItems(temp.items)
         holder.binding.showAllTxt.setOnClickListener {
 //            hrClearanceViewModel.navToSeeAll(
 //                NavSeeAll(
