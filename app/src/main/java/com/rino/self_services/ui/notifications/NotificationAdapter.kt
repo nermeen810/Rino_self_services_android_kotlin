@@ -19,7 +19,7 @@ class NotificationAdapter(
     private var viewModel: NotificationViewModel,
     private val onItemClicked: (notification: Data) -> Unit
 ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
-
+   var process = 0
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -39,25 +39,27 @@ class NotificationAdapter(
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        holder.binding.notificationBodyText.text = notificationList[position].body
-        holder.binding.notificationID.text = "رقم الطلب:  "+notificationList[position].id.toString().numToArabic()
+        if(notificationList[position].processType == process) {
+            holder.binding.notificationBodyText.text = notificationList[position].body
+            holder.binding.notificationID.text =
+                "رقم الطلب:  " + notificationList[position].id.toString().numToArabic()
 
-        if (notificationList[position].isread == true) {
-            holder.binding.notificationIsReadImg.setImageResource(read_msg)
-        } else {
-            holder.binding.notificationIsReadImg.setImageResource(unread_msg)
-        }
-        holder.binding.card.setOnClickListener {
-            onItemClicked(notificationList[position])
-        }
-        holder.binding.markAsRead.setOnClickListener {
-            if (notificationList[position].isread == false) {
-                Log.e("notification id", notificationList[position]?.id.toString())
-                //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
-                viewModel.setNotificationAsRead(position, notificationList[position].id ?: -1)
+            if (notificationList[position].isread == true) {
+                holder.binding.notificationIsReadImg.setImageResource(read_msg)
+            } else {
+                holder.binding.notificationIsReadImg.setImageResource(unread_msg)
+            }
+            holder.binding.card.setOnClickListener {
+                onItemClicked(notificationList[position])
+            }
+            holder.binding.markAsRead.setOnClickListener {
+                if (notificationList[position].isread == false) {
+                    Log.e("notification id", notificationList[position]?.id.toString())
+                    //        holder.binding.notificationIsReadImg.setImageResource(read_msg)
+                    viewModel.setNotificationAsRead(position, notificationList[position].id ?: -1)
+                }
             }
         }
-
     }
 
     fun setNotificationAsRead(position: Int) {

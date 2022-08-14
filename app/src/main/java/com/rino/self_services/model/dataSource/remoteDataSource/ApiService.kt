@@ -21,6 +21,9 @@ import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
 import com.rino.self_services.model.pojo.login.RefreshTokenResponse
+import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsDetailsResponse
+import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsResponse
+import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsSearchResponse
 import com.rino.self_services.model.pojo.notifications.AllNotificationResponse
 import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.notifications.NotificationCountResponse
@@ -155,6 +158,19 @@ interface ApiService {
     @GET("api/requests/{id}/amount-changelog")
     suspend fun getAmountChangelog(@Header("Authorization"   ) auth: String,  @Path("id" ) id :Int):Response<AmountChangelogResponse?>
 
+
+    @GET("api/orders/period/{period_value}")
+    suspend fun getManagementAlertsList(@Header("Authorization"   ) auth: String,
+                                       @Path("period_value")period_value :String):Response<ManagementAlertsResponse?>
+
+    @GET("api/Orders/query/{query}/page/{page}")
+    suspend fun searchMARequest(@Header("Authorization") auth: String,
+                                @Path("query") search_txt : String,
+                                @Path("page") page: Long):Response<ManagementAlertsSearchResponse?>
+
+    @GET("api/Orders/{id}")
+    suspend fun getDetailsMARequest(@Header("Authorization") auth: String,
+                                    @Path("id") id: Int):Response<ManagementAlertsDetailsResponse?>
 }
 
 

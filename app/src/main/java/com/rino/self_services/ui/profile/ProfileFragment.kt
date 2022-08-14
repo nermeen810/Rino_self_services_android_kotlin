@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.rino.self_services.R
 import com.rino.self_services.databinding.FragmentProfileBinding
 import com.rino.self_services.ui.notifications.NotificationsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +43,7 @@ class ProfileFragment : Fragment() {
         logout()
         handleBack()
         observePermission()
+        observeShowError()
     }
 
     private fun navToChangePassword() {
@@ -91,6 +95,22 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun observeShowError() {
+        viewModel.setError.observe(viewLifecycleOwner) {
+            it?.let {
+                Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+                    .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.color_orange)).setActionTextColor(
+                        ContextCompat.getColor(
+                        requireContext(),
+                        R.color.white)).setAction(getString(R.string.dismiss))
+                    {
+                    }.show()
+            }
+        }
+    }
     private fun navToCreateComplaints() {
         val action =
             ProfileFragmentDirections.actionProfileFragmentToComplaintsFragment(from_where+"_profile")
@@ -125,6 +145,10 @@ class ProfileFragment : Fragment() {
             } else if (from_where == "payment") {
                 val action =
                     ProfileFragmentDirections.actionProfileFragmentToPaymentProcessesFragment()
+                findNavController().navigate(action)
+            }else if (from_where == "MA") {
+                val action =
+                    ProfileFragmentDirections.actionProfileFragmentToManagementAlertsFragment()
                 findNavController().navigate(action)
             }
 

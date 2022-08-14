@@ -10,4 +10,5 @@ data class NotificationCountResponse(
 data class DataCount(
     @SerializedName("paymentNotifies") var payments:Int?,
     @SerializedName("clearanceNotifies") var hr:Int?,
+    @SerializedName("orderNotifies") var managementAlerts:Int?
 )

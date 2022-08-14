@@ -1,6 +1,26 @@
 package com.rino.self_services.model.pojo.managementAlerts
 
-class ManagementAlertsResponse {
+import com.google.gson.annotations.SerializedName
 
+data class ManagementAlertsResponse (
+    @SerializedName("data"    ) var data    : ArrayList<Data> = arrayListOf(),
+    @SerializedName("count"   ) var count   : Int?            = null,
+    @SerializedName("success" ) var success : Boolean?        = null,
+    @SerializedName("message" ) var message : String?         = null)
 
-}
+data class Data (
+
+    @SerializedName("id"          ) var id         : Int,
+    @SerializedName("status"      ) var status     : Int,
+    @SerializedName("status_date" ) var statusDate : String,
+    @SerializedName("custom_data" ) var customData : CustomData? = CustomData()
+
+)
+
+data class CustomData (
+
+    @SerializedName("details"     ) var details     : String? = null,
+    @SerializedName("amount"      ) var amount      : Int?    = null,
+    @SerializedName("beneficiary" ) var beneficiary : String? = null
+
+)

@@ -169,6 +169,11 @@ class ViewComplaintsFragment : Fragment() {
                     ViewComplaintsFragmentDirections.actionViewComplaintsFragmentToComplaintsFragment("payment_view_complaints")
                 findNavController().navigate(action)
             }
+            else if (from_where == "MA_profile") {
+                val action =
+                    ViewComplaintsFragmentDirections.actionViewComplaintsFragmentToComplaintsFragment("MA_view_complaints")
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -182,6 +187,10 @@ class ViewComplaintsFragment : Fragment() {
             } else if (from_where == "payment_profile") {
                 val action =
                     ViewComplaintsFragmentDirections.actionViewComplaintsFragmentToProfileFragment("payment")
+                findNavController().navigate(action)
+            }else if (from_where == "MA_profile") {
+                val action =
+                    ViewComplaintsFragmentDirections.actionViewComplaintsFragmentToProfileFragment("MA")
                 findNavController().navigate(action)
             }
         }

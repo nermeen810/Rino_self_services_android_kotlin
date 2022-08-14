@@ -18,7 +18,7 @@ data class Data(
     @SerializedName("subcategory") var subcategory: String? = null,
     @SerializedName("body") var body: String? = null,
     @SerializedName("isread") var isread: Boolean? = null,
-    @SerializedName("process") var processType:String? = null,
+    @SerializedName("process") var processType:Int? = null,
     @SerializedName("entity") var entity:Int? = null
 
 )

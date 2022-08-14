@@ -47,6 +47,17 @@ class NotificationsFragment : Fragment() {
         serviceAdapter = NotificationAdapter(requireContext(), arrayListOf(), viewModel) {
             getPressedItemData(it)
         }
+        when(fromWhere){
+            "payment"-> {
+             serviceAdapter.process = 0
+            }
+            "hr"-> {
+                serviceAdapter.process = 1
+            }
+            "MA"-> {
+                serviceAdapter.process = 2
+            }
+        }
         setUpUI()
         observeAllNotification()
         observeSetNotificationAsRead()
@@ -144,6 +155,10 @@ class NotificationsFragment : Fragment() {
             } else if (fromWhere == "payment") {
                 val action =
                     NotificationsFragmentDirections.actionNotificationsFragmentToPaymentProcessesFragment()
+                findNavController().navigate(action)
+            }else if (fromWhere == "MA") {
+                val action =
+                    NotificationsFragmentDirections.actionNotificationsFragmentToManagementAlertsFragment()
                 findNavController().navigate(action)
             }
         }

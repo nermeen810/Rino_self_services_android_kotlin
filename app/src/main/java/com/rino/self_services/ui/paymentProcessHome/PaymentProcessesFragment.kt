@@ -20,6 +20,7 @@ import com.rino.self_services.model.pojo.payment.Data
 import com.rino.self_services.model.pojo.payment.Items
 import com.rino.self_services.model.pojo.payment.PaymentHomeResponse
 import com.rino.self_services.ui.hrClearanceHome.HrClearanceHomeFragmentDirections
+import com.rino.self_services.utils.numToArabic
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -97,7 +98,7 @@ class PaymentProcessesFragment : Fragment() {
         viewModel.getNotificationCount()
         viewModel.getNotificationCount.observe(viewLifecycleOwner) {
             it?.let {
-                binding.countTxt.text = (it.data?.payments ?: 0).toString()
+                binding.countTxt.text = (it.data?.payments ?: 0).toString().numToArabic()
                 notificationCount = it.data?.payments ?: 0
             }
         }

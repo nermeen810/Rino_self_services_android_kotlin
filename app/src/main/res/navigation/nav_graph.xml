@@ -41,6 +41,9 @@
             android:id="@+id/action_homeFragment_to_paymentProcessDetailsFragment"
             app:destination="@id/paymentProcessDetailsFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_managementAlertsFragment"
+            app:destination="@id/managementAlertsFragment" />
 
     </fragment>
     <fragment
@@ -229,6 +232,9 @@
             android:id="@+id/action_notificationsFragment_to_paymentProcessDetailsFragment"
             app:destination="@id/paymentProcessDetailsFragment"
             app:popUpTo="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_managementAlertsFragment"
+            app:destination="@id/managementAlertsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -259,6 +265,9 @@
         <action
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_managementAlertsFragment"
+            app:destination="@id/managementAlertsFragment" />
     </fragment>
     <fragment
         android:id="@+id/complaintsFragment"
@@ -354,6 +363,22 @@
             android:name="file"
             app:argType="com.rino.self_services.ui.pdfViewer.MyFile" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/managementAlertsFragment"
+        android:name="com.rino.self_services.ui.managmentAlarts.ManagementAlertsFragment"
+        android:label="fragment_managment_alarts"
+        tools:layout="@layout/fragment_managment_alarts" >
+
+        <action
+            android:id="@+id/managementAlertsFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/managementAlertsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_managementAlertsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 </navigation>

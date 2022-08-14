@@ -11,6 +11,8 @@ import com.rino.self_services.model.pojo.forgetPassword.ResetPasswordRequest
 import com.rino.self_services.model.pojo.hrClearance.SearchRequest
 import com.rino.self_services.model.pojo.login.ChangePasswordRequest
 import com.rino.self_services.model.pojo.login.PermissionResponse
+import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsResponse
+import com.rino.self_services.model.pojo.managementAlerts.ManagementAlertsSearchResponse
 import com.rino.self_services.model.pojo.notifications.DeviceTokenRequest
 import com.rino.self_services.model.pojo.payment.EditAmountRequest
 import com.rino.self_services.model.pojo.profile.ProfileResponse
@@ -118,4 +120,13 @@ class ApiDataSource @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAmountChangelog(auth: String,id :Int) = apiService.getAmountChangelog(auth,id)
 
+
+    suspend fun getManagementAlertsList(auth: String,
+                                      period_value :String) = apiService.getManagementAlertsList(auth,period_value)
+
+    suspend fun searchMARequest(auth: String,
+                               search_txt : String,
+                               page: Long) = apiService.searchMARequest(auth,search_txt,page)
+
+    suspend fun getDetailsMARequest( auth: String, id: Int) = apiService.getDetailsMARequest(auth,id)
 }

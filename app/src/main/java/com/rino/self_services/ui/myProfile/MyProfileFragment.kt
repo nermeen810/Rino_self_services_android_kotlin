@@ -107,16 +107,10 @@ class MyProfileFragment : Fragment() {
 
     private fun handleBack() {
         binding.backbtn.setOnClickListener {
+            val action =
+                MyProfileFragmentDirections.actionMyProfileFragmentToProfileFragment(from_where)
+            findNavController().navigate(action)
 
-            if (from_where == "hr") {
-                val action =
-                    MyProfileFragmentDirections.actionMyProfileFragmentToProfileFragment("hr")
-                findNavController().navigate(action)
-            } else if (from_where == "payment") {
-                val action =
-                    MyProfileFragmentDirections.actionMyProfileFragmentToProfileFragment("payment")
-                findNavController().navigate(action)
-            }
         }
     }
 

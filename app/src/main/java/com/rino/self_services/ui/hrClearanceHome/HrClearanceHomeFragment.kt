@@ -18,6 +18,8 @@ import com.rino.self_services.model.pojo.hrClearance.Data
 import com.rino.self_services.model.pojo.hrClearance.HrClearanceResponse
 import com.rino.self_services.model.pojo.hrClearance.Items
 import com.rino.self_services.ui.paymentProcessHome.*
+import com.rino.self_services.utils.dateToArabic
+import com.rino.self_services.utils.numToArabic
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -91,8 +93,8 @@ class HrClearanceHomeFragment : Fragment() {
         viewModel.getNotificationCount()
         viewModel.getNotificationCount.observe(viewLifecycleOwner) {
             it?.let {
-                binding.countTxt.text = (it.data?.hr ?: 0).toString()
-                notificationCount = (it.data?.hr?.let { it1 -> it.data?.hr?.plus(it1) }) ?: 0
+                binding.countTxt.text = (it.data?.hr ?: 0).toString().numToArabic()
+                notificationCount = (it.data?.hr ?: 0)
             }
         }
     }

@@ -416,13 +416,22 @@ class ComplaintsFragment : Fragment() {
             val action =
                 ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("payment")
             findNavController().navigate(action)
-        } else if (from_where == "hr_view_complaints") {
+        }  else if (from_where == "MA_profile") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToProfileFragment("MA")
+            findNavController().navigate(action)
+        }else if (from_where == "hr_view_complaints") {
             val action =
                 ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("hr_profile")
             findNavController().navigate(action)
         } else if (from_where == "payment_view_complaints") {
             val action =
                 ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("payment_profile")
+            findNavController().navigate(action)
+
+        }else if (from_where == "MA_view_complaints") {
+            val action =
+                ComplaintsFragmentDirections.actionComplaintsFragmentToViewComplaintsFragment("MA_profile")
             findNavController().navigate(action)
 
         }
