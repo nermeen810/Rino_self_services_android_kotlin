@@ -21,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.rino.self_services.R
 import com.rino.self_services.model.pojo.HRClearanceDetailsRequest
+import com.rino.self_services.ui.home.HomeFragment
 import com.rino.self_services.ui.paymentProcessHome.NavSeeAll
 import com.rino.self_services.ui.paymentProcessHome.NavToDetails
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,19 +82,19 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onBackPressed() {
-        //   super.onBackPressed()
-        if (count == 0) {
-            Toast.makeText(
-                this,
-                getString(R.string.exit_msg),
-                Toast.LENGTH_SHORT
-            ).show()
-            count += 1
-        } else {
-            finish()
-        }
-    }
+//    override fun onBackPressed() {
+//        //   super.onBackPressed()
+//        if (count == 0) {
+//            Toast.makeText(
+//                this,
+//                getString(R.string.exit_msg),
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            count += 1
+//        } else {
+//            finish()
+//        }
+//    }
 
 
     private fun splashSetup(navController: NavController) {
@@ -226,6 +227,28 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (caller != FileCaller.none) {
             emitFileForCaller(data, resultCode)
+        }
+        val navHostFragment = supportFragmentManager.fragments.first()
+                as? NavHostFragment
+
+        navHostFragment?.let {
+            val childFragments =
+                navHostFragment.childFragmentManager.fragments
+
+            childFragments.forEach { fragment ->
+                fragment.onActivityResult(requestCode, resultCode, data)
+
+                if (fragment is HomeFragment) {
+                    val page = supportFragmentManager
+                        .findFragmentByTag(
+                            "android:switcher:${R.id.homeFragment}:${fragment.arguments}"
+                        )
+
+                    page?.let {
+                        page.onActivityResult(requestCode, resultCode, data)
+                    }
+                }
+            }
         }
     }
 
